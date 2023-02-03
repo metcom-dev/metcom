@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="email_template_preorder" model="mail.template">
+            <field name="name">Pre-orden de Compra - Send by Email</field>
+            <field name="model_id" ref="purchase_preorder.model_purchase_preorder"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">{{ (object.user_id.email and '&quot;%s&quot; &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '') }}</field>
+            <field name="partner_to">{{ object.validate_user_id.partner_id.id }}</field>
+            <field name="subject">{{ object.company_id.name }} Pre-orden de Compra (Ref {{ object.name }})</field>
+            <field name="lang">{{ object.user_id.partner_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Estimado <t t-out="object.validate_user_id.partner_id.name or ''">Usuario</t>
+                    <br/>
+                    Se adjunta la pre-orden de compra <strong><t t-out="object.name" /></strong> de <t t-out="object.company_id.name" />.
+                    </p>
+                        <br/><br/>
+                        <center>
+                            <a t-att-href="object.get_mail_url()" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">Ir</a>
+                            <br/><br/>
+                        </center>
+                        <br/><br/>
+                    <p>Gracias,</p>
+                    <p style="color:#888888;">
+                        <t t-if="object.user_id and object.user_id.signature">
+                            <t t-out="object.user_id.signature" />
+                        </t>
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="report_purchase_preorder"/>
+        </record>
+
+    </data>
+</odoo>

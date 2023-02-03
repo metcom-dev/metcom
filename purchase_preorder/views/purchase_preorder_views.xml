@@ -1,0 +1,129 @@
+<odoo>
+	<record id="view_purchase_preorder_tree" model="ir.ui.view">
+		<field name="name">view.purchase.preorder.tree</field>
+		<field name="model">purchase.preorder</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree decoration-muted="priority=='low'" decoration-danger="priority=='high'" decoration-success="priority=='medium'">
+				<field name="name"/>
+				<field name="location_id" groups="purchase_preorder.group_preorder_administrator"/>
+				<field name="priority"/>
+				<field name="date_order"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_purchase_preorder_form" model="ir.ui.view">
+		<field name="name">view.purchase.preorder.form</field>
+		<field name="model">purchase.preorder</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+                    <button name="action_preorder_send" string="Enviar por email" type="object" class="oe_highlight"/>
+                    <button name="send_validate" string="Enviar a validar" type="object" class="oe_highlight" states="draft"/>
+                    <button name="print_preorder" string="Imprimir" type="object" class="oe_highlight"/>
+                    <button name="action_validate" string="Validar" type="object" class="oe_highlight" 
+						attrs="{'invisible': ['|',('check_stock','=',False),('state','!=','open')]}" groups="purchase_preorder.group_preorder_administrator"/>
+                    <button name="create_purchase_order" string="Generar compra" type="object" class="oe_highlight" states="preorder" groups="purchase_preorder.group_preorder_administrator"/>
+                    <button name="get_quantity_stock" string="Revisar stock" type="object" class="oe_highlight" states="draft,open" groups="purchase_preorder.group_preorder_administrator"/>
+                    <button name="action_draft" string="Volver a borrador" type="object" class="oe_highlight" states="cancel"/>
+                    <button name="action_cancel" string="Cancelar" type="object" states="draft,open,preorder"/>
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,preorder"/>
+				</header>
+				<sheet>
+					<div class="oe_title">
+						<h1>
+							<field name="name" class="oe_inline" readonly="1"/>
+						</h1>
+					</div>
+					<group>
+						<group>
+							<field name="location_id" attrs="{'readonly': [('state','not in',('draft','open'))] }" groups="purchase_preorder.group_preorder_administrator"/>
+							<field name="user_id" attrs="{'readonly': [('state','not in',('draft'))] }"/>
+							<field name="validate_user_id" attrs="{'readonly': [('state','not in',('draft'))] }"/>
+							<field name="priority" widget="radio" attrs="{'readonly': [('state','not in',('draft','open'))] }"/>
+						</group>
+						<group>
+							<field name="date_order" attrs="{'readonly': [('state','not in',('draft','open'))] }"/>
+							<field name="date_validate" attrs="{'invisible': [('state','in',('draft'))], 'readonly': [('state','not in',('draft','open'))] }"/>
+							<field name="check_stock" invisible="1"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Productos" >
+							<button name="action_send_lines_done" states="open" string="⇒ Validar todas las lineas" type="object" class="oe_link oe_right" groups="purchase_preorder.group_preorder_administrator"/>
+							<field name="line_ids" attrs="{'readonly': [('state','not in',('draft','open'))] }">
+								<tree editable="bottom" decoration-muted="state=='done'" decoration-danger="state=='cancel'" decoration-success="state=='done'">
+									<field name="product_id" />
+									<field name="product_qty" />
+									<field name="product_uom" />
+									<field name="stock_qty" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="product_stock_uom" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="stock_date" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="purchase_product_qty" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="purchase_product_uom" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="state" readonly="1"/>
+                    				<button name="action_done" string="Validar" type="object" class="oe_highlight"
+										attrs="{'invisible': ['|',('parent.state','!=','open'), ('state','in',('done'))]}" 
+										groups="purchase_preorder.group_preorder_administrator"/>
+                    				<button name="action_cancel" string="Cancelar" type="object"
+										attrs="{'invisible': ['|',('parent.state','!=','open'), ('state','in',('cancel'))]}"
+										groups="purchase_preorder.group_preorder_administrator"/>
+								</tree>
+							</field>
+							<field name="note" class="oe_inline" placeholder="Observaciones"/>
+							<div class="oe_clear"/>
+						</page>
+					</notebook>
+				</sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_purchase_preorder_search" model="ir.ui.view">
+		<field name="name">view.purchase.preorder.search</field>
+		<field name="model">purchase.preorder</field>
+		<field name="type">search</field>
+		<field name="mode">primary</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+				<filter string="Aprobados" name="state_preorder" domain="[('state','=','preorder')]"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="action_purchase_preorder_act_window" model="ir.actions.act_window">
+		<field name="name">Pre-orden de Compra</field>
+		<field name="res_model">purchase.preorder</field>
+		<field name="view_mode">tree,form</field>
+		<field name="target">current</field>
+		<field name="search_view_id" ref="view_purchase_preorder_search" />
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Cree una Pre-orden de compra
+			</p>
+		</field>
+	</record>
+
+    <menuitem id="preorder_root"
+		name="Pre-orden"
+		sequence="11"
+		web_icon="purchase_preorder,static/description/icon.png"/>
+
+    <menuitem 
+        id="menu_purchase_preorder" 
+        name="Pre-orden de Compra"
+        parent="preorder_root"
+        action="action_purchase_preorder_act_window"
+		groups="purchase_preorder.group_preorder_user"
+		sequence="1"/>
+
+</odoo>
