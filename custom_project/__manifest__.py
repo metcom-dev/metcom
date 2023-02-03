@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 {
-    'name' : 'Crons Personalizados',
+    'name' : 'Perzonalización de Proyectos',
     'version' : '16.0.1',
-    'summary': 'Crons Personalizados MetCom',
+    'summary': 'Personalización de Proyectos MetCom',
     'sequence': 10,
     'description': """
-        Crons Personalizados para MetCom
+        Personalizacion de Proyectos MetCom
     """,
-    'category': 'Purchase',
+    'category': 'Project',
     'license': 'LGPL-3',
     'website': 'https://conflux.pe',
-    'depends' : ['purchase', 'purchase_preorder'],
+    'depends' : ['project'],
     'data': [
-        "data/ir_cron.xml",
+        'security/ir.model.access.csv',
+        "views/project_view.xml",
     ],
     'qweb': [],
     'installable': True,
