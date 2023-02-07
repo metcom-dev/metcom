@@ -33,14 +33,13 @@ class Project(models.Model):
     def go_principal_panel(self):
         for rec in self:
             return {
-                'name': rec.display_name,
+                'name': 'Proyecto',
                 'view_mode': 'form',
                 'view_type': 'form',
                 'view_id': self.env.ref('project.edit_project').id,
                 'res_model': 'project.project',
                 'res_id': rec.id,
                 'type': 'ir.actions.act_window',
-                'nodestroy': True,
                 'target': 'current',
                 'domain': ""
             }
@@ -66,7 +65,7 @@ class ProjectAttachment(models.Model):
 
     project_id = fields.Many2one(string='Proyecto', comodel_name='project.project', ondelete='cascade')
     image = fields.Binary(string="Archivo", required=True)
-    image_name = fields.Char(string="Nombre Imagen")
+    image_name = fields.Char(string="Nombre Archivo")
     type = fields.Selection(string='Tipo', selection=[
         ('purchase', 'Compras'), 
         ('photo', 'Fotos e Informes'),
