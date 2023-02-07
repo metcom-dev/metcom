@@ -7,9 +7,6 @@
         <field name="inherit_id" ref="product.product_category_form_view"/>
         <field name="arch" type="xml">
             <field name="parent_id" position="after">
-                <!-- <field name="supplier_one" options="{'no_create': True}" class="oe_inline" />
-                <field name="supplier_two" options="{'no_create': True}" class="oe_inline" />
-                <field name="supplier_three" options="{'no_create': True}" class="oe_inline" /> -->
                 <field name="supplier_ids" options="{'no_create': True}" class="oe_inline" widget="many2many_tags" />
             </field>
         </field>
