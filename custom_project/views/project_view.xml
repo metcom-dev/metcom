@@ -62,7 +62,7 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr='//div[@class="o_primary"]' position='inside'>
+            <xpath expr='//div[hasclass("o_primary")]' position='inside'>
                 <button type="object" name="go_principal_panel" class="btn btn-primary btn-sm">Panel Principal</button>
             </xpath>
         </field>
