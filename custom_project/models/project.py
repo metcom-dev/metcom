@@ -33,7 +33,7 @@ class Project(models.Model):
     def go_principal_panel(self):
         for rec in self:
             return {
-                'name': 'Projecto',
+                'name': 'Proyecto',
                 'view_mode': 'form',
                 'view_type': 'form',
                 'view_id': self.env.ref('project.edit_project').id,
