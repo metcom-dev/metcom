@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- <data noupdate="1"> -->
-    <data>
+    <data noupdate="1">
         <record id="ir_cron_autosend_purchase_quotation_suppliers" model="ir.cron">
             <field name="name">Cotizaciones de Compra: Auto-envio a Proveedores de productos</field>
             <field name="user_id" ref="base.user_root"/>

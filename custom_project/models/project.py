@@ -1,9 +1,12 @@
 from odoo import models, fields, api
 
+import logging
+log = logging.getLogger(__name__)
+
 class Project(models.Model):
     _inherit = 'project.project'
 
-    requirement_ids = fields.One2many(string='Requerimientos', comodel_name='project.requirement', inverse_name='project_id', copy=True)
+    requirement_ids = fields.One2many(string='Requerimientos', comodel_name='purchase.preorder', inverse_name='project_id', copy=True, readonly=True)
     labor_ids = fields.One2many(string='Mano de Obra', comodel_name='project.labor', inverse_name='project_id', copy=True)
     purchase_attachs_ids = fields.One2many(
         string='Ordenes de Compra',
@@ -27,21 +30,20 @@ class Project(models.Model):
         copy=True
     )
 
-class ProjectRequirement(models.Model):
-    _name = 'project.requirement'
-    _description = 'Lineas de Requerimiento de Proyecto'
-
-    project_id = fields.Many2one(string='Proyecto', comodel_name='project.project', ondelete='cascade')
-    product_id = fields.Many2one(string="Producto", comodel_name='product.product', ondelete='restrict', required=True)
-    product_qty = fields.Float(string="Cantidad Requerida", required=True)
-    product_uom = fields.Many2one(string='UdM', comodel_name='uom.uom', required=True)
-    date = fields.Date(string='Fecha que se Requiere', default=fields.Datetime.now, required=True)
-    
-    @api.onchange('product_id')
-    def _onchange_product_id(self):
-        if not self.product_id:
-            return
-        self.product_uom = self.product_id.uom_id.id
+    def go_principal_panel(self):
+        for rec in self:
+            return {
+                'name': rec.display_name,
+                'view_mode': 'form',
+                'view_type': 'form',
+                'view_id': self.env.ref('project.edit_project').id,
+                'res_model': 'project.project',
+                'res_id': rec.id,
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'current',
+                'domain': ""
+            }
 
 class ProjectLabor(models.Model):
     _name = 'project.labor'

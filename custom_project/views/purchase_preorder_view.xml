@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_purchase_preorder_project_metcom_form">
+        <field name="name">purchase.preorder.project.metcom.form</field>
+        <field name="model">purchase.preorder</field>
+        <field name="inherit_id" ref="purchase_preorder.view_purchase_preorder_form"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="after">
+                <field name="project_id" options="{'no_create': True}" attrs="{'readonly': [('state','not in',('draft','open'))] }" groups="purchase_preorder.group_preorder_administrator" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

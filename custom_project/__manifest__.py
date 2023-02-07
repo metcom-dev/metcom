@@ -10,10 +10,12 @@
     'category': 'Project',
     'license': 'LGPL-3',
     'website': 'https://conflux.pe',
-    'depends' : ['project'],
+    'depends' : ['project', 'purchase_preorder'],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         "views/project_view.xml",
+        "views/purchase_preorder_view.xml",
     ],
     'qweb': [],
     'installable': True,
