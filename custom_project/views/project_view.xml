@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_project_notebooks_metcom_form">
+        <field name="name">project.notebooks.metcom.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Requerimientos">
+                    <field name="requirement_ids" >
+                        <tree editable="bottom">
+                            <field name="name" />
+                            <field name="date_order" />
+                            <field name="user_id" />
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </page>
+                <page string="Mano de Obra">
+                    <field name="labor_ids">
+                        <tree editable="bottom">
+                            <field name="employee_id" />
+                            <field name="employee_vat" readonly="True" force_save="True" />
+                            <field name="hours" />
+                        </tree>
+                    </field>
+                </page>
+                <page string="Orden de Compra" groups="custom_project.group_accounting_staff,custom_project.group_management_staff">
+                    <field name="purchase_attachs_ids" context="{'default_type': 'purchase'}">
+                        <tree editable="bottom">
+                            <field name="image" filename="image_name" />
+                            <field name="image_name" readonly="True" force_save="True" />
+                            <field name="type" invisible="True" />
+                        </tree>
+                    </field>
+                </page>
+                <page string="Informes y Fotografías" groups="custom_project.group_operations_staff,custom_project.group_management_staff">
+                    <field name="photo_attachs_ids" context="{'default_type': 'photo'}">
+                        <tree editable="bottom">
+                            <field name="image" filename="image_name" />
+                            <field name="image_name" readonly="True" force_save="True" />
+                            <field name="type" invisible="True" />
+                        </tree>
+                    </field>
+                </page>
+                <page string="Otros">
+                    <field name="other_attachs_ids" context="{'default_type': 'other'}">
+                        <tree editable="bottom">
+                            <field name="image" filename="image_name" />
+                            <field name="image_name" readonly="True" force_save="True" />
+                            <field name="type" invisible="True" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_project_button_metcom_kanban">
+        <field name="name">project.button.metcom.kanban</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr='//div[hasclass("o_primary")]' position='inside'>
+                <button type="object" name="go_principal_panel" class="btn btn-primary btn-sm">Panel Principal</button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
