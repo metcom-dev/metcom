@@ -30,6 +30,10 @@ class Project(models.Model):
         copy=True
     )
 
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', 'El nombre del proyecto debe ser unico.'),
+    ]
+
     def go_principal_panel(self):
         for rec in self:
             return {
@@ -44,10 +48,11 @@ class Project(models.Model):
                 'domain': ""
             }
 
-    @api.model
-    def create(self, vals):
-        sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
-        vals['name'] = sequence[:-1] + vals['name']
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
+            vals['name'] = sequence[:-1] + vals['name']
         res = super(Project, self).create(vals)
         return res
 
