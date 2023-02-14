@@ -44,6 +44,13 @@ class Project(models.Model):
                 'domain': ""
             }
 
+    @api.model
+    def create(self, vals):
+        sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
+        vals['name'] = sequence[:-1] + vals['name']
+        res = super(Project, self).create(vals)
+        return res
+
 class ProjectLabor(models.Model):
     _name = 'project.labor'
     _description = 'Lineas de Mano de Obra de Proyecto'

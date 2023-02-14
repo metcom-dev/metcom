@@ -151,9 +151,14 @@ class PurchaseOrder(models.Model):
         return locations
 
     def create_purchase_order_from_preorder(self):
-        preorder_ids = self.env["purchase.preorder"].search([('state', '=', 'preorder')])
+        preorder_ids = self.env["purchase.preorder"].search([('state', '=', 'preorder'), ('check_po_generated', '=', False)])
         locations_prods = self._separate_products_from_preorders(preorder_ids)
         categories_prods = self.__check_product_stock(locations_prods)
         for products in categories_prods.values():
             if len(products):
                 self.create_purchase_order_from_products(products)
+
+        for preorder_id in preorder_ids:
+            preorder_id.write({
+                "check_po_generated": True
+            })

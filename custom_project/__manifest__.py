@@ -14,6 +14,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
+        'data/ir_sequence.xml',
         "views/project_view.xml",
         "views/purchase_preorder_view.xml",
     ],
