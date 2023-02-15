@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_res_partner_extra_field">
+        <field name="name">res.partner.extra.fields.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Datos Adicionales">
+                    <group name="container_row_2">
+                        <group priority="1">
+                            <field name="is_carrier" />
+                            <field name="is_domiciled" />
+                            <field name="is_worker" />
+                            <field name="is_seller" />
+                            <field name="is_collector" />
+                            <field name="is_driver" />
+                            <field name="is_bank" />
+                        </group>
+                        <group priority="2">
+                            <field name="discharge_date" />
+                            <field name="start_date" />
+                            <field name="end_date" />
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_res_partner_extra_field_search">
+        <field name="name">res.partner.extra.fields.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="type_company" position="after">
+                <filter name="is_carrier" string="Es transportista" domain="[('is_carrier', '=', True)]" />
+                <filter name="is_domiciled" string="Es domiciliado" domain="[('is_domiciled', '=', True)]" />
+                <filter name="is_worker" string="Es trabajador" domain="[('is_worker', '=', True)]" />
+                <filter name="is_seller" string="Es vendedor" domain="[('is_seller', '=', True)]" />
+                <filter name="is_collector" string="Es cobrador" domain="[('is_collector', '=', True)]" />
+                <filter name="is_driver" string="Es chofer" domain="[('is_driver', '=', True)]" />
+                <filter name="is_bank" string="Es banco" domain="[('is_bank', '=', True)]" />
+                <!-- <filter name="filter_date_range" string="Por fecha" domain="[('start_date', '&gt;=', context.get('start_date')), ('end_date', '&lt;=', context.get('end_date'))]"/> -->
+            </filter>
+        </field>
+    </record>
+</odoo>
