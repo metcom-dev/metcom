@@ -18,9 +18,9 @@
                             <field name="is_bank" />
                         </group>
                         <group priority="2">
-                            <field name="discharge_date" />
                             <field name="start_date" />
                             <field name="end_date" />
+                            <field name="discharge_date" />
                         </group>
                     </group>
                 </page>
@@ -34,6 +34,7 @@
         <field name="inherit_id" ref="base.view_res_partner_filter"/>
         <field name="arch" type="xml">
             <filter name="type_company" position="after">
+                <separator/>
                 <filter name="is_carrier" string="Es transportista" domain="[('is_carrier', '=', True)]" />
                 <filter name="is_domiciled" string="Es domiciliado" domain="[('is_domiciled', '=', True)]" />
                 <filter name="is_worker" string="Es trabajador" domain="[('is_worker', '=', True)]" />
@@ -41,7 +42,10 @@
                 <filter name="is_collector" string="Es cobrador" domain="[('is_collector', '=', True)]" />
                 <filter name="is_driver" string="Es chofer" domain="[('is_driver', '=', True)]" />
                 <filter name="is_bank" string="Es banco" domain="[('is_bank', '=', True)]" />
-                <!-- <filter name="filter_date_range" string="Por fecha" domain="[('start_date', '&gt;=', context.get('start_date')), ('end_date', '&lt;=', context.get('end_date'))]"/> -->
+                <separator/>
+                <filter string="Fecha de inicio" name="start_date" date="start_date"/>
+                <filter string="Fecha de fin" name="end_date" date="end_date"/>
+                <filter string="Fecha de alta" name="discharge_date" date="discharge_date"/>
             </filter>
         </field>
     </record>
