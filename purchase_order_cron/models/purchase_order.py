@@ -70,27 +70,15 @@ class PurchaseOrder(models.Model):
         })
         po_id.message_post(body="Creado desde Pre-ordenes de Compra mediante Acción Automática.")
 
-    def _separate_products_by_categories_projects(self, products):
+    def _separate_products_by_categories(self, products):
         """
-            Se crea una diccionario con los productos separados por categoría y proyectos con la siguiente estructura:
-            {
-                categ_id: {
-                    project_id: {
-                        product_id: {
-                            product_data
-                        },
-                        ...
-                    },
-                    ...
-                },
-                ...
-            }
+            Se crea una diccionario con los productos separados por categoría.
 
             Args:
                 - products: list
 
             Return:
-                - categories_prods: dcit
+                - categories_prods: dict
         """
         categories_prods = dict()
         for product in products:
@@ -107,19 +95,6 @@ class PurchaseOrder(models.Model):
                     prod["product_qty"] += product_id["product_qty"]
                 else:
                     categories_prods[categ_id].append(product)
-                # if project_id not in categories_prods[categ_id]:
-                #     categories_prods[categ_id].update({
-                #         project_id: {
-                #             product_id: product
-                #         }
-                #     })
-                # else:
-                #     if product_id not in categories_prods[categ_id][project_id]:
-                #         categories_prods[categ_id][project_id].update({
-                #             product_id: product
-                #         })
-                #     else:
-                #         categories_prods[categ_id][project_id][product_id]["product_qty"] += product["product_qty"]
         return categories_prods
 
     def _subtract_stock_from_warehouse(self, product_id, product_qty, stocks, location_id):
@@ -238,7 +213,7 @@ class PurchaseOrder(models.Model):
         preorder_ids = self.env["purchase.preorder"].search([('state', '=', 'preorder'), ('check_po_generated', '=', False)], order="date_order asc")
         stocks_project_warehouse, stock_principal_warehouse = self._get_stocks_warehouse_from_preorders(preorder_ids)
         products = self._update_product_stock_warehouse(preorder_ids, stocks_project_warehouse, stock_principal_warehouse)
-        categories_prods = self._separate_products_by_categories_projects(products)
+        categories_prods = self._separate_products_by_categories(products)
         for products in categories_prods.values():
             self._create_purchase_order_from_products(products)
 
