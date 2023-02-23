@@ -1,6 +1,7 @@
 from odoo import models, fields
 
 import base64
+from datetime import datetime, timedelta
 
 import logging
 log = logging.getLogger(__name__)
@@ -58,7 +59,7 @@ class PurchaseOrder(models.Model):
                 product_liens[line.product_id.id] = {
                     "display_type": line.display_type,
                     "name": line.name,
-                    "date_planned": line.date_planned,
+                    "date_planned": datetime.strftime(line.date_planned - timedelta(hours=5), '%d/%m/%Y %H:%M:%S'),
                     "product_qty": line.product_qty,
                     "product_uom": line.product_uom,
                 }
@@ -76,7 +77,7 @@ class PurchaseOrder(models.Model):
                     "display_type": line.display_type,
                     "name": line.name,
                     "taxes_id": line.taxes_id,
-                    "date_planned": line.date_planned,
+                    "date_planned": datetime.strftime(line.date_planned - timedelta(hours=5), '%d/%m/%Y %H:%M:%S'),
                     "product_qty": line.product_qty,
                     "product_uom": line.product_uom,
                     "price_unit": line.price_unit,
