@@ -51,6 +51,40 @@ class PurchaseOrder(models.Model):
                         order_id.write({'state': 'sent'})
 
     # CRON: ir_cron_create_purchase_order_from_preorder
+    def _get_quotation_new_order_lines(self):
+        product_liens = dict()
+        for line in self.order_line:
+            if not product_liens.get(line.product_id.id, False):
+                product_liens[line.product_id.id] = {
+                    "display_type": line.display_type,
+                    "name": line.name,
+                    "date_planned": line.date_planned,
+                    "product_qty": line.product_qty,
+                    "product_uom": line.product_uom,
+                }
+            else:
+                product_liens[line.product_id.id]['product_qty'] += round(line.product_qty, 3)
+        return [value for value in product_liens.values()]
+
+    def _get_order_new_order_lines(self):
+        product_liens = dict()
+        for line in self.order_line:
+            if not product_liens.get(line.product_id.id, False):
+                product_liens[line.product_id.id] = {
+                    "price_subtotal": line.price_subtotal,
+                    "price_total": line.price_total,
+                    "display_type": line.display_type,
+                    "name": line.name,
+                    "taxes_id": line.taxes_id,
+                    "date_planned": line.date_planned,
+                    "product_qty": line.product_qty,
+                    "product_uom": line.product_uom,
+                    "price_unit": line.price_unit,
+                }
+            else:
+                product_liens[line.product_id.id]['product_qty'] += round(line.product_qty, 3)
+        return [value for value in product_liens.values()]
+
     def _create_purchase_order_from_products(self, products):
         po_lines = []
         for product in products:
