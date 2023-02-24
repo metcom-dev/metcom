@@ -8,7 +8,7 @@
         Personalizacion de Proyectos MetCom
     """,
     'category': 'Project',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'website': 'https://conflux.pe',
     'depends' : ['project', 'purchase_preorder'],
     'data': [
