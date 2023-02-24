@@ -5,9 +5,10 @@
             <field name="name">Proyecto Secuencia</field>
             <field name="implementation">no_gap</field>
             <field name="code">project.project_project_sequence</field>
-            <field name="prefix">MTC%(year)s%(month)s%(day)s-</field>
-            <field name="padding">0</field>
-            <field name="number_increment">0</field>
+            <field name="prefix">MT%(y)s%(month)s%(day)s-</field>
+            <field name="suffix">-</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
         </record>
     </data>
 </odoo>

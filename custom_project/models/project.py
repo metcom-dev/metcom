@@ -52,7 +52,7 @@ class Project(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
-            vals['name'] = sequence[:-1] + vals['name']
+            vals['name'] = sequence + vals['name']
         res = super(Project, self).create(vals)
         return res
 
