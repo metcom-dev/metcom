@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchasequotation_document_inherit" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <h2 class="mt-4">Request for Quotation <span t-field="o.name"/></h2>
+
+                <table class="table table-sm mt-4">
+                    <thead style="display: table-row-group">
+                        <tr>
+                            <th name="th_description"><strong>Description</strong></th>
+                            <th name="th_expected_date" class="text-center"><strong>Expected Date</strong></th>
+                            <th name="th_quantity" class="text-end"><strong>Qty</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="new_lines" t-value="o._get_quotation_new_order_lines()"/>
+                        <t t-foreach="new_lines" t-as="order_line">
+                            <tr t-att-class="'bg-200 fw-bold o_line_section' if order_line['display_type'] == 'line_section' else 'fst-italic o_line_note' if order_line['display_type'] == 'line_note' else ''">
+                                <t t-if="not order_line['display_type']">
+                                    <td id="product">
+                                        <span t-esc="order_line['name']"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="order_line['date_planned']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-esc="'%.2f' % order_line['product_qty']"/>
+                                        <span t-esc="order_line['product_uom'].name" groups="uom.group_uom"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td colspan="99" id="section">
+                                        <span t-esc="order_line['name']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <p t-field="o.notes" class="mt-4"/>
+
+                <div class="oe_structure"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
