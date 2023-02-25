@@ -1,7 +1,6 @@
 {
     'name': "Pre-orden de compra",
-    'author': "Conflux",
-    'license': "AGPL-3",
+    'license': "OPL-1",
     'version': '16.0.0',
     'website': "https://conflux.pe",
     'category': "Tools",

@@ -8,7 +8,7 @@
         Crons Personalizados para MetCom
     """,
     'category': 'Purchase',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'website': 'https://conflux.pe',
     'depends' : ['purchase', 'purchase_preorder'],
     'data': [

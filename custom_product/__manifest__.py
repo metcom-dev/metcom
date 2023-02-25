@@ -8,7 +8,7 @@
         Personalizacion de Productos MetCom
     """,
     'category': 'Stock',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'website': 'https://conflux.pe',
     'depends' : ['stock'],
     'data': [

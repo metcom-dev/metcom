@@ -8,7 +8,7 @@
         Personalizacion de Contactos MetCom
     """,
     'category': 'Stock',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'website': 'https://conflux.pe',
     'depends' : ['base', 'account'],
     'data': [
