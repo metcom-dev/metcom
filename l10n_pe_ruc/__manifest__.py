@@ -6,6 +6,7 @@
     'description': """
         Permite consulta RUC en base a DNI, pasaporte, Carnet de Extranjería y RUC desde los contactos de Odoo.
     """,
+    "license": "LGPL-3",
     'depends': [
         'base',
         'contacts',
