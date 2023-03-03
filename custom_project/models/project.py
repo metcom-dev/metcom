@@ -28,6 +28,7 @@ class Project(models.Model):
         domain=[('type', '=', 'other')],
         copy=True
     )
+    warehouse_id = fields.Many2one(string="Almacén", comodel_name="stock.warehouse")
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', 'El nombre del proyecto debe ser unico.'),
@@ -52,6 +53,8 @@ class Project(models.Model):
         for vals in vals_list:
             sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
             vals['name'] = sequence + vals['name']
+            if 'warehouse_id' not in vals:
+                vals['warehouse_id'] = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
         res = super(Project, self).create(vals)
         return res
 

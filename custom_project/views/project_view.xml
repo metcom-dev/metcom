@@ -6,6 +6,9 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="warehouse_id" options="{'no_create': True, 'no_create_edit': True}" groups="base.group_no_one" />
+            </field>
             <xpath expr="//notebook" position="inside">
                 <page string="Requerimientos">
                     <field name="requirement_ids" >
