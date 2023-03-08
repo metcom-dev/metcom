@@ -64,7 +64,9 @@ class Project(models.Model):
             fields.append('warehouse_id')
         warehouse_id = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
         if warehouse_id:
+            domain.append('|')
             domain.append(['warehouse_id', '=', warehouse_id])
+            domain.append(['warehouse_id', '=', False])
         res = super(Project, self).web_search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order, count_limit=count_limit)
         return res
 
