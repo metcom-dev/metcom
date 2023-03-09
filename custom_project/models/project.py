@@ -57,18 +57,6 @@ class Project(models.Model):
                 vals['warehouse_id'] = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
         res = super(Project, self).create(vals)
         return res
-    
-    @api.model
-    def web_search_read(self, domain=None, fields=None, offset=0, limit=None, order=None, count_limit=None):
-        if 'warehouse_id' not in fields:
-            fields.append('warehouse_id')
-        warehouse_id = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
-        if warehouse_id:
-            domain.append('|')
-            domain.append(['warehouse_id', '=', warehouse_id])
-            domain.append(['warehouse_id', '=', False])
-        res = super(Project, self).web_search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order, count_limit=count_limit)
-        return res
 
 class ProjectAttachment(models.Model):
     _name = 'project.attachment'
