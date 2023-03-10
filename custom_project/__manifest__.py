@@ -17,6 +17,7 @@
         'data/ir_sequence.xml',
         "views/project_view.xml",
         "views/purchase_preorder_view.xml",
+        "views/res_users_view.xml"
     ],
     'qweb': [],
     'installable': True,

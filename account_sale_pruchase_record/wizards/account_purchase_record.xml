@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="wizard_account_purchases_record_form">
+            <field name="name">wizard.account.purchases.record.form</field>
+            <field name="model">report.account_purchase_record</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <!-- <field name="company_id" options="{'no_open': True, 'no_create': 1, 'no_create_edit': 1}" groups="base.group_multi_company"/> -->
+                        <!-- <field name="company_branch_address_ids" options="{'no_open': True, 'no_create': 1, 'no_create_edit': 1}" widget="many2many_tags" groups="company_branch_address.group_multi_company_branch_address"/> -->
+                        <field name="date_from" required="True" />
+                        <field name="date_to" required="True" />
+                    </group>
+                    <footer>
+                        <button name="export_xls" type="object" context="{'xls_export': 1}" string="Generar Reporte" class="oe_highlight" icon="fa-print" />
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="wizard_account_purchases_record_action">
+            <field name="name">Registro de compras</field>
+            <field name="res_model">report.account_purchase_record</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_account_purchases_record_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="report_account_purchases_record_xlsx" model="ir.actions.report">
+            <field name="name">Purchases Record XLS</field>
+            <field name="model">report.account_purchase_record</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">account_sale_purchase_record.acc_purchase_record.xlsx</field>
+            <field name="report_file">Registro de compras</field>
+        </record>
+
+        <menuitem 
+            id="menu_account_purchases_record" 
+            name="Registro de compras" 
+            action="wizard_account_purchases_record_action" 
+            parent="account.account_reports_management_menu"
+            sequence="21"/>
+
+    </data>
+</odoo>
