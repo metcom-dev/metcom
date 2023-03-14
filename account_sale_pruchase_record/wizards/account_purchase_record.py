@@ -10,6 +10,7 @@ log = logging.getLogger(__name__)
 
 class PurchasesRecord(models.TransientModel):
     _name = 'report.account_purchase_record'
+    _description = 'Reporte Registro de Compras'
 
     company_id = fields.Many2one('res.company', string='Empresa', default=lambda self: self.env.user.company_id)
     date_from = fields.Date(string='Desde', default=fields.Date.today())

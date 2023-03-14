@@ -10,6 +10,7 @@ log = logging.getLogger(__name__)
 
 class SalesRecord(models.TransientModel):
     _name = 'report.account_sale_record'
+    _description = 'Reporte Registro de Ventas'
 
     company_id = fields.Many2one('res.company', string='Empresa', default=lambda self: self.env.user.company_id)
     # company_branch_address_ids = fields.Many2many(string='Sucursales', comodel_name='res.company.branch.address')
