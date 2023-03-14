@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 class AccountSalesRecordReportXlsx(models.AbstractModel):
     _name = 'report.account_sale_purchase_record.acc_sale_record.xlsx'
     _inherit = 'report.report_xlsx.abstract'
+    _description = 'Ecel de Reporte Registro de Ventas'
 
     def generate_xlsx_report(self, workbook, data, lines):
         wizard = lines[0]

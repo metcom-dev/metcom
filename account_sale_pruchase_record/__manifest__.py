@@ -5,6 +5,7 @@
     'website': "https://conflux.pe",
     'category': 'Account',
     'version': '0.1',
+    'license': 'LGPL-3',
     'depends': [
         # 'l10n_pe_edi_extended',
         # 'company_branch_address_account',
