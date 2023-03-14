@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="schedule_planning_template_view_form" model="ir.ui.view">
+            <field name="name">schedule.planning.template.form</field>
+            <field name="model">schedule.planning.template</field>
+            <field name="arch" type="xml">
+                <form string="Formulario de Plantilla de Horario">
+                    <sheet>
+                        <group>
+                            <group>
+                                <label for="start_time" widget="float_time"/>
+                                <div class="d-flex flex-column flex-shrink-1">
+                                    <div class="d-flex">
+                                        <field name="start_time" widget="float_time" class="oe_inline"/>
+                                        <i class="fa fa-long-arrow-right my-1 mx-1" aria-label="Arrow icon" title="Arrow"/>
+                                        <field name="end_time" widget="float_time" class="flex-shrink-1 oe_inline"/>
+                                        <span class="ms-2 flex-shrink-1" attrs="{'invisible': [('duration_days', '&lt;=', 1)]}">
+                                            (lapso de <field name="duration_days" class="oe_inline"/> días)
+                                        </span>
+                                    </div>
+                                </div>
+                                <label for="duration"/>
+                                <div class="d-flex flex-column flex-shrink-1">
+                                    <div class="d-flex">
+                                        <field name="duration" widget="float_time" decoration-danger="duration &lt; 0" decoration-secondary="duration == 0" class="oe_inline flex-shrink-1"/>
+                                        <span class="ms-2 flex-shrink-1"> Horas laborales</span>
+                                    </div>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="schedule_planning_template_view_tree" model="ir.ui.view">
+            <field name="name">schedule.planning.template.tree</field>
+            <field name="model">schedule.planning.template</field>
+            <field name="arch" type="xml">
+                <tree string="Lista de Plantillas de Horarios" sample="1">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="schedule_planning_template_action" model="ir.actions.act_window">
+            <field name="name">Plantillas de Horarios</field>
+            <field name="res_model">schedule.planning.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No se encontraron plantillas de planificación de horarios. ¡Creemos una!
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="schedule_planning_menu_template"
+            name="Plantillas de Horarios"
+            parent="planning.planning_menu_settings"
+            sequence="90"
+            action="schedule_planning_template_action"
+            groups="planning.group_planning_manager"/>
+
+    </data>
+</odoo>

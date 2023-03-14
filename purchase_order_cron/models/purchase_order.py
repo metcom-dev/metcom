@@ -127,7 +127,7 @@ class PurchaseOrder(models.Model):
             else:
                 prod = next((prod for prod in categories_prods[categ_id] if prod["project_id"] == project_id), None)
                 if prod:
-                    prod["product_qty"] += product_id["product_qty"]
+                    prod["product_qty"] += product["product_qty"]
                 else:
                     categories_prods[categ_id].append(product)
         return categories_prods

@@ -7,7 +7,6 @@ class Project(models.Model):
     _inherit = 'project.project'
 
     requirement_ids = fields.One2many(string='Requerimientos', comodel_name='purchase.preorder', inverse_name='project_id', copy=True, readonly=True)
-    labor_ids = fields.One2many(string='Mano de Obra', comodel_name='project.labor', inverse_name='project_id', copy=True)
     purchase_attachs_ids = fields.One2many(
         string='Ordenes de Compra',
         comodel_name='project.attachment',
@@ -29,6 +28,7 @@ class Project(models.Model):
         domain=[('type', '=', 'other')],
         copy=True
     )
+    warehouse_id = fields.Many2one(string="Almacén", comodel_name="stock.warehouse")
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', 'El nombre del proyecto debe ser unico.'),
@@ -53,23 +53,10 @@ class Project(models.Model):
         for vals in vals_list:
             sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
             vals['name'] = sequence + vals['name']
+            if 'warehouse_id' not in vals:
+                vals['warehouse_id'] = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
         res = super(Project, self).create(vals)
         return res
-
-class ProjectLabor(models.Model):
-    _name = 'project.labor'
-    _description = 'Lineas de Mano de Obra de Proyecto'
-
-    project_id = fields.Many2one(string='Proyecto', comodel_name='project.project', ondelete='cascade')
-    employee_id = fields.Many2one(string="Empleado", comodel_name='hr.employee', ondelete='restrict', required=True)
-    employee_vat = fields.Char(string="DNI")
-    hours = fields.Float(string="Horas Dedicadas", required=True)
-
-    @api.onchange('employee_id')
-    def _onchange_employee_id(self):
-        if not self.employee_id:
-            return
-        self.employee_vat = self.employee_id.identification_id
 
 class ProjectAttachment(models.Model):
     _name = 'project.attachment'

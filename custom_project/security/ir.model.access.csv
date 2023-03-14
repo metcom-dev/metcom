@@ -1,3 +1,2 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_project_labor,access_project_labor,model_project_labor,,1,1,1,1
 access_project_attachment,access_project_attachment,model_project_attachment,,1,1,1,1
