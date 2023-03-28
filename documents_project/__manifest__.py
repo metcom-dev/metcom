@@ -4,7 +4,7 @@
     'category': 'Project Management',
     'version': '1.0',
     'author': 'Conflux',
-    'depends': ['base', 'project'],
+    'depends': ['base', 'project', 'custom_project'],
     'data': [
         'views/files_view.xml',
         'security/ir.model.access.csv',
