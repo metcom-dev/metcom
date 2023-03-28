@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_files_for_project_tree" model="ir.ui.view">
+        <field name="name">project.attachment.tree</field>
+        <field name="model">project.attachment</field>
+        <field name="arch" type="xml">
+            <tree string="Archivos">
+                <field name="project_id" />
+                <field name="type" string="Carpeta" />
+                <field name="image_name" />
+                <field name="write_date" string="Fecha de registro"/>
+                <field name="create_uid" string="Usuario"/>
+                <field name="warehouse_id" string="Almacén" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_files_for_project_form" model="ir.ui.view">
+        <field name="name">project.attachment.form</field>
+        <field name="model">project.attachment</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <button type="object" name="donwload_file" string="Descargar" class="oe_highlight" attrs="{'invisible': [('type', '!=', 'binary')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title" aria-label="Name">
+                        <h1>
+                            <field name="image_name" class="oe_inline" placeholder="Document Name" required="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="image" filename="image_name" />
+                            <field name="project_id" string="Proyecto" />
+                            <field name="warehouse_id" string="Almacén" />
+                            <field name="create_uid" string="Propietario" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="type" string="Carpeta" />
+                            <field name="write_date" string="Fecha de registro" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_attachment_search" model="ir.ui.view">
+        <field name="name">project.attachment.search</field>
+        <field name="model">project.attachment</field>
+        <field name="arch" type="xml">
+            <search string="Buscar proyecto">
+                <field name="project_id" string="Proyecto" filter_domain="[('project_id', 'ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Proyecto" name="groupby_project" domain="[]" context="{'group_by': 'project_id'}"/>
+                </group>
+                <group expand="0" string="Filtros" name="filter">
+                    <filter string="Todos los proyectos" name="all_projects" domain="[]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="project_documents_search_panel" model="ir.ui.view">
+        <field name="name">project.attachment.search.panel</field>
+        <field name="model">project.attachment</field>
+        <field name="inherit_id" ref="view_project_attachment_search"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <searchpanel>
+                    <field name="project_id" enable_counters="1" icon="fa fa-file-text" select="multi" string="Proyectos"  />
+                    <field name="type" enable_counters="1" icon="fa fa-folder" string="Carpetas" />
+                    <field name="warehouse_id" icon="fa fa-building" string="Almacénes"  />
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="proyecto_lista_form_action">
+        <field name="name">Proyecto Lista</field>
+        <field name="res_model">project.attachment</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_files_for_project_tree" />
+        <field name="search_view_id" ref="view_project_attachment_search" />
+    </record>
+
+    <menuitem 
+        id="menu_documentos" 
+        name="Documentos" 
+        action="proyecto_lista_form_action"
+        parent="project.menu_main_pm" 
+        sequence="10"/>
+    
+</odoo>
