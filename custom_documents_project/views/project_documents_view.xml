@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="project_documents_tree_view" model="ir.ui.view">
+        <field name="name">project.documents.tree.view</field>
+        <field name="model">documents.document</field>
+        <field name="arch" type="xml">
+            <tree string="Archivos">
+                <field name="project_id" />
+                <field name="attachment_name" />
+                <field name="type" invisible="1" />
+                <button type="object" name="download_file_metcom" string="Descargar" class="oe_highlight" attrs="{'invisible': [('type', '!=', 'binary')]}"/>
+                <field name="folder_id" string="Carpeta" />
+                <field name="warehouse_id" string="Almacén" />
+                <field name="write_date" string="Fecha de registro"/>
+                <field name="create_uid" string="Usuario"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="project_documents_search_view" model="ir.ui.view">
+        <field name="name">project.documents.search.view</field>
+        <field name="model">documents.document</field>
+        <field name="arch" type="xml">
+            <search string="Buscar proyecto">
+                <field name="project_id" string="Proyecto" filter_domain="[('project_id', 'ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Proyectos" name="groupby_project" domain="[]" context="{'group_by': 'project_id'}"/>
+                </group>
+                <group expand="0" string="Group By">
+                    <filter string="Carpetas" name="groupby_folder" domain="[]" context="{'group_by': 'folder_id'}"/>
+                </group>
+                <group expand="0" string="Filtros" name="filter">
+                    <filter string="Todos los proyectos" name="all_projects" domain="[]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="project_documents_search_panel" model="ir.ui.view">
+        <field name="name">project.documents.search.panel</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="project_documents_search_view"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <searchpanel>
+                    <field name="project_id" enable_counters="1" icon="fa fa-file-text" select="multi" string="Proyectos"  />
+                    <field name="warehouse_id" icon="fa fa-building" string="Almacénes" />
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="proyect_documents_action">
+        <field name="name">Documentos de Proyectos</field>
+        <field name="res_model">documents.document</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="project_documents_tree_view" />
+        <field name="search_view_id" ref="project_documents_search_view" />
+        <field name="domain">[('project_id', '!=', None)]</field>
+    </record>
+
+    <menuitem 
+        id="menu_project_documents"
+        name="Documentos" 
+        action="proyect_documents_action"
+        parent="project.menu_main_pm" 
+        sequence="5"
+    />
+    
+</odoo>

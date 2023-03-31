@@ -7,7 +7,10 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <field name="tag_ids" position="after">
-                <field name="warehouse_id" options="{'no_create': True, 'no_create_edit': True}" groups="base.group_no_one" />
+                <field name="warehouse_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
+                <field name="purchase_folder_id" invisible="1" />
+                <field name="photo_folder_id" invisible="1" />
+                <field name="other_folder_id" invisible="1" />
             </field>
             <xpath expr="//notebook" position="inside">
                 <page string="Requerimientos">
@@ -31,29 +34,29 @@
                     </field>
                 </page>
                 <page string="Orden de Compra" groups="custom_project.group_accounting_staff,custom_project.group_management_staff">
-                    <field name="purchase_attachs_ids" context="{'default_type': 'purchase'}">
+                    <field name="purchase_attachs_ids" context="{'default_folder_id': purchase_folder_id}">
                         <tree editable="bottom">
-                            <field name="image" filename="image_name" />
-                            <field name="image_name" readonly="True" force_save="True" />
-                            <field name="type" invisible="True" />
+                            <field name="datas" string="Archivo" filename="name" />
+                            <field name="name" readonly="True" force_save="True" />
+                            <field name="folder_id" invisible="True" />
                         </tree>
                     </field>
                 </page>
                 <page string="Informes y Fotografías" groups="custom_project.group_operations_staff,custom_project.group_management_staff">
-                    <field name="photo_attachs_ids" context="{'default_type': 'photo'}">
+                    <field name="photo_attachs_ids" context="{'default_folder_id': photo_folder_id}">
                         <tree editable="bottom">
-                            <field name="image" filename="image_name" />
-                            <field name="image_name" readonly="True" force_save="True" />
-                            <field name="type" invisible="True" />
+                            <field name="datas" string="Archivo" filename="name" />
+                            <field name="name" readonly="True" force_save="True" />
+                            <field name="folder_id" invisible="True" />
                         </tree>
                     </field>
                 </page>
                 <page string="Otros">
-                    <field name="other_attachs_ids" context="{'default_type': 'other'}">
+                    <field name="other_attachs_ids" context="{'default_folder_id': other_folder_id}">
                         <tree editable="bottom">
-                            <field name="image" filename="image_name" />
-                            <field name="image_name" readonly="True" force_save="True" />
-                            <field name="type" invisible="True" />
+                            <field name="datas" string="Archivo" filename="name" />
+                            <field name="name" readonly="True" force_save="True" />
+                            <field name="folder_id" invisible="True" />
                         </tree>
                     </field>
                 </page>
