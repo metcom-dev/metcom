@@ -1,12 +1,12 @@
 {
-    'name': 'Files for Projects',
+    'name': 'Documentos para Proyectos',
     'description': 'Este módulo lista los archivos por proyecto y almacen.',
     'category': 'Project Management',
-    'version' : '16.0.1',,
+    'version' : '16.0.1',
     'author': 'Conflux',
     'license': 'OPL-1',
     'website': 'https://conflux.pe',
-    'depends': ['base', 'project', 'custom_project'],
+    'depends': ['base', 'documents', 'project'],
     'data': [
         'views/files_view.xml',
         'security/ir.model.access.csv',

@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
-    <record id="view_files_for_project_tree" model="ir.ui.view">
-        <field name="name">project.attachment.tree</field>
-        <field name="model">project.attachment</field>
+    <record id="project_documents_tree_view" model="ir.ui.view">
+        <field name="name">project.documents.tree.view</field>
+        <field name="model">documents.document</field>
         <field name="arch" type="xml">
             <tree string="Archivos">
                 <field name="project_id" />
-                <field name="type" string="Carpeta" />
-                <field name="image_name" />
+                <field name="attachment_name" />
                 <field name="write_date" string="Fecha de registro"/>
                 <field name="create_uid" string="Usuario"/>
-                <field name="warehouse_id" string="Almacén" />
+                <!-- <field name="warehouse_id" string="Almacén" /> -->
             </tree>
         </field>
     </record>
 
-    <record id="view_files_for_project_form" model="ir.ui.view">
-        <field name="name">project.attachment.form</field>
-        <field name="model">project.attachment</field>
-        <field name="priority" eval="1"/>
+    <record id="project_documents_form_view" model="ir.ui.view">
+        <field name="name">project.documents.form.view</field>
+        <field name="model">documents.document</field>
+        <field name="priority" eval="1" />
         <field name="arch" type="xml">
             <form create="false">
-                <header>
+                <!-- <header>
                     <button type="object" name="donwload_file" string="Descargar" class="oe_highlight" attrs="{'invisible': [('type', '!=', 'binary')]}"/>
-                </header>
+                </header> -->
                 <sheet>
                     <div class="oe_title" aria-label="Name">
                         <h1>
-                            <field name="image_name" class="oe_inline" placeholder="Document Name" required="True"/>
+                            <field name="attachment_name" class="oe_inline" placeholder="Nombre de Archivo" required="True" />
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="image" filename="image_name" />
+                            <field name="attachment_id" filename="attachment_name" />
                             <field name="project_id" string="Proyecto" />
-                            <field name="warehouse_id" string="Almacén" />
-                            <field name="create_uid" string="Propietario" readonly="1"/>
+                            <!-- <field name="warehouse_id" string="Almacén" /> -->
                         </group>
                         <group>
-                            <field name="type" string="Carpeta" />
+                            <field name="create_uid" string="Propietario" readonly="1"/>
                             <field name="write_date" string="Fecha de registro" readonly="1"/>
                         </group>
                     </group>
@@ -48,9 +46,9 @@
         </field>
     </record>
 
-    <record id="view_project_attachment_search" model="ir.ui.view">
-        <field name="name">project.attachment.search</field>
-        <field name="model">project.attachment</field>
+    <record id="project_documents_search_view" model="ir.ui.view">
+        <field name="name">project.documents.search.view</field>
+        <field name="model">documents.document</field>
         <field name="arch" type="xml">
             <search string="Buscar proyecto">
                 <field name="project_id" string="Proyecto" filter_domain="[('project_id', 'ilike', self)]"/>
@@ -65,33 +63,33 @@
     </record>
 
     <record id="project_documents_search_panel" model="ir.ui.view">
-        <field name="name">project.attachment.search.panel</field>
-        <field name="model">project.attachment</field>
-        <field name="inherit_id" ref="view_project_attachment_search"/>
+        <field name="name">project.documents.search.panel</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="project_documents_search_view"/>
         <field name="arch" type="xml">
             <search position="inside">
                 <searchpanel>
                     <field name="project_id" enable_counters="1" icon="fa fa-file-text" select="multi" string="Proyectos"  />
-                    <field name="type" enable_counters="1" icon="fa fa-folder" string="Carpetas" />
-                    <field name="warehouse_id" icon="fa fa-building" string="Almacénes"  />
+                    <!-- <field name="warehouse_id" icon="fa fa-building" string="Almacénes"  /> -->
                 </searchpanel>
             </search>
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="proyecto_lista_form_action">
-        <field name="name">Proyecto Lista</field>
-        <field name="res_model">project.attachment</field>
-        <field name="view_mode">form,tree</field>
-        <field name="view_id" ref="view_files_for_project_tree" />
-        <field name="search_view_id" ref="view_project_attachment_search" />
+    <record model="ir.actions.act_window" id="proyect_documents_action">
+        <field name="name">Documentos de Proyectos</field>
+        <field name="res_model">documents.document</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="project_documents_tree_view" />
+        <field name="search_view_id" ref="project_documents_search_view" />
     </record>
 
     <menuitem 
-        id="menu_documentos" 
+        id="menu_project_documents"
         name="Documentos" 
-        action="proyecto_lista_form_action"
+        action="proyect_documents_action"
         parent="project.menu_main_pm" 
-        sequence="10"/>
+        sequence="99"
+    />
     
 </odoo>
