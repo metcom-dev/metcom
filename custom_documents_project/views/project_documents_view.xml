@@ -9,42 +9,14 @@
                 <field name="project_id" />
                 <field name="attachment_name" />
                 <field name="type" invisible="1" />
-                <button type="object" name="access_content" string="Descargar" class="oe_highlight" attrs="{'invisible': [('type', '!=', 'binary')]}"/>
-                <field name="folder_id" />
+                <button type="object" name="download_file_metcom" string="Descargar" class="oe_highlight" attrs="{'invisible': [('type', '!=', 'binary')]}"/>
+                <field name="folder_id" string="Carpeta" />
                 <field name="warehouse_id" string="Almacén" />
                 <field name="write_date" string="Fecha de registro"/>
                 <field name="create_uid" string="Usuario"/>
             </tree>
         </field>
     </record>
-
-    <!-- <record id="project_documents_form_view" model="ir.ui.view">
-        <field name="name">project.documents.form.view</field>
-        <field name="model">documents.document</field>
-        <field name="priority" eval="1" />
-        <field name="arch" type="xml">
-            <form create="false">
-                <sheet>
-                    <div class="oe_title" aria-label="Name">
-                        <h1>
-                            <field name="attachment_name" class="oe_inline" placeholder="Nombre de Archivo" required="True" />
-                        </h1>
-                    </div>
-                    <group>
-                        <group>
-                            <field name="attachment_id" filename="attachment_name" />
-                            <field name="project_id" string="Proyecto" />
-                            <field name="warehouse_id" string="Almacén" />
-                        </group>
-                        <group>
-                            <field name="create_uid" string="Propietario" readonly="1"/>
-                            <field name="write_date" string="Fecha de registro" readonly="1"/>
-                        </group>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record> -->
 
     <record id="project_documents_search_view" model="ir.ui.view">
         <field name="name">project.documents.search.view</field>
