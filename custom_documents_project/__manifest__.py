@@ -6,9 +6,14 @@
     'author': 'Conflux',
     'license': 'OPL-1',
     'website': 'https://conflux.pe',
-    'depends': ['base', 'documents', 'project'],
+    'depends': [
+        'base',
+        'documents',
+        'project',
+        'custom_project',
+    ],
     'data': [
-        'views/files_view.xml',
+        'views/project_documents_view.xml',
         'security/ir.model.access.csv',
         'security/security.xml'
     ],
