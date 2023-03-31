@@ -57,7 +57,7 @@ class Project(models.Model):
             sequence = self.env['ir.sequence'].next_by_code('project.project_project_sequence')
             vals['name'] = sequence + vals['name']
             if 'warehouse_id' not in vals or not vals['warehouse_id']:
-                vals['warehouse_id'] = self.env.user.property_warehouse_id.id if self.env.user.property_warehouse_id else None
+                vals['warehouse_id'] = self.env.user.property_warehouse_ids[0].id if self.env.user.property_warehouse_ids else None
         res = super(Project, self).create(vals_list)
         for project_id in res:
             if project_id.documents_folder_id:
