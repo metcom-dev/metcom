@@ -71,9 +71,8 @@ class Project(models.Model):
                 project_id.other_folder_id = self.env["documents.folder"].create(folder_data).id
         return res
 
-
-class Document(models.Model):
-    _inherit = 'documents.document'
-
-    project_id = fields.Many2one(string='Proyecto', comodel_name='project.project', ondelete='cascade')
-    # warehouse_id = fields.Many2one(string="Almacen", comodel_name='stock.warehouse', related="project_id.warehouse_id", store=True, ondelete='cascade')
+    def write(self, vals):
+        if 'name' in vals:
+            folder_id = self.env["documents.folder"].search([('name', '=', self.name)])
+            folder_id.write({"name": vals['name']})
+        return super(Project, self).write(vals)

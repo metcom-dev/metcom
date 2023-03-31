@@ -10,7 +10,7 @@
     'category': 'Project',
     'license': 'OPL-1',
     'website': 'https://conflux.pe',
-    'depends' : ['project', 'purchase_preorder'],
+    'depends' : ['documents', 'project', 'purchase_preorder'],
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
