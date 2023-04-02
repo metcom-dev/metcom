@@ -5,7 +5,7 @@
         <field name="name">project.documents.tree.view</field>
         <field name="model">documents.document</field>
         <field name="arch" type="xml">
-            <tree string="Archivos">
+            <tree string="Archivos" create="false">
                 <field name="project_id" />
                 <field name="attachment_name" />
                 <field name="type" invisible="1" />
