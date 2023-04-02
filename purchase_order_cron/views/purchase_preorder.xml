@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_purchase_preorder_button_cron_form">
+        <field name="name">purchase.preorder.button.cron.form</field>
+        <field name="model">purchase.preorder</field>
+        <field name="inherit_id" ref="purchase_preorder.view_purchase_preorder_form"/>
+        <field name="arch" type="xml">
+            <button name="create_purchase_order" position="after">
+                <button name="create_purchase_order_from_preorder" string="Generar Orden de Compra" type="object" class="oe_highlight" states="preorder" groups="purchase_preorder.group_preorder_administrator"/>
+            </button>
+            <button name="create_purchase_order" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+        </field>
+    </record>
+
+</odoo>
