@@ -15,6 +15,7 @@
         "data/ir_cron.xml",
         "reports/purchase_quotation_template.xml",
         "reports/purchase_order_template.xml",
+        "views/purchase_preorder.xml",
     ],
     'qweb': [],
     'installable': True,
