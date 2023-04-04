@@ -8,8 +8,7 @@
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="True"/>
-            <!-- <field name="domain_force">['|', ('warehouse_id', '=', False), '|', ('warehouse_id', 'in', [warehouse for warehouse in user.property_warehouse_ids.ids] ), ('create_uid', '=', user.id)]</field> -->
-            <field name="domain_force">[('warehouse_id', 'in', [warehouse_id.id for warehouse_id in user.property_warehouse_ids])]</field>
+            <field name="domain_force">['|', ('warehouse_id', '=', False), '|', ('warehouse_id', 'in', [warehouse_id.id for warehouse_id in user.property_warehouse_ids]), ('create_uid', '=', user.id)]</field>
         </record>
     </data>
 </odoo>
