@@ -29,7 +29,7 @@
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="True"/>
-            <field name="domain_force">['|', ('warehouse_id', '=', False),'|', ('warehouse_id', 'in', [warehouse.id for warehouse in user.property_warehouse_ids] ), ('create_uid', '=', user.id)]</field>
+            <field name="domain_force">['|', '|', ('warehouse_id', '=', False), ('warehouse_id', 'in', [warehouse.id for warehouse in user.property_warehouse_ids]), ('create_uid', '=', user.id)]</field>
             <!-- <field name="domain_force">[('warehouse_id', '=', user.property_warehouse_id.id)]</field> -->
         </record>
     </data>
