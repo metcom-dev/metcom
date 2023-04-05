@@ -51,6 +51,21 @@ class PurchaseOrder(models.Model):
                         mail_id = self.env['mail.mail'].sudo().create(mail_vals).send()
                         order_id.write({'state': 'sent'})
 
+    def _get_quotation_new_order_lines(self):
+        product_liens = dict()
+        for line in self.order_line:
+            if not product_liens.get(line.product_id.id, False):
+                product_liens[line.product_id.id] = {
+                    "display_type": line.display_type,
+                    "name": line.name,
+                    "date_planned": datetime.strftime(line.date_planned - timedelta(hours=5), '%d/%m/%Y %H:%M:%S'),
+                    "product_qty": line.product_qty,
+                    "product_uom": line.product_uom,
+                }
+            else:
+                product_liens[line.product_id.id]['product_qty'] += round(line.product_qty, 3)
+        return [value for value in product_liens.values()]
+
     def _get_order_new_order_lines(self):
         product_lines = dict()
         for line in self.order_line:
