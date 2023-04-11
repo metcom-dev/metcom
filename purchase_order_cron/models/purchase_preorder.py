@@ -52,7 +52,7 @@ class PrePurchase(models.Model):
                     categ_id: [product]
                 })
             else:
-                prod = next((prod for prod in categories_prods[categ_id] if prod["project_id"] == project_id), None)
+                prod = next((prod for prod in categories_prods[categ_id] if prod["project_id"] == project_id and prod["product_id"] == product_id), None)
                 if prod:
                     prod["product_qty"] += product["product_qty"]
                 else:
