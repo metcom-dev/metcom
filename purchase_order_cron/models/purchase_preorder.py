@@ -10,6 +10,7 @@ class PrePurchase(models.Model):
     check_po_generated = fields.Boolean(
         string='PO generado por cron',
         default=False,
+        copy=False
     )
 
     # CRON: ir_cron_create_purchase_order_from_preorder

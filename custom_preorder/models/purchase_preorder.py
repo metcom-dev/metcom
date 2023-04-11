@@ -9,7 +9,7 @@ class PrePurchase(models.Model):
     po_state = fields.Selection([
         ("pending", "Pendiente"),
         ("generate", "Atendido"),
-    ], string='Estado OC', default="pending", compute="_compute_po_state", store=True)
+    ], string='Estado OC', default="pending", compute="_compute_po_state", store=True, copy=False)
 
     @api.depends("check_po_generated")
     def _compute_po_state(self):
