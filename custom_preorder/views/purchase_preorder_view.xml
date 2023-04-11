@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_purchase_preorder_project_po_state_tree">
+        <field name="name">purchase.preorder.project.po.state.tree</field>
+        <field name="model">purchase.preorder</field>
+        <field name="inherit_id" ref="purchase_preorder.view_purchase_preorder_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="project_id" />
+            </field>
+            <field name="state" position="after">
+                <field name="po_state" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

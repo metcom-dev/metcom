@@ -26,7 +26,7 @@ class PrePurchase(models.Model):
                 'price_unit': 0,
                 'taxes_id': product["product_taxes_id"],
             }])
-        po_id = self.create({
+        po_id = self.env["purchase.order"].create({
             'partner_id': self.env.user.company_id.partner_id.id,
             'order_line': po_lines
         })
