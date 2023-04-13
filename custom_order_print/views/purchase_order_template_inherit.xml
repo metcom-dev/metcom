@@ -105,11 +105,9 @@
                             </tr>
                             <tr>
                                 <td>Centro de Costo:</td>
-                                <td>
-                                    <t t-if="o.order_line">
-                                        <td><span t-field="o.order_line[0].analytic_distribution"/></td>
-                                    </t>
-                                </td>
+                                <t t-if="o.order_line">
+                                    <td><span t-field="o.order_line[0].analytic_distribution"/></td>
+                                </t>
                             </tr>
                         </tbody>
                     </table>
