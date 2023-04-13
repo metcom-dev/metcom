@@ -109,6 +109,12 @@
                                     <td><span t-field="o.order_line[0].analytic_distribution"/></td>
                                 </t>
                             </tr>
+                            <tr>
+                                <td>Forma de Pago:</td>
+                                <t t-if="o.order_line">
+                                    <td><span t-field="o.payment_term_id"/></td>
+                                </t>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
