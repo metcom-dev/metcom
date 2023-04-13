@@ -13,12 +13,13 @@ class ReportPurchaseOrder(models.AbstractModel):
         analytic_distribution_names = []
 
         for line in order_lines:
-            analytic_distribution_id = list(line.analytic_distribution.keys())[0]
-            if analytic_distribution_id != 'False':
-                analytic_account = self.env['account.analytic.account'].search([('id', '=', analytic_distribution_id)])
-                if analytic_account:
-                    if analytic_account.name not in analytic_distribution_names:
-                        analytic_distribution_names.append(analytic_account.name)
+            if line.analytic_distribution:
+                analytic_distribution_id = list(line.analytic_distribution.keys())[0]
+                if analytic_distribution_id != 'False':
+                    analytic_account = self.env['account.analytic.account'].search([('id', '=', analytic_distribution_id)])
+                    if analytic_account:
+                        if analytic_account.name not in analytic_distribution_names:
+                            analytic_distribution_names.append(analytic_account.name)
 
         return {
             'doc_ids': docids,
