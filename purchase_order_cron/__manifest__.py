@@ -16,6 +16,7 @@
         "reports/purchase_quotation_template.xml",
         "reports/purchase_order_template.xml",
         "views/purchase_preorder.xml",
+        "views/purchase_order.xml",
     ],
     'qweb': [],
     'installable': True,

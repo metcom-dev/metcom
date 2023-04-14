@@ -7,7 +7,7 @@
     'description': """
         Personalizacion de Contactos MetCom
     """,
-    'category': 'Stock',
+    'category': 'Partner',
     'license': 'OPL-1',
     'website': 'https://conflux.pe',
     'depends' : ['base', 'account'],

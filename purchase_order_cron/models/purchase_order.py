@@ -9,6 +9,8 @@ log = logging.getLogger(__name__)
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    from_preorders = fields.Char(string="Generado de Pre-Orden(es)", readonly=True)
+
     # CRON: ir_cron_autosend_purchase_quotation_suppliers
     def process_send_quotation_suppliers(self):
         order_ids = self.env['purchase.order'].search([('state', '=', 'draft'), ('company_id', '=', self.env.company.id)])

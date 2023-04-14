@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record model="ir.ui.view" id="view_res_partner_extra_field">
         <field name="name">res.partner.extra.fields.form</field>
         <field name="model">res.partner</field>
@@ -49,4 +50,25 @@
             </filter>
         </field>
     </record>
+
+    <record id="view_res_partner_currency_bank_form" model="ir.ui.view">
+        <field name="name">res.partner.currency.bank.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form" />
+        <field name="arch" type="xml">
+            <field name="bank_ids" position="replace">
+                <field name="bank_ids" nolabel="1" colspan="2" context="{'default_allow_out_payment': True}">
+                    <tree editable="bottom">
+                        <field name="sequence" widget="handle" />
+                        <field name="bank_id" />
+                        <field name="acc_number" />
+                        <field name="currency_id" />
+                        <field name="allow_out_payment" widget="boolean_toggle" />
+                        <field name="acc_holder_name" invisible="1" />
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+
 </odoo>
