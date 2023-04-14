@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="purchase_order_template_inherit" inherit_id="purchase.report_purchaseorder_document" name="Purchase Order Template Inherit">
-        <!-- <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']" position="after"> -->
         <xpath expr="//t[@t-set='address']" position="replace">
             <t t-set="address">
                 <div t-field="o.partner_id"
@@ -14,7 +13,7 @@
             </t>
         </xpath>
 
-        <xpath expr="//div[@class='page']/div[2]" position="replace">
+        <xpath expr="//div[hasclass('page')]/div[2]" position="replace">
             <div class="mt-4">
                 <h2 t-if="o.state in ['draft', 'sent', 'to approve']">Solicitud de presupuesto #<span t-field="o.name"/></h2>
                 <h2 t-if="o.state in ['purchase', 'done']">Orden de compra #<span t-field="o.name"/></h2>
@@ -43,7 +42,7 @@
             </div>
         </xpath>
 
-        <xpath expr="//table[contains(@class, 'o_main_table')]/thead" position="replace">
+        <xpath expr="//table[hasclass('o_main_table')]/thead" position="replace">
             <thead style="display: table-row-group">
                 <tr>
                     <th name="th_description"><strong>Descripción</strong></th>
@@ -56,7 +55,7 @@
             </thead>
         </xpath>
 
-        <xpath expr="//table[contains(@class, 'o_main_table')]/tbody" position="replace">
+        <xpath expr="//table[hasclass('o_main_table')]/tbody" position="replace">
             <tbody>
                 <t t-set="current_subtotal" t-value="0"/>
                 <t t-foreach="o.order_line" t-as="line">
