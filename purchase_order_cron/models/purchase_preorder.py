@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, _
 from odoo.exceptions import UserError, ValidationError
 
 import logging
@@ -6,15 +6,33 @@ log = logging.getLogger(__name__)
 
 class PrePurchase(models.Model):
     _inherit = 'purchase.preorder'
-
+    
     check_po_generated = fields.Boolean(
         string='PO generado por cron',
         default=False,
         copy=False
     )
+    
+    def action_view_purchase_orders(self, orders=False):
+        if orders:
+            result = self.env['ir.actions.act_window']._for_xml_id('purchase.purchase_rfq')
+            if len(orders) > 1:
+                result['domain'] = [('id', 'in', orders)]
+            elif len(orders) == 1:
+                res = self.env.ref('purchase.purchase_order_form', False)
+                form_view = [(res and res.id or False, 'form')]
+                if 'views' in result:
+                    result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+                else:
+                    result['views'] = form_view
+                result['res_id'] = orders[0]
+        else:
+            result = {'type': 'ir.actions.act_window_close'}
+
+        return result
 
     # CRON: ir_cron_create_purchase_order_from_preorder
-    def _create_purchase_order_from_products(self, products):
+    def _create_purchase_order_from_products(self, products, preorder_ids):
         po_lines = []
         for product in products:
             po_lines.append([0, 0, {
@@ -31,7 +49,11 @@ class PrePurchase(models.Model):
             'partner_id': self.env.user.company_id.partner_id.id,
             'order_line': po_lines
         })
-        po_id.message_post(body="Creado desde Pre-ordenes de Compra mediante Acción Automática.")
+        body = "Creado desde Pre-ordenes de Compra"
+        if preorder_ids:
+            body += ": " + ", ".join(preorder_id.name for preorder_id in preorder_ids)
+        po_id.message_post(body=body)
+        return po_id.id
 
     def _separate_products_by_categories(self, products):
         """
@@ -182,13 +204,17 @@ class PrePurchase(models.Model):
                     raise ValidationError("Ya se ha generado una Orden de Compra desde esta Pre-orden.")
         else:
             preorder_ids = self.env["purchase.preorder"].search([('state', '=', 'preorder'), ('check_po_generated', '=', False)], order="date_order asc")
-        stocks_project_warehouse, stock_principal_warehouse = self._get_stocks_warehouse_from_preorders(preorder_ids)
-        products = self._update_product_stock_warehouse(preorder_ids, stocks_project_warehouse, stock_principal_warehouse)
-        categories_prods = self._separate_products_by_categories(products)
-        for products in categories_prods.values():
-            self._create_purchase_order_from_products(products)
+        if len(preorder_ids):
+            stocks_project_warehouse, stock_principal_warehouse = self._get_stocks_warehouse_from_preorders(preorder_ids)
+            products = self._update_product_stock_warehouse(preorder_ids, stocks_project_warehouse, stock_principal_warehouse)
+            categories_prods = self._separate_products_by_categories(products)
+            order_ids = []
+            for products in categories_prods.values():
+                order_ids.append(self._create_purchase_order_from_products(products, preorder_ids))
 
-        for preorder_id in preorder_ids:
-            preorder_id.write({
-                "check_po_generated": True
-            })
+            for preorder_id in preorder_ids:
+                preorder_id.write({
+                    "check_po_generated": True
+                })
+
+            return self.action_view_purchase_orders(order_ids)
