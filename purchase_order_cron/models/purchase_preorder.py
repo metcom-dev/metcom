@@ -34,6 +34,7 @@ class PrePurchase(models.Model):
     # CRON: ir_cron_create_purchase_order_from_preorder
     def _create_purchase_order_from_products(self, products, preorder_ids):
         po_lines = []
+        str_preorders = ", ".join(preorder_id.name for preorder_id in preorder_ids)
         for product in products:
             po_lines.append([0, 0, {
                 'name': product["product_name"],
@@ -47,11 +48,10 @@ class PrePurchase(models.Model):
             }])
         po_id = self.env["purchase.order"].create({
             'partner_id': self.env.user.company_id.partner_id.id,
-            'order_line': po_lines
+            'from_preorders': str_preorders,
+            'order_line': po_lines,
         })
-        body = "Creado desde Pre-ordenes de Compra"
-        if preorder_ids:
-            body += ": " + ", ".join(preorder_id.name for preorder_id in preorder_ids)
+        body = "Creado desde Pre-ordenes de Compra: " + str_preorders
         po_id.message_post(body=body)
         return po_id.id
 
@@ -133,7 +133,8 @@ class PrePurchase(models.Model):
                 product_id = line_id.product_id.id
                 product_qty = line_id.product_qty
                 product_qty, stocks_project_warehouse = self._subtract_stock_from_warehouse(product_id, product_qty, stocks_project_warehouse, location_id)
-                product_qty, stock_principal_warehouse = self._subtract_stock_from_warehouse(product_id, product_qty, stock_principal_warehouse, principal_warehouse_id)
+                if location_id != principal_warehouse_id:
+                    product_qty, stock_principal_warehouse = self._subtract_stock_from_warehouse(product_id, product_qty, stock_principal_warehouse, principal_warehouse_id)
 
                 products.append({
                     "product_categ_id": line_id.product_id.categ_id.id,
