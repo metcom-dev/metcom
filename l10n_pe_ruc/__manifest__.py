@@ -10,6 +10,7 @@
     'depends': [
         'base',
         'contacts',
+        'l10n_latam_base',
     ],
     'data': [
         'views/partner_views.xml',
