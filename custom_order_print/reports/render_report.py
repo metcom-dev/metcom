@@ -5,6 +5,7 @@ log = logging.getLogger(__name__)
 
 class ReportPurchaseOrder(models.AbstractModel):
     _name = 'report.purchase.report_purchaseorder'
+    _description = "Valores para reporte de Orden de Compra"
 
     @api.model
     def _get_report_values(self, docids, data=None):
