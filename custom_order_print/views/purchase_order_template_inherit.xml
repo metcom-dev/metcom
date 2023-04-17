@@ -3,9 +3,12 @@
     <template id="purchase_order_template_inherit" inherit_id="purchase.report_purchaseorder_document" name="Purchase Order Template Inherit">
         <xpath expr="//t[@t-set='address']" position="replace">
             <t t-set="address">
-                <h4>PROVEEDOR</h4>
+                <strong>PROVEEDOR</strong>
                 <div t-field="o.partner_id"
-                    t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'/>
+                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                <t t-if="o.partner_id.vat">
+                    <div><em>RUC: </em> <span t-field="o.partner_id.vat"/></div>
+                </t>
                 <t t-if="o.partner_id.bank_ids">
                     <div>
                         <em>Tipo de Moneda: </em>
@@ -54,7 +57,6 @@
                     <th name="th_quantity" class="text-center"><strong>Cantidad</strong></th>
                     <th name="th_uom" class="text-center"><strong>UND</strong></th>
                     <th name="th_date_req" class="text-center"><strong>Fecha Entrega</strong></th>
-                    <!-- <th name="th_taxes"><strong>Impuestos</strong></th> -->
                     <th name="th_price_unit" class="text-end"><strong>Precio Unitario</strong></th>
                     <th name="th_amount" class="text-end"><strong>Monto</strong></th>
                 </tr>
@@ -121,14 +123,33 @@
 
         <xpath expr="//div[@id='informations']" position="after">
             <div id="information" class="row justify-content-start">
+                <style>
+                    .custom_table_header {
+                        background-color: #D0D3D4;
+                        color: black;
+                    }
+
+                    .custom_table {
+                        height: 100%;
+                    }
+
+                    .same_font_size {
+                        font-size: 1rem;
+                    }
+
+                    .custom_table_body {
+                        background-color: white;
+                        color: black;
+                    }
+                </style>
                 <div class="col-6">
-                    <table class="table table-sm o_main_table table-borderless mt-2">
-                        <thead style="display: table-row-group">
-                            <tr class="bg-200">
+                    <table class="table table-sm o_main_table table-borderless mt-2 custom_table same_font_size">
+                        <thead class="same_font_size" style="display: table-row-group">
+                            <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Información</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="custom_table_body">
                             <tr>
                                 <td>Nº de Cotizacion:</td>
                                 <td><span t-field="o.name"/></td>
@@ -164,13 +185,13 @@
                     </table>
                 </div>
                 <div class="col-6">
-                    <table class="table table-sm o_main_table table-borderless mt-2">
-                        <thead style="display: table-row-group">
-                            <tr class="bg-200">
+                    <table class="table table-sm o_main_table table-borderless mt-2 custom_table same_font_size">
+                        <thead class="same_font_size" style="display: table-row-group">
+                            <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Transporte designado:</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="custom_table_body">
                             <tr>
                                 <td>Transportista:</td>
                                 <td><span t-field="o.carrier_id"/></td>
@@ -191,15 +212,13 @@
 
         <xpath expr="//p[@t-field='o.notes']" position="after">
             <div style="margin-top: 10px;">
-                <p>
-                    <t-raw>
-                        <b>Informacion Importante:</b>
-                        METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
-                        3% de pagos superiores a S/.700
-                        Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
-                        El horario de Recepcion de Facturas sera hasta las 13:00 horas
-                    </t-raw>
-                </p>
+                <b>Informacion Importante:</b>
+                METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
+                3% de pagos superiores a S/.700
+                <div>
+                Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
+                El horario de Recepcion de Facturas sera hasta las 13:00 horas
+                </div>
             </div>
         </xpath>
 
