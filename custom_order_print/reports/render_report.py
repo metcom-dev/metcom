@@ -19,8 +19,10 @@ class ReportPurchaseOrder(models.AbstractModel):
                 if analytic_distribution_id != 'False':
                     analytic_account = self.env['account.analytic.account'].search([('id', '=', analytic_distribution_id)])
                     if analytic_account:
-                        if analytic_account.name not in analytic_distribution_names:
-                            analytic_distribution_names.append(analytic_account.name)
+                        name = analytic_account.name
+                        name = name.split('-')[0] + '-' + name.split('-')[1]
+                        if name not in analytic_distribution_names:
+                            analytic_distribution_names.append(name)
 
         return {
             'doc_ids': docids,

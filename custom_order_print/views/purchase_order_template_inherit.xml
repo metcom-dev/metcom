@@ -3,12 +3,17 @@
     <template id="purchase_order_template_inherit" inherit_id="purchase.report_purchaseorder_document" name="Purchase Order Template Inherit">
         <xpath expr="//t[@t-set='address']" position="replace">
             <t t-set="address">
+                <h4>PROVEEDOR</h4>
                 <div t-field="o.partner_id"
                     t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'/>
                 <t t-if="o.partner_id.bank_ids">
                     <div>
-                        <em>Cuenta Cte: </em><span t-field="o.partner_id.bank_ids[0].acc_number"/> - <span t-field="o.partner_id.bank_ids[0].bank_id"/>
+                        <em>Tipo de Moneda: </em>
+                        <t t-if="o.currency_id.name == 'PEN'"><span>Soles</span></t>
+                        <t t-if="o.currency_id.name == 'USD'"><span>Dólares</span></t>
+                        <t t-if="o.currency_id.name == 'EUR'"><span>Euros</span></t>
                     </div>
+                    <div><em>Cuenta: </em><span t-field="o.partner_id.bank_ids[0].acc_number"/></div>
                 </t>
             </t>
         </xpath>
@@ -44,11 +49,12 @@
 
         <xpath expr="//table[hasclass('o_main_table')]/thead" position="replace">
             <thead style="display: table-row-group">
-                <tr>
+                <tr class="bg-200">
                     <th name="th_description"><strong>Descripción</strong></th>
                     <th name="th_quantity" class="text-center"><strong>Cantidad</strong></th>
-                    <th name="th_date_req" class="text-center"><strong>Fecha Req.</strong></th>
-                    <th name="th_taxes"><strong>Impuestos</strong></th>
+                    <th name="th_uom" class="text-center"><strong>UND</strong></th>
+                    <th name="th_date_req" class="text-center"><strong>Fecha Entrega</strong></th>
+                    <!-- <th name="th_taxes"><strong>Impuestos</strong></th> -->
                     <th name="th_price_unit" class="text-end"><strong>Precio Unitario</strong></th>
                     <th name="th_amount" class="text-end"><strong>Monto</strong></th>
                 </tr>
@@ -69,14 +75,13 @@
                             </td>
                             <td class="text-center">
                                 <span t-field="line.product_qty"/>
-                                <span t-field="line.product_uom.name" groups="uom.group_uom"/>
                             </td>
                             <td class="text-center">
-                                <span t-field="line.date_planned"/>
+                                <span t-field="line.product_uom.name" groups="uom.group_uom"/>
                             </td>
-                            <td name="td_taxes">
-                                <!-- <span t-esc="', '.join(map(lambda x: x.description or x.name, line.taxes_id))"/> -->
-                                <span t-esc="line.taxes_id.display_name"/>
+                            <td name="td_date">
+                                <!-- <span t-field="line.date_planned"/> -->
+                                <span t-esc="line.date_planned and line.date_planned.strftime('%Y-%m-%d') or ''"/>
                             </td>
                             <td class="text-end">
                                 <span t-field="line.price_unit"/>
@@ -119,7 +124,7 @@
                 <div class="col-6">
                     <table class="table table-sm o_main_table table-borderless mt-2">
                         <thead style="display: table-row-group">
-                            <tr>
+                            <tr class="bg-200">
                                 <th colspan="2" class="text-center">Información</th>
                             </tr>
                         </thead>
@@ -127,10 +132,6 @@
                             <tr>
                                 <td>Nº de Cotizacion:</td>
                                 <td><span t-field="o.name"/></td>
-                            </tr>
-                            <tr>
-                                <td>Nº de Proveedor:</td>
-                                <td><span t-field="o.partner_id.vat"/></td>
                             </tr>
                             <tr>
                                 <td>Centro de Costo:</td>
@@ -143,9 +144,20 @@
                                 </t>
                             </tr>
                             <tr>
+                                <td>Nro. PO:</td>
+                                <td><span t-field="o.partner_ref"/></td>
+                            </tr>
+                            <tr>
                                 <td>Forma de Pago:</td>
-                                <t t-if="o.order_line">
-                                    <td><span t-field="o.payment_term_id"/></td>
+                                <t t-if="o.payment_term_id">
+                                    <td>Credito  
+                                    <t t-if="o.payment_term_id.name == 'Pago inmediato'">
+                                        <span>Contado</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.payment_term_id"/>
+                                    </t>
+                                    </td>
                                 </t>
                             </tr>
                         </tbody>
@@ -154,20 +166,20 @@
                 <div class="col-6">
                     <table class="table table-sm o_main_table table-borderless mt-2">
                         <thead style="display: table-row-group">
-                            <tr>
+                            <tr class="bg-200">
                                 <th colspan="2" class="text-center">Transporte designado:</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-200">
+                            <tr>
                                 <td>Transportista:</td>
                                 <td><span t-field="o.carrier_id"/></td>
                             </tr>
-                            <tr class="bg-200">
+                            <tr>
                                 <td>Ruc:</td>
                                 <td><span t-field="o.carrier_id.vat"/></td>
                             </tr>
-                            <tr class="bg-200">
+                            <tr>
                                 <td>Dirección:</td>
                                 <td><span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/> </td>
                             </tr>
@@ -176,5 +188,20 @@
                 </div>
             </div>
         </xpath>
+
+        <xpath expr="//p[@t-field='o.notes']" position="after">
+            <div style="margin-top: 10px;">
+                <p>
+                    <t-raw>
+                        <b>Informacion Importante:</b>
+                        METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
+                        3% de pagos superiores a S/.700
+                        Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
+                        El horario de Recepcion de Facturas sera hasta las 13:00 horas
+                    </t-raw>
+                </p>
+            </div>
+        </xpath>
+
     </template>
 </odoo>
