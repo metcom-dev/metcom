@@ -124,78 +124,70 @@
         <xpath expr="//div[@id='informations']" position="after">
             <div id="information" class="row">
                 <style>
-                    .custom_table {
-                        display: flex;
-                        flex-direction: row;
-                        width: 100%;
-                    }
-
-                    .custom_column {
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    .first_custom_column {
-                        flex: 0 1 auto;
-                    }
-
-                    .last_custom_column {
-                        flex: 1;
-                    }
-
                     .custom_table_header {
                         background-color: #D0D3D4;
                         color: black;
-                        font-weight: bold;
-                        text-align: center;
-                        padding: 5px;
-                    }
-
-                    .custom_table_body {
-                        background-color: white;
-                        color: black;
-                        padding: 5px;
-                    }
-
-                    .empty_column {
-                        width: 1%;
-                        background-color: white;
                     }
 
                     .same_font_size {
                         font-size: 1rem;
                     }
                 </style>
-                <div class="col-12 custom_table same_font_size">
-                    <div class="custom_column first_custom_column">
-                        <div class="custom_table_header">Información</div>
-                        <div class="custom_table_body">Nº de Cotizacion: <span t-field="o.name"/></div>
-                        <div class="custom_table_body">Centro de Costo: 
-                            <t t-if="o.order_line">
-                                <t t-foreach="analytic_distribution_names" t-as="analytic_distribution_name">
-                                    <span t-esc="analytic_distribution_name"/>,
-                                </t>
-                            </t>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header custom_table_header same_font_size text-center">
+                            Información
                         </div>
-                        <div class="custom_table_body">Nro. PO: <span t-field="o.partner_ref"/></div>
-                        <div class="custom_table_body">Forma de Pago: 
-                            Credito  
-                            <t t-if="o.payment_term_id">
-                                <t t-if="o.payment_term_id.name == 'Pago inmediato'">
-                                    <span>Contado</span>
-                                </t>
-                                <t t-else="">
-                                    <span t-field="o.payment_term_id"/>
-                                </t>
-                            </t>
+                        <div class="card-body">
+                            <dl class="row same_font_size">
+                                <dt class="col-6">Nº de Cotizacion:</dt>
+                                <dd class="col-6"><span t-field="o.name"/></dd>
+
+                                <dt class="col-6">Centro de Costo:</dt>
+                                <dd class="col-6">
+                                    <t t-if="o.order_line">
+                                        <t t-foreach="analytic_distribution_names" t-as="analytic_distribution_name">
+                                            <span t-esc="analytic_distribution_name"/>,
+                                        </t>
+                                    </t>
+                                </dd>
+
+                                <dt class="col-6">Nro. PO:</dt>
+                                <dd class="col-6"><span t-field="o.partner_ref"/></dd>
+
+                                <dt class="col-6">Forma de Pago:</dt>
+                                <dd class="col-6">
+                                    Credito  
+                                    <t t-if="o.payment_term_id">
+                                        <t t-if="o.payment_term_id.name == 'Pago inmediato'">
+                                            <span>Contado</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="o.payment_term_id"/>
+                                        </t>
+                                    </t>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
-                    <div class="empty_column"></div>
-                    <div class="custom_column last_custom_column">
-                        <div class="custom_table_header">Transporte designado:</div>
-                        <div class="custom_table_body">Transportista: <span t-field="o.carrier_id"/></div>
-                        <div class="custom_table_body">Ruc: <span t-field="o.carrier_id.vat"/></div>
-                        <div class="custom_table_body">Dirección: <span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/></div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header custom_table_header same_font_size text-center">
+                            Transporte designado:
+                        </div>
+                        <div class="card-body">
+                            <dl class="row same_font_size">
+                                <dt class="col-6">Transportista:</dt>
+                                <dd class="col-6"><span t-field="o.carrier_id"/></dd>
+
+                                <dt class="col-6">Ruc:</dt>
+                                <dd class="col-6"><span t-field="o.carrier_id.vat"/></dd>
+
+                                <dt class="col-6">Dirección:</dt>
+                                <dd class="col-6"><span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/></dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
             </div>
