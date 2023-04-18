@@ -20,7 +20,7 @@ class ReportPurchaseOrder(models.AbstractModel):
                     analytic_account = self.env['account.analytic.account'].search([('id', '=', analytic_distribution_id)])
                     if analytic_account:
                         name = analytic_account.name
-                        name = name.split('-')[0] + '-' + name.split('-')[1]
+                        name = name.split('-')[0]
                         if name not in analytic_distribution_names:
                             analytic_distribution_names.append(name)
 
