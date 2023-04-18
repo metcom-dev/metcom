@@ -141,18 +141,28 @@
                         background-color: white;
                         color: black;
                     }
+
+                    .empty_column {
+                        width: 1%;
+                        background-color: white;
+                    }
                 </style>
-                <div class="col-6">
+                <div class="col-12">
                     <table class="table table-sm custom_table same_font_size">
                         <thead class="same_font_size">
                             <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Información</th>
+                                <th class="empty_column"></th>
+                                <th colspan="2" class="text-center">Transporte designado:</th>
                             </tr>
                         </thead>
                         <tbody class="custom_table_body">
                             <tr>
                                 <td>Nº de Cotizacion:</td>
                                 <td><span t-field="o.name"/></td>
+                                <td class="empty_column"></td>
+                                <td>Transportista:</td>
+                                <td><span t-field="o.carrier_id"/></td>
                             </tr>
                             <tr>
                                 <td>Centro de Costo:</td>
@@ -163,14 +173,21 @@
                                         </t>
                                     </t>
                                 </td>
+                                <td class="empty_column"></td>
+                                <td>Ruc:</td>
+                                <td><span t-field="o.carrier_id.vat"/></td>
                             </tr>
                             <tr>
                                 <td>Nro. PO:</td>
                                 <td><span t-field="o.partner_ref"/></td>
+                                <td class="empty_column"></td>
+                                <td>Dirección:</td>
+                                <td><span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/> </td>
                             </tr>
                             <tr>
                                 <td>Forma de Pago:</td>
-                                <td>Credito  
+                                <td>
+                                    Credito  
                                     <t t-if="o.payment_term_id">
                                         <t t-if="o.payment_term_id.name == 'Pago inmediato'">
                                             <span>Contado</span>
@@ -180,29 +197,6 @@
                                         </t>
                                     </t>
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-6">
-                    <table class="table table-sm custom_table same_font_size">
-                        <thead class="same_font_size">
-                            <tr class="custom_table_header">
-                                <th colspan="2" class="text-center">Transporte designado:</th>
-                            </tr>
-                        </thead>
-                        <tbody class="custom_table_body">
-                            <tr>
-                                <td>Transportista:</td>
-                                <td><span t-field="o.carrier_id"/></td>
-                            </tr>
-                            <tr>
-                                <td>Ruc:</td>
-                                <td><span t-field="o.carrier_id.vat"/></td>
-                            </tr>
-                            <tr>
-                                <td>Dirección:</td>
-                                <td><span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/> </td>
                             </tr>
                         </tbody>
                     </table>
