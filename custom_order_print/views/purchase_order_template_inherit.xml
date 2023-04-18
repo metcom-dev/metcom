@@ -159,7 +159,7 @@
                         font-size: 1rem;
                     }
                 </style>
-                <div class="col-12 custom_table same_font_size">
+                <div class="col-12 row custom_table same_font_size">
                     <div class="custom_column">
                         <div class="custom_table_header">Información</div>
                         <div class="custom_table_body">Nº de Cotizacion: <span t-field="o.name"/></div>
