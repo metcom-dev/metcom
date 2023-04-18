@@ -122,7 +122,7 @@
         </xpath>
 
         <xpath expr="//div[@id='informations']" position="after">
-            <div id="information" class="row justify-content-start">
+            <div id="information" class="row">
                 <style>
                     .custom_table_header {
                         background-color: #D0D3D4;
@@ -143,8 +143,8 @@
                     }
                 </style>
                 <div class="col-6">
-                    <table class="table table-sm o_main_table table-borderless mt-2 custom_table same_font_size">
-                        <thead class="same_font_size" style="display: table-row-group">
+                    <table class="table table-sm table-borderless custom_table same_font_size">
+                        <thead class="same_font_size">
                             <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Información</th>
                             </tr>
@@ -156,13 +156,13 @@
                             </tr>
                             <tr>
                                 <td>Centro de Costo:</td>
-                                <t t-if="o.order_line">
-                                    <td>
+                                <td>
+                                    <t t-if="o.order_line">
                                         <t t-foreach="analytic_distribution_names" t-as="analytic_distribution_name">
                                             <span t-esc="analytic_distribution_name"/>, 
                                         </t>
-                                    </td>
-                                </t>
+                                    </t>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Nro. PO:</td>
@@ -170,23 +170,23 @@
                             </tr>
                             <tr>
                                 <td>Forma de Pago:</td>
-                                <t t-if="o.payment_term_id">
-                                    <td>Credito  
-                                    <t t-if="o.payment_term_id.name == 'Pago inmediato'">
-                                        <span>Contado</span>
+                                <td>Credito  
+                                    <t t-if="o.payment_term_id">
+                                        <t t-if="o.payment_term_id.name == 'Pago inmediato'">
+                                            <span>Contado</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="o.payment_term_id"/>
+                                        </t>
                                     </t>
-                                    <t t-else="">
-                                        <span t-field="o.payment_term_id"/>
-                                    </t>
-                                    </td>
-                                </t>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-6">
-                    <table class="table table-sm o_main_table table-borderless mt-2 custom_table same_font_size">
-                        <thead class="same_font_size" style="display: table-row-group">
+                    <table class="table table-sm table-borderless custom_table same_font_size">
+                        <thead class="same_font_size">
                             <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Transporte designado:</th>
                             </tr>
