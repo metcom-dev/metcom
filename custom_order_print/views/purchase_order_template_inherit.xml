@@ -123,28 +123,29 @@
 
         <xpath expr="//div[@id='informations']" position="after">
             <div id="information" class="row">
-                <style>
-                    .custom_table_header {
-                        background-color: #D0D3D4;
-                        color: black;
-                    }
-
-                    .custom_table {
+                 <style>
+                    table.custom_table {
                         height: 100%;
                     }
 
-                    .same_font_size {
-                        font-size: 1rem;
+                    table.custom_table thead.same_font_size tr.custom_table_header {
+                        background-color: #D0D3D4 !important;
+                        color: black !important;
                     }
 
-                    .custom_table_body {
-                        background-color: white;
-                        color: black;
+                    table.custom_table tbody.custom_table_body tr {
+                        background-color: white !important;
+                        color: black !important;
                     }
 
-                    .empty_column {
+                    table.custom_table.same_font_size {
+                        font-size: 1rem !important;
+                    }
+
+                    table.custom_table thead.same_font_size th.empty_column,
+                    table.custom_table tbody.custom_table_body td.empty_column {
                         width: 1%;
-                        background-color: white;
+                        background-color: white !important;
                     }
                 </style>
                 <div class="col-12">
