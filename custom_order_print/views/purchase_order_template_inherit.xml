@@ -143,7 +143,7 @@
                     }
                 </style>
                 <div class="col-6">
-                    <table class="table-borderless custom_table same_font_size">
+                    <table class="table table-sm custom_table same_font_size">
                         <thead class="same_font_size">
                             <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Información</th>
@@ -185,7 +185,7 @@
                     </table>
                 </div>
                 <div class="col-6">
-                    <table class="table-borderless custom_table same_font_size">
+                    <table class="table table-sm custom_table same_font_size">
                         <thead class="same_font_size">
                             <tr class="custom_table_header">
                                 <th colspan="2" class="text-center">Transporte designado:</th>
