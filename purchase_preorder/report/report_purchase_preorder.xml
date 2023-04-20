@@ -18,23 +18,27 @@
 				<t t-foreach="docs" t-as="doc">
 					<t t-call="web.external_layout">
 						<div class="page">
-							<div class="oe_structure"/>
+							<!-- <div class="oe_structure"/> -->
 							<div class="row">
-								<div class="col-xs-12" style="text-align:center;">
+								<div class="col-12" style="text-align:center;">
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
-								<div class="col-xs-6">
+							</div>
+							<div class="row">
+								<div class="col-6">
 									<strong>Ubicación de Almacén:</strong> <span t-field="doc.location_id"/><br/>
 									<strong>Usuario:</strong> <span t-field="doc.user_id"/><br/>
 									<strong>Usuario Validador:</strong> <span t-field="doc.validate_user_id"/><br/>
 									<strong>Urgencia:</strong> <span t-field="doc.priority"/><br/>
 								</div>
-								<div class="col-xs-6">
+								<div class="col-6">
 									<strong>Fecha de Pedido:</strong> <span t-field="doc.date_order"/><br/>
 									<strong>Fecha de Validación:</strong> <span t-field="doc.date_validate"/><br/>
 								</div>
-								<br/>
-								<div class="col-xs-12">
+							</div>
+							<br/>
+							<div class="row">
+								<div class="col-12">
 									<table class="table table-condensed">
 										<thead>
 											<tr>
@@ -64,8 +68,10 @@
 										</tbody>
 									</table>
 								</div>
-								<br/>
-								<div class="col-xs-8" t-if="doc.note">
+							</div>
+							<br/>
+							<div class="row">
+								<div class="col-8" t-if="doc.note">
 									<strong>Notas:</strong><br/>
 									<span t-field="doc.note"/>
 								</div>
