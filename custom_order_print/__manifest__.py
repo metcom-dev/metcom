@@ -12,6 +12,7 @@
     'website': 'https://conflux.pe',
     'depends' : ['purchase', 'custom_contact'],
     'data': [
+        #
         "views/purchase_order.xml",
         "views/purchase_order_template_inherit.xml"
     ],
