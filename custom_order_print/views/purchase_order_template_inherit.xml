@@ -16,7 +16,7 @@
                         <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'USD'"><span>Dólares</span></t>
                         <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'EUR'"><span>Euros</span></t>
                     </div>
-                    <div>Cuenta: <span t-field="o.partner_id.bank_ids[0].acc_number"/> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/> </div>
+                    <div>Cuenta: <span t-field="o.partner_id.bank_ids[0].acc_number"/><t t-if="o.partner_id.bank_ids[0].bank_bic"> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/></t></div>
                 </t>
             </t>
         </xpath>
@@ -164,8 +164,8 @@
                         <div class="custom_table_body">Nº de Cotizacion: <span t-field="o.name"/></div>
                         <div class="custom_table_body">Centro de Costo: 
                             <t t-if="o.order_line">
-                                <t t-foreach="analytic_distribution_names" t-as="analytic_distribution_name">
-                                    <span t-esc="analytic_distribution_name"/>,
+                                <t t-if="o.order_line">
+                                    <span t-esc="analytic_distribution_names"/>
                                 </t>
                             </t>
                         </div>
