@@ -30,4 +30,3 @@ class ReportPurchaseOrder(models.AbstractModel):
             'docs': docs,
             'analytic_distribution_names': ', '.join(name for name in analytic_distribution_names ),
         }
-        
