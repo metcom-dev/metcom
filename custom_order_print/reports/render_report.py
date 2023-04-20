@@ -20,7 +20,7 @@ class ReportPurchaseOrder(models.AbstractModel):
                     analytic_account = self.env['account.analytic.account'].search([('id', '=', analytic_distribution_id)])
                     if analytic_account:
                         name = analytic_account.name
-                        name = name.split('-')[0]
+                        name = name.split('-')[0] + '-' + name.split('-')[1]
                         if name not in analytic_distribution_names:
                             analytic_distribution_names.append(name)
 
@@ -28,6 +28,6 @@ class ReportPurchaseOrder(models.AbstractModel):
             'doc_ids': docids,
             'doc_model': 'purchase.order',
             'docs': docs,
-            'analytic_distribution_names': analytic_distribution_names,
+            'analytic_distribution_names': ', '.join(name for name in analytic_distribution_names ),
         }
         
