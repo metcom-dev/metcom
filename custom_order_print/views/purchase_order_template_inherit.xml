@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="purchase_order_template_inherit" inherit_id="purchase.report_purchaseorder_document" name="Purchase Order Template Inherit">
+        <xpath expr="//t[@t-set='address']" position="replace">
+            <t t-set="address">
+                <strong>PROVEEDOR</strong>
+                <div t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                <t t-if="o.partner_id.vat">
+                    <div>RUC: <span t-field="o.partner_id.vat"/></div>
+                </t>
+                <t t-if="o.partner_id.bank_ids">
+                    <div>
+                        Tipo de Moneda: 
+                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'PEN'"><span>Soles</span></t>
+                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'USD'"><span>Dólares</span></t>
+                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'EUR'"><span>Euros</span></t>
+                    </div>
+                    <div>Cuenta: <span t-field="o.partner_id.bank_ids[0].acc_number"/><t t-if="o.partner_id.bank_ids[0].bank_bic"> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/></t></div>
+                </t>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]/div[2]" position="replace">
+            <div class="mt-4">
+                <h2 t-if="o.state in ['draft', 'sent', 'to approve']">Solicitud de presupuesto #<span t-field="o.name"/></h2>
+                <h2 t-if="o.state in ['purchase', 'done']">Orden de compra #<span t-field="o.name"/></h2>
+                <h2 t-if="o.state == 'cancel'">Orden de compra cancelada #<span t-field="o.name"/></h2>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div id="informations" class="row mt-2 mb32">
+                <div t-if="o.user_id" class="col-3 bm-2">
+                    <strong>Representante de compras:</strong>
+                    <p t-field="o.user_id" class="m-0"/>
+                </div>
+                <div t-if="o.partner_ref" class="col-3 bm-2">
+                    <strong>Su referencia de pedido:</strong>
+                    <p t-field="o.partner_ref" class="m-0"/>
+                </div>
+                <div t-if="o.state in ['purchase','done'] and o.date_approve" class="col-3 bm-2">
+                    <strong>Fecha de Orden:</strong>
+                    <p t-field="o.date_approve" class="m-0"/>
+                </div>
+                <div t-elif="o.date_order" class="col-3 bm-2">
+                    <strong>Fecha límite de pedido:</strong>
+                    <p t-field="o.date_order" class="m-0"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//table[hasclass('o_main_table')]/thead" position="replace">
+            <thead style="display: table-row-group">
+                <tr class="bg-200">
+                    <th name="th_description"><strong>Descripción</strong></th>
+                    <th name="th_quantity" class="text-center"><strong>Cantidad</strong></th>
+                    <th name="th_uom" class="text-center"><strong>UND</strong></th>
+                    <th name="th_date_req" class="text-center"><strong>Fecha Entrega</strong></th>
+                    <th name="th_price_unit" class="text-end"><strong>Precio Unitario</strong></th>
+                    <th name="th_amount" class="text-end"><strong>Monto</strong></th>
+                </tr>
+            </thead>
+        </xpath>
+
+        <xpath expr="//table[hasclass('o_main_table')]/tbody" position="replace">
+            <tbody>
+                <t t-set="current_subtotal" t-value="0"/>
+                <t t-foreach="o.order_line" t-as="line">
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                    <tr t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                        <t t-if="not line.display_type">
+                            <td id="product">
+                                <span t-field="line.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.product_qty"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                            </td>
+                            <td name="td_date">
+                                <span t-esc="line.date_planned and line.date_planned.strftime('%Y-%m-%d') or ''"/>
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.price_subtotal"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td colspan="99" id="section">
+                                <span t-field="line.name"/>
+                            </td>
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td colspan="99" id="note">
+                                <span t-field="line.name"/>
+                            </td>
+                        </t>
+                    </tr>
+                    <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                        <tr class="is-subtotal text-end">
+                            <td colspan="99" id="subtotal">
+                                <strong class="mr16">Subtotal</strong>
+                                <span
+                                    t-esc="current_subtotal"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                />
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </tbody>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="information" class="row">
+                <style>
+                    .custom_table {
+                        display: flex;
+                        flex-direction: row;
+                        width: 100%;
+                    }
+
+                    .custom_column {
+                        display: flex;
+                        flex-direction: column;
+                        flex-basis: 50%;
+                    }
+
+                    .custom_table_header {
+                        background-color: #D0D3D4;
+                        color: black;
+                        font-weight: bold;
+                        text-align: center;
+                        padding: 5px;
+                    }
+
+                    .custom_table_body {
+                        background-color: white;
+                        color: black;
+                        padding: 5px;
+                    }
+
+                    .empty_column {
+                        width: 1%;
+                        background-color: white;
+                    }
+
+                    .same_font_size {
+                        font-size: 1rem;
+                    }
+                </style>
+                <div class="col-12 row custom_table same_font_size">
+                    <div class="col-6 custom_column">
+                        <div class="custom_table_header">Información</div>
+                        <div class="custom_table_body">Nº de Cotizacion: <span t-field="o.name"/></div>
+                        <div class="custom_table_body">Centro de Costo: 
+                            <t t-if="o.order_line">
+                                <t t-if="o.order_line">
+                                    <span t-esc="analytic_distribution_names"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="custom_table_body">Nro. PO: <span t-field="o.partner_ref"/></div>
+                        <div class="custom_table_body">Forma de Pago: 
+                            <t t-if="o.payment_term_id">
+                                <t t-if="o.payment_term_id.name == 'Pago inmediato'">
+                                   Credito <span>Contado</span>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="o.payment_term_id"/>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="custom_column col-6">
+                        <div class="custom_table_header">Transporte designado:</div>
+                        <div class="custom_table_body">Transportista: <span t-field="o.carrier_id"/></div>
+                        <div class="custom_table_body">Ruc: <span t-field="o.carrier_id.vat"/></div>
+                        <div class="custom_table_body">Dirección: <span t-field="o.carrier_id.street"/> - <span t-field="o.carrier_id.city"/></div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//p[@t-field='o.notes']" position="after">
+            <div style="margin-top: 10px;">
+                <b>Informacion Importante:</b>
+                METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
+                3% de pagos superiores a S/.700
+                <div>
+                Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
+                El horario de Recepcion de Facturas sera hasta las 13:00 horas
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>
