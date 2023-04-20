@@ -7,16 +7,16 @@
                 <div t-field="o.partner_id"
                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
                 <t t-if="o.partner_id.vat">
-                    <div><p>RUC: </p> <span t-field="o.partner_id.vat"/></div>
+                    <div>RUC: <span t-field="o.partner_id.vat"/></div>
                 </t>
                 <t t-if="o.partner_id.bank_ids">
                     <div>
-                        <p>Tipo de Moneda: </p>
+                        Tipo de Moneda: 
                         <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'PEN'"><span>Soles</span></t>
                         <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'USD'"><span>Dólares</span></t>
                         <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'EUR'"><span>Euros</span></t>
                     </div>
-                    <div><p>Cuenta: </p><span t-field="o.partner_id.bank_ids[0].acc_number"/> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/> </div>
+                    <div>Cuenta: <span t-field="o.partner_id.bank_ids[0].acc_number"/> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/> </div>
                 </t>
             </t>
         </xpath>
