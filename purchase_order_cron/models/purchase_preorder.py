@@ -130,6 +130,8 @@ class PrePurchase(models.Model):
             analytic_account_id = preorder_id.project_id.analytic_account_id.id
             location_id = preorder_id.location_id.id
             for line_id in preorder_id.line_ids:
+                if line_id.state != "done":
+                    continue
                 product_id = line_id.product_id.id
                 product_qty = line_id.product_qty
                 product_qty, stocks_project_warehouse = self._subtract_stock_from_warehouse(product_id, product_qty, stocks_project_warehouse, location_id)
@@ -180,6 +182,8 @@ class PrePurchase(models.Model):
                     location_id: dict()
                 })
             for line_id in preorder_id.line_ids:
+                if line_id.state != "done":
+                    continue
                 product_id = line_id.product_id.id
                 if product_id not in warehouses[location_id]:
                     quant_id = self.env['stock.quant'].search([('product_id', '=', product_id), ('location_id', '=', location_id)], limit=1)
