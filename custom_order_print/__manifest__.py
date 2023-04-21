@@ -15,7 +15,11 @@
         "views/purchase_order.xml",
         "views/purchase_order_template_inherit.xml"
     ],
-    'qweb': [],
+    'assets': {
+        'web.report_assets_common': [
+            'custom_order_print/static/src/scss/custom_styles.scss',
+        ],
+    },
     'installable': True,
     'application': False,
     'auto_install': False,
