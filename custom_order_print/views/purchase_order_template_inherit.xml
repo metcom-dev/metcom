@@ -194,7 +194,7 @@
 
     <template id="external_layout_boxed_inherit" inherit_id="web.external_layout_boxed" >
         <xpath expr="//div[@t-field='company.report_footer']" position="before">
-            <div style="text-align: left; font-size: 0.9em;" >
+            <div class="important_container" >
                 <b>Informacion Importante:</b>
                 METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que <br/> estamos obligados a retener el 
                 3% de pagos superiores a S/.700
