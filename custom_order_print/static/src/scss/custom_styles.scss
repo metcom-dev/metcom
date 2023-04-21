@@ -2,8 +2,15 @@
     margin-top: 200px;
     white-space: nowrap;
     border-top: none;
-    height: auto !important;
+    position: relative;
     ul {
         margin: 4px 0;
     }
+}
+
+.important_container{
+    text-align: left; 
+    font-size: 0.9em;
+    position: absolute;
+    bottom: 100%;
 }
