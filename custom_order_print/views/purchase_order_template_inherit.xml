@@ -169,11 +169,11 @@
                                 </t>
                             </t>
                         </div>
-                        <div class="custom_table_body">Nro. PO: <span t-field="o.partner_ref"/></div>
+                        <div class="custom_table_body">Nro. PO: <span t-field="o.from_preorders"/></div>
                         <div class="custom_table_body">Forma de Pago: 
                             <t t-if="o.payment_term_id">
                                 <t t-if="o.payment_term_id.name == 'Pago inmediato'">
-                                   Credito <span>Contado</span>
+                                   <span>Contado</span>
                                 </t>
                                 <t t-else="">
                                     <span t-field="o.payment_term_id"/>
@@ -191,8 +191,8 @@
             </div>
         </xpath>
 
-        <xpath expr="//p[@t-field='o.notes']" position="after">
-            <div style="margin-top: 10px;">
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <div class="footer">
                 <b>Informacion Importante:</b>
                 METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
                 3% de pagos superiores a S/.700
