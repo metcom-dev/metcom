@@ -191,7 +191,7 @@
             </div>
         </xpath>
 
-        <xpath expr="//p[@t-field='o.notes']" position="after">
+        <!-- <xpath expr="//p[@t-field='o.notes']" position="after">
             <div class="footer">
                 <b>Informacion Importante:</b>
                 METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
@@ -201,7 +201,7 @@
                 El horario de Recepcion de Facturas sera hasta las 13:00 horas
                 </div>
             </div>
-        </xpath>
+        </xpath> -->
 
     </template>
 </odoo>
