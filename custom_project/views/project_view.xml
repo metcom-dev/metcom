@@ -64,6 +64,17 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="view_project_access_invoicing_page_metcom_form">
+        <field name="name">project.access.invoicing.page.metcom.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="sale_timesheet.project_project_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='billing_employee_rate']" position="attributes">
+                <attribute name="groups">project.group_project_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="view_project_button_metcom_kanban">
         <field name="name">project.button.metcom.kanban</field>
         <field name="model">project.project</field>
