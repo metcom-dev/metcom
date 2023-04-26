@@ -10,7 +10,7 @@
     'category': 'Purchase',
     'license': 'OPL-1',
     'website': 'https://conflux.pe',
-    'depends' : ['purchase', 'purchase_preorder'],
+    'depends' : ['purchase', 'purchase_preorder', 'custom_project'],
     'data': [
         "data/ir_cron.xml",
         "reports/purchase_quotation_template.xml",
