@@ -23,6 +23,7 @@ class ReportPurchaseOrder(models.AbstractModel):
                     bank_name = bank.currency_id.name
                     account_number = bank.acc_number
                     bank_bic = bank.bank_bic
+                    
 
         for line in order_lines:
             if line.analytic_distribution:
