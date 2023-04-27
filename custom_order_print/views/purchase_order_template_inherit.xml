@@ -12,11 +12,11 @@
                 <t t-if="o.partner_id.bank_ids">
                     <div>
                         Tipo de Moneda: 
-                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'PEN'"><span>Soles</span></t>
-                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'USD'"><span>Dólares</span></t>
-                        <t t-if="o.partner_id.bank_ids[0].currency_id.name == 'EUR'"><span>Euros</span></t>
+                        <t t-if="bank_name == 'PEN'"><span>Soles</span></t>
+                        <t t-if="bank_name == 'USD'"><span>Dólares</span></t>
+                        <t t-if="bank_name == 'EUR'"><span>Euros</span></t>
                     </div>
-                    <div>Cuenta: <span t-field="o.partner_id.bank_ids[0].acc_number"/><t t-if="o.partner_id.bank_ids[0].bank_bic"> - <span t-field="o.partner_id.bank_ids[0].bank_bic"/></t></div>
+                    <div>Cuenta: <span t-esc="account_number"/><t t-if="bank_bic"> - <span t-esc="bank_bic"/></t></div>
                 </t>
             </t>
         </xpath>

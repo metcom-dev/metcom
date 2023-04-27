@@ -12,6 +12,17 @@ class ReportPurchaseOrder(models.AbstractModel):
         docs = self.env['purchase.order'].browse(docids)
         order_lines = docs.order_line
         analytic_distribution_names = []
+        bank_name = ''
+        account_number = ''
+        bank_bic = ''
+
+        currency_id = docs.currency_id
+        if docs.partner_id.bank_ids:
+            for bank in docs.partner_id.bank_ids:
+                if bank.currency_id == currency_id:
+                    bank_name = bank.currency_id.name
+                    account_number = bank.acc_number
+                    bank_bic = bank.bank_bic
 
         for line in order_lines:
             if line.analytic_distribution:
@@ -29,4 +40,7 @@ class ReportPurchaseOrder(models.AbstractModel):
             'doc_model': 'purchase.order',
             'docs': docs,
             'analytic_distribution_names': ', '.join(name for name in analytic_distribution_names ),
+            'bank_name': bank_name,
+            'account_number': account_number,
+            'bank_bic': bank_bic,
         }
