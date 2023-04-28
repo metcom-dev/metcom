@@ -17,12 +17,21 @@ class ReportPurchaseOrder(models.AbstractModel):
         bank_bic = ''
 
         currency_id = docs.currency_id
+        bank_type = docs.bank_type
         if docs.partner_id.bank_ids:
             for bank in docs.partner_id.bank_ids:
                 if bank.currency_id == currency_id:
                     bank_name = bank.currency_id.name
                     account_number = bank.acc_number
                     bank_bic = bank.bank_bic
+                    if bank_type:
+                        if bank.bank_id.id == bank_type.id:
+                            break
+                        else:
+                            bank_name = bank.currency_id.name
+                            account_number = bank.acc_number
+                            bank_bic = bank.bank_bic
+
 
         for line in order_lines:
             if line.analytic_distribution:

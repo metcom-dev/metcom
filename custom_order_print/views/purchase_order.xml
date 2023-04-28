@@ -8,6 +8,11 @@
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="carrier_id"/>
             </xpath>
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="partner_banks" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                <field name="allowed_bank_type_ids" invisible="1"/>
+                <field name="bank_type" attrs="{'readonly': [('partner_banks', '=', [])], 'required': [('partner_banks', '!=', [])]}" domain="[('id', 'in', allowed_bank_type_ids)]"/>
+            </xpath>
         </field>
     </record>
 </odoo>
