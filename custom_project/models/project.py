@@ -32,6 +32,13 @@ class Project(models.Model):
         domain=lambda self: [('folder_id', '=', self.other_folder_id.id)],
         copy=True
     )
+
+    analytic_account_id = fields.Many2one('account.analytic.account', string="Analytic Account", copy=False, ondelete='set null',
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", check_company=True,
+        help="Analytic account to which this project, its tasks and its timesheets are linked. \n"
+            "Track the costs and revenues of your project by setting this analytic account on your related documents (e.g. sales orders, invoices, purchase orders, vendor bills, expenses etc.).\n"
+            "This analytic account can be changed on each task individually if necessary.\n"
+            "An analytic account is required in order to use timesheets.", track_visibility='onchange')
     
     _sql_constraints = [
         ('name_uniq', 'unique(name)', 'El nombre del proyecto debe ser unico.'),
