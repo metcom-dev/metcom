@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="preorder_report_inherit_template" inherit_id="purchase_preorder.preorder_template">
+        <xpath expr="//div[hasclass('page')]/div[1]/div[1]" position="inside">
+            <strong>Proyecto:</strong> <span t-field="doc.project_id.name"/><br/>
+        </xpath>
+    </template>
+</odoo>
