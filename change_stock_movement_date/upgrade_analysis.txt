@@ -1,0 +1,3 @@
+---Models in module 'change_stock_movement_date'---
+---Fields in module 'change_stock_movement_date'---
+---XML records in module 'change_stock_movement_date'---

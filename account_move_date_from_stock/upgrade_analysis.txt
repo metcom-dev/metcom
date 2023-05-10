@@ -1,0 +1,3 @@
+---Models in module 'account_move_date_from_stock'---
+---Fields in module 'account_move_date_from_stock'---
+---XML records in module 'account_move_date_from_stock'---

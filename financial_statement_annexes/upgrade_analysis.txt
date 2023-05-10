@@ -1,0 +1,3 @@
+---Models in module 'financial_statement_annexes'---
+---Fields in module 'financial_statement_annexes'---
+---XML records in module 'financial_statement_annexes'---
