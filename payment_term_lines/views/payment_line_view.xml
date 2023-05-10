@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_payment_term_line_extension_form" model="ir.ui.view">
+        <field name="name">account.payment.term.line.form</field>
+        <field name="model">account.payment.term.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Payment Terms" editable="bottom" create="false">
+            <h1>Tipo de Plaza</h1>
+            <group>
+                <group>
+                    <field name="value" string="Due Type"/>
+                    <field name="value_amount" string="Due Amount" attrs="{'invisible': [('value', '=', 'balance')]}" digits="[2, 2]"/>
+                    <field name="months" string="Months"/>
+                    <field name="days" string="Days"/>
+                </group>
+                <group>
+                    <field name="end_month" string="End Month" widget="boolean_toggle"/>
+                    <field name="days_after" string="Days After" attrs="{'invisible': [('end_month','=', False)]}"/>
+                    <field name="discount_percentage" string="Discount Percentage"/>
+                    <field name="discount_days" string="Discount Days"/>
+                    <field name="factor_round" attrs="{'invisible':[('value','=','balance')]}"/>
+                </group>
+            </group>
+            <br/>
+            <br/>
+            <h1>Cuentas Contables</h1>
+            <br/>
+            <br/>
+                <field name="term_extension">
+                    <tree string="Accounting Accounts" editable="top" no_open="True">
+                            <field name="currency" style="width: 100px !important" optional="hide"/>
+                            <field name="ledger_account"
+                                   domain="[('related_user_account_name','in', ('asset_receivable', 'asset_current'))]"
+                                   filter_domain="[('related_user_account_name','in', ('asset_receivable', 'asset_current'))]"
+                                   style="width: 1000px !important" optional="hide"/>
+
+                            <field name="ledger_account_payable"
+                                   domain="[('related_user_account_name','in', ('liability_payable', 'liability_current'))]"
+                                   filter_domain="[('related_user_account_name','in', ('liability_payable', 'liability_current'))]"
+                                   style="width: 500px !important" optional="hide"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+</odoo>
