@@ -1,0 +1,3 @@
+---Models in module 'afp_percentage'---
+---Fields in module 'afp_percentage'---
+---XML records in module 'afp_percentage'---

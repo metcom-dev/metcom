@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_salary_rule_form_view_inherit_setting_rules_payroll" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.view.inherit.setting_rules_payroll</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Configuración" name="configuration">
+                    <group name="conf_group"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

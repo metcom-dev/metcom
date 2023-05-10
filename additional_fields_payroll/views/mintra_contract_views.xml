@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mintra_contract_view_form" model="ir.ui.view">
+        <field name="name">mintra.contract.view.form</field>
+        <field name="model">mintra.contract</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="mintra_description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mintra_contract_view_tree" model="ir.ui.view">
+        <field name="name">mintra.contract.view.tree</field>
+        <field name="model">mintra.contract</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="mintra_description"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

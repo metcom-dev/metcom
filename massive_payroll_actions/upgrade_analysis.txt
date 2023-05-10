@@ -1,0 +1,3 @@
+---Models in module 'massive_payroll_actions'---
+---Fields in module 'massive_payroll_actions'---
+---XML records in module massive_payroll_actions---

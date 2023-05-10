@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payroll_structure_view_form_inherit_setting_voucher" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.view.form.inherit.setting_voucher</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+        <field name="arch" type="xml">
+            <field name="report_id" position="after">
+                <field name="additional_certificate"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_get_additional_certificate_hr_payslip" model="ir.actions.server">
+        <field name="name">Certificado adicional</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_get_additional_certificate()</field>
+    </record>
+
+</odoo>

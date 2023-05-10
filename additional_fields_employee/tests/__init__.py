@@ -1,0 +1,2 @@
+from . import test_additional_fields_employee
+from . import test_additional_fields_contract

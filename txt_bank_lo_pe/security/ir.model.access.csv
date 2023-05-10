@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acccess_hr_massive_payment_all,hr.massive.payment,model_hr_massive_payment,,1,1,1,1

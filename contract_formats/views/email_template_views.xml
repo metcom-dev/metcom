@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="contract_email_template_preview_form_contract_formats" model="ir.ui.view">
+        <field name="name">contract_email_template.preview.form</field>
+        <field name="model">mail.template.preview</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="model_id" invisible="1"/>
+                <h3>Vista previa de Plantilla del contrato de
+                    <field name="resource_ref" class="oe_inline" style="margin-left: 8px;" readonly="1"/>
+                </h3>
+                <field name="model_id" class="oe_inline" invisible="1"/>
+                <hr/>
+                <field name="body_html" widget="html" readonly="1" nolabel="1" options='{"safe": True}'/>
+                <footer>
+                    <button string="Salir" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

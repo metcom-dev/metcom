@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Email template for new users -->
+        <record id="template_hr_contract" model="mail.template">
+            <field name="name">Plantilla de contrato</field>
+            <field name="model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="subject">Plantilla de contrato</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<p>${object.employee_id.address_id.name or 'Name'}</p><br/>
+<p>${object.employee_id.address_id.vat or 'vat'}</p><br/>
+<p>${object.employee_id.name or 'Employee_id'}</p><br/>
+<p>${object.employee_id.type_identification_id.name or 'type_Identification_id'}</p><br/>
+<p>${object.employee_id.identification_id or 'Identification_id'}</p><br/>
+<p>${object.employee_id.job_id.name or 'Identification_id'}</p><br/>
+<p>${object.employee_id.department_id.name or 'departament_id'}</p><br/>
+<p>${object.employee_id.address_home_id.street or 'street'}</p><br/>
+<p>${object.wage or 'wage'}</p><br/>
+<p>${object.date_start or 'date_start'}</p><br/>
+<p>${object.date_end or 'date_end'}</p><br/>
+<p>${object.service_duration or 'Duration_contract'}</p><br/>
+<p>${object.additional_info or ''}</p><br/>
+<p>
+    % if object.employee_id.get_employer_sign():
+        <img src="data:image/png;base64,${object.employee_id.get_employer_sign()['sign_decode']}"/>
+    % endif
+</p><br/>
+            </field>
+        </record>
+    </data>
+</odoo>

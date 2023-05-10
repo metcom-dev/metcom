@@ -1,0 +1,3 @@
+---Models in module 'setting_voucher'---
+---Fields in module 'setting_voucher'---
+---XML records in module 'setting_voucher'---
