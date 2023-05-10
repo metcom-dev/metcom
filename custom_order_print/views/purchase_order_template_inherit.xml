@@ -190,30 +190,15 @@
                 </div>
             </div>
         </xpath>
-
-        <!-- <xpath expr="//p[@t-field='o.notes']" position="after">
-            <div style="font-size: 0.9em;">
-                <b>Informacion Importante:</b>
-                METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
-                3% de pagos superiores a S/.700
-                <div>
-                Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
-                El horario de Recepcion de Facturas sera hasta las 13:00 horas
-                </div>
-            </div>
-        </xpath> -->
     </template>
 
     <template id="external_layout_boxed_inherit" inherit_id="web.external_layout_boxed" >
         <xpath expr="//div[@t-field='company.report_footer']" position="before">
-            <div class="important_container" >
+            <div class="important_container"  style="text-align: justify;">
                 <b>Informacion Importante:</b>
-                METCOM MYS EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que <br/> estamos obligados a retener el 
-                3% de pagos superiores a S/.700
-                <div>
-                Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.<br/>
+                <span t-esc="o.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
+                3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
                 El horario de Recepcion de Facturas sera hasta las 13:00 horas
-                </div>
             </div> 
         </xpath>
     </template>
