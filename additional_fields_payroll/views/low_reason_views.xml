@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="low_reason_view_form" model="ir.ui.view">
+        <field name="name">low.reason.view.form</field>
+        <field name="model">low.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="low_reason_description"/>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="low_reason_view_tree" model="ir.ui.view">
+        <field name="name">low.reason.view.tree</field>
+        <field name="model">low.reason</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="low_reason_description"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_low_reason" model="ir.actions.act_window">
+        <field name="name">[17] Motivo fin del periodo</field>
+        <field name="res_model">low.reason</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_low_reason"
+              name="[17]  Motivo fin del periodo"
+              parent="localization_menu.menu_hr_information_plame"
+              action="action_low_reason"
+              sequence="17"
+    />
+
+</odoo>

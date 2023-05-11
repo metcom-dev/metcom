@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_contract_view_form_inherit_contract_formats" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit.contract_formats</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <field name="notes" position="after">
+                <field name="service_duration"/>
+            </field>
+            <xpath expr="//notebook/page[@name='other']" position="inside">
+                <group string="Información adicional para contrato">
+                    <field name="additional_info" nolabel="1"/>
+                </group>
+                <group>
+                    <group>
+                        <field name="contract_template_id"/>
+                    </group>
+                    <group>
+                        <button class="oe_stat_button" name="create_action_leads_view" icon="fa-search-plus"
+                                string="Vista Previa" type="object"
+                                attrs="{'invisible':[('contract_template_id','=', False)]}"/>
+                    </group>
+                </group>
+                <group string="Descargable">
+                    <field name="contract_name" invisible="True"/>
+                    <field name="contract_binary" filename="contract_name" readonly="True"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_generate_contract_report_pdf" model="ir.actions.server">
+        <field name="name">Generar contrato</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_generate_report_pdf()
+        </field>
+    </record>
+
+    <record id="action_generate_massive_contract_report_pdf" model="ir.actions.server">
+        <field name="name">Descarga Contrato</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_generate_massive_report_pdf()
+        </field>
+    </record>
+
+    <report
+            id="report_hr_contract"
+            model="hr.contract"
+            string="Contratos"
+            report_type="qweb-pdf"
+            name="contract_formats.template_report_hr_contract"
+            file="contract_formats.template_report_hr_contract"
+            menu="False"
+    />
+
+    <template id="external_layout_contract_formats">
+        <div class="article doc_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+             t-att-data-oe-id="doc and doc.id"
+             t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+
+    <template id="template_report_hr_contract">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="contract_formats.external_layout_contract_formats">
+                    <t t-if="o.contract_template_id">
+                        <span t-raw="o.get_render_template_contract()"/>
+                        <p style="page-break-before:always;"/>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acccess_low_reason_hr_contract_manager,low.reason,model_low_reason,hr_contract.group_hr_contract_manager,1,1,1,1
+acccess_mintra_contract_hr_contract_manager,mintra.contract,model_mintra_contract,hr_contract.group_hr_contract_manager,1,1,1,1
