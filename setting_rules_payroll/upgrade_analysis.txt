@@ -1,0 +1,3 @@
+---Models in module 'setting_rules_paroll'---
+---Fields in module 'setting_rules_paroll'---
+---XML records in module setting_rules_paroll---

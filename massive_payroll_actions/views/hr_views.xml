@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_form_inherit_massive_payroll_actions" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherit.massive_payroll_actions</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_payslip_cancel']" position="attributes">
+                <attribute name="states">draft,confirm,verify,done</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_view_form_massive_payroll_actions" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.inherit.massive_payroll_actions</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_validate']" position="after">
+                <button name="action_check" type="object" string="Verificar" class="oe_highlight" attrs="{'invisible' : ['|', ('payslip_count', '=', 0), ('state', '!=', 'draft')]}"/>
+                <button name="action_cancel" type="object" string="Cancelar" states="draft,verify,close" class="oe_highlight"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_draft']" position="attributes">
+                <attribute name="states">cancel,verify</attribute>
+                <attribute name="invisible">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_hr_payroll_draft_payroll">
+        <field name="name">Establecer a Borrador</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.action_payslip_draft()
+        </field>
+    </record>
+</odoo>

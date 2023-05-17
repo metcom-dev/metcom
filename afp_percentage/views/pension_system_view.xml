@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pension_system_view_list_inherit" model="ir.ui.view">
+        <field name="name">pension_system_view_list_inherit</field>
+        <field name="model">pension.system</field>
+        <field name="inherit_id" ref="types_system_pension.pension_system_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pension_system_view_form_inherit" model="ir.ui.view">
+        <field name="name">pension_system_view_form_inherit</field>
+        <field name="model">pension.system</field>
+        <field name="inherit_id" ref="types_system_pension.pension_system_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="button_afp_method" string="Actualizar Porcentajes" type="object"
+                            attrs="{'invisible': [('name','not in', ['SPP HABITAT', 'SPP PRIMA', 'SPP PROFUTURO','SPP INTEGRA'])]}"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.server" id="pension_system_server">
+        <field name="name">Actualizar Porcentajes</field>
+        <field name="model_id" ref="types_system_pension.model_pension_system"/>
+        <field name="binding_model_id" ref="types_system_pension.model_pension_system"/>
+        <field name="binding_view_types">list</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">
+            records.button_afp_method()
+        </field>
+    </record>
+</odoo>

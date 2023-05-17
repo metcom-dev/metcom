@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_bank_search_view_inherit_txt_bank_lo_pe" model="ir.ui.view">
+        <field name="name">res.partner.bank.search.view.inherit.txt_bank_lo_pe</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <separator/>
+                <filter string="Cuenta de la empresa" name="company_accounts"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

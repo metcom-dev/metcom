@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="other_net_tree_view_inherited" model="ir.ui.view">
+        <field name="name">payslip.tree.view.inherited</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='net_wage']" position="after">
+                <field name="net_other" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,3 @@
+---Models in module 'hr_payslip'---
+---Fields in module 'hr_payslip'---
+---XML records in module 'hr_payslip'---

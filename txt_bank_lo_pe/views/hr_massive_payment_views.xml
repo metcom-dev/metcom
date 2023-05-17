@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_massive_payment_tree_view" model="ir.ui.view">
+        <field name="name">hr.massive.payment.tree.view</field>
+        <field name="model">hr.massive.payment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="payment_date"/>
+                <field name="acc_type"/>
+                <field name="payment_type_id"/>
+                <field name="is_validate_account"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_massive_payment_form_view" model="ir.ui.view">
+        <field name="name">hr.massive.payment.form.view</field>
+        <field name="model">hr.massive.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_files" string="Generar .TXT" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="payment_date"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="payment_type_id" domain="[('partner_id','=', partner_id)]" context="{'search_default_company_accounts':1}"/>
+                        <field name="exchange_type"/>
+                        <field name="acc_type"/>
+                        <field name="is_validate_account"/>
+                        <field name="is_bbva" invisible="1"/>
+                        <field name="type_process" attrs="{'invisible': [('is_bbva','=',False)]}"/>
+                        <field name="future_date" attrs="{'invisible': [('type_process','!=','F')]}"/>
+                        <field name="run_time" attrs="{'invisible': [('type_process','!=','H')]}"/>
+
+                        <field name="txt_filename" invisible="1"/>
+                        <field name="txt_binary" filename="txt_filename" readonly="1"/>
+                        <field name="txt_filename2" invisible="1"/>
+                        <field name="txt_binary2" filename="txt_filename2" readonly="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Nóminas" name="hr_payslips">
+                            <field name="payslip_ids" domain="[('state','=','done')]"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_massive_payment" model="ir.actions.act_window">
+        <field name="name">Pago Masivo</field>
+        <field name="res_model">hr.massive.payment</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+
+    <menuitem id="hr_localization_menu_root_hr_massive_payment"
+              name="Pago Masivo"
+              parent="hr_localization_menu.hr_localization_menu_root"
+              action="action_hr_massive_payment"
+    />
+
+</odoo>

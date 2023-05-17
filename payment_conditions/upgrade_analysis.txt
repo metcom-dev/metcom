@@ -1,0 +1,6 @@
+---Models in module 'payment_conditions'---
+payment_conditions   / hr.contract              / schedule_pay_conditions (Many2one)           : previously name schedule_pay
+payment_conditions   / hr.payroll.structure.type        / default_schedule_pay_conditions (Many2one)           : previously name field default_schedule_pay
+payment_conditions   / hr.payroll.structure         / schedule_pay_conditions (Many2one)           : previously name field schedule_pay
+---Fields in module 'payment_conditions'---
+---XML records in module 'payment_conditions'---

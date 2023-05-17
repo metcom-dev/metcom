@@ -1,0 +1,3 @@
+---Models in module 'struct_rules_days'---
+---Fields in module 'struct_rules_days'---
+---XML records in module struct_rules_days---
