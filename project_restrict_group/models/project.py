@@ -33,5 +33,5 @@ class Project(models.Model):
     
     def write(self, vals):
         res = super(Project, self).write(vals)
-        res.action_create_group()
+        self.action_create_group()
         return res
