@@ -4,7 +4,7 @@ class Project(models.Model):
     _inherit = 'project.project'
 
     restrict_group_id = fields.Many2one('res.groups', string='Restrict Group')
-    privacy_visibility = fields.Selection(selection_add=[('user_group', 'User Group')])
+    privacy_visibility = fields.Selection(selection_add=[('user_group', 'User Group')], ondelete={'user_group': 'set default'})
 
     def action_create_group(self):
         for rec in self:
