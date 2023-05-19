@@ -8,6 +8,7 @@
     "category": "Project",
     "depends": ["project"],
     "data": [
+        "data/project_security.xml",
         "views/project_views.xml"
     ],
     "installable": True,

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
-    <record model="ir.rule" id="project_public_members_rule">
-        <field name="name">Project: employees: following required for follower-only projects</field>
+    <record model="ir.rule" id="project_internal_members_rule">
+        <field name="name">Project: Group Restriction</field>
         <field name="model_id" ref="model_project_project"/>
-        <field name="domain_force">['|',
-                                        ('privacy_visibility', '!=', 'user_group'),
-                                        ('message_partner_ids', 'in', [user.partner_id.id])
-                                    ]</field>
-        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">['|', '|', ('restrict_group_id', '=', False), ('restrict_group_id', 'in', user.groups_id.ids), ('create_uid', '=', user.id)]</field>
     </record>
 </data>
 </odoo>
