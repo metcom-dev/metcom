@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="edit_project" model="ir.ui.view">
+            <field name="name">project.project.form.SECURITY</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <button name="project_update_all_action" position="after">
+                    <button name="action_create_group" string="Generate Group" type="object" class="oe_highlight" groups="base.group_no_one" attrs="{'invisible':[('restrict_group_id','!=', False)]}"/>
+                </button>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="restrict_group_id" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
