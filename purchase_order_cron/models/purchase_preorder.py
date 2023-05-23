@@ -212,14 +212,17 @@ class PrePurchase(models.Model):
         if len(preorder_ids):
             stocks_project_warehouse, stock_principal_warehouse = self._get_stocks_warehouse_from_preorders(preorder_ids)
             products = self._update_product_stock_warehouse(preorder_ids, stocks_project_warehouse, stock_principal_warehouse)
-            categories_prods = self._separate_products_by_categories(products)
-            order_ids = []
-            for products in categories_prods.values():
-                order_ids.append(self._create_purchase_order_from_products(products, preorder_ids))
+            if products:
+                categories_prods = self._separate_products_by_categories(products)
+                order_ids = []
+                for products in categories_prods.values():
+                    order_ids.append(self._create_purchase_order_from_products(products, preorder_ids))
 
-            for preorder_id in preorder_ids:
-                preorder_id.write({
-                    "check_po_generated": True
-                })
+                for preorder_id in preorder_ids:
+                    preorder_id.write({
+                        "check_po_generated": True
+                    })
 
-            return self.action_view_purchase_orders(order_ids)
+                return self.action_view_purchase_orders(order_ids)
+            else:
+                raise ValidationError("No se generaron órdenes de Compra porque hay Stock suficiente para los productos, en la Ubicación de Almacén de esta Pre-Orden y/o en el Almacén Princial.")

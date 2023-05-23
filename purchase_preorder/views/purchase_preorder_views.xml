@@ -58,12 +58,12 @@
 								<tree editable="bottom" decoration-muted="state=='done'" decoration-danger="state=='cancel'" decoration-success="state=='done'">
 									<field name="product_id" />
 									<field name="product_qty" />
-									<field name="product_uom" />
-									<field name="stock_qty" groups="purchase_preorder.group_preorder_administrator"/>
-									<field name="product_stock_uom" groups="purchase_preorder.group_preorder_administrator"/>
-									<field name="stock_date" groups="purchase_preorder.group_preorder_administrator"/>
-									<field name="purchase_product_qty" groups="purchase_preorder.group_preorder_administrator"/>
-									<field name="purchase_product_uom" groups="purchase_preorder.group_preorder_administrator"/>
+									<field name="product_uom" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+									<field name="stock_qty" groups="purchase_preorder.group_preorder_administrator" readonly="True" force_save="True" />
+									<field name="product_stock_uom" groups="purchase_preorder.group_preorder_administrator" readonly="True" force_save="True" options="{'no_open': True}" />
+									<field name="stock_date" groups="purchase_preorder.group_preorder_administrator" readonly="True" force_save="True" />
+									<field name="purchase_product_qty" groups="purchase_preorder.group_preorder_administrator" readonly="True" force_save="True" />
+									<field name="purchase_product_uom" groups="purchase_preorder.group_preorder_administrator" readonly="True" force_save="True" options="{'no_open': True}" />
 									<field name="state" readonly="1"/>
                     				<button name="action_done" string="Validar" type="object" class="oe_highlight"
 										attrs="{'invisible': ['|',('parent.state','!=','open'), ('state','in',('done'))]}" 
