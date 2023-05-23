@@ -4,6 +4,7 @@ from odoo.tools.float_utils import float_round
 
 class StockProductsValuation(models.Model):
     _name = 'ple.stock.products.valuation'
+    _description = 'Ple Stock Products Valuation'
 
     ple_stock_products = fields.Many2one(string='Valuation book', comodel_name="ple.permanent.inventory.physical.units")
 
