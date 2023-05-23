@@ -10,6 +10,7 @@ import re
 
 class StockProductsValuation(models.Model):
     _name = 'ple.stock.products.valuation.final'
+    _description = 'Ple Stock Products Valuation Final'
 
     ple_stock_products_final = fields.Many2one(string='Valuation book final',
                                                comodel_name="ple.permanent.inventory.physical.units")
