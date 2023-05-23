@@ -8,6 +8,7 @@ class PrePurchase(models.Model):
 
     po_state = fields.Selection([
         ("pending", "Pendiente"),
+        ("w_stock", "Stock Disponible"),
         ("generate", "Atendido"),
     ], string='Estado OC', default="pending", compute="_compute_po_state", store=True, copy=False)
 
