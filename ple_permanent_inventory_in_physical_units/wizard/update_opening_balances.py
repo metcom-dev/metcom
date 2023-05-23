@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class UpdateOpeningWizard(models.TransientModel):
     _name = 'update.opening.wizard'
+    _description = 'Update Opening Wizard'
 
     borrower_id = fields.Many2one('ple.permanent.inventory.physical.units', string='Inventario Valorizado')
 
