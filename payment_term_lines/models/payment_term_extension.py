@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 class PaymentTermLineExt(models.Model):
     _name = "account.payment.term.line.extension"
+    _description = "Account Payment Term Line Extension"
 
     payment_term_line_id = fields.Many2one('account.payment.term.line')
 
