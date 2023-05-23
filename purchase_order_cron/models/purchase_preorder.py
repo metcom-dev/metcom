@@ -1,5 +1,5 @@
 from odoo import models, fields, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError, Warning
 
 import logging
 log = logging.getLogger(__name__)
@@ -225,4 +225,17 @@ class PrePurchase(models.Model):
 
                 return self.action_view_purchase_orders(order_ids)
             else:
-                raise ValidationError("No se generaron órdenes de Compra porque hay Stock suficiente para los productos, en la Ubicación de Almacén de esta Pre-Orden y/o en el Almacén Princial.")
+                for preorder_id in preorder_ids:
+                    preorder_id.po_state = "w_stock"
+                # raise UserError("No se generaron órdenes de Compra porque hay Stock suficiente para los productos, en la Ubicación de Almacén de esta Pre-Orden y/o en el Almacén Princial.")
+                notification = {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': ('Stock Disponible'),
+                        'message': 'Hay Stock suficiente para los productos, en los Almacenes.',
+                        'type':'info',  # types: success,warning,danger,info
+                        'sticky': False,  # True/False will display for few seconds if false
+                    },
+                }
+                return notification
