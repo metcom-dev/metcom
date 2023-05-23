@@ -297,7 +297,7 @@ class PrePurchaseLine(models.Model):
 	@api.onchange('stock_qty')
 	def _onchange_stock_qty(self):
 		if self.product_stock_uom.id == self.product_uom.id:
-			self.purchase_product_qty = self.product_qty - self.stock_qty
+			self.purchase_product_qty = self.product_qty - self.stock_qty if self.product_qty - self.stock_qty >= 0 else 0
 			self.purchase_product_uom = self.product_stock_uom
 		else:
 			self.purchase_product_qty = 0
