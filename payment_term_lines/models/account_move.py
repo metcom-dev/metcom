@@ -1,52 +1,19 @@
 from dateutil.relativedelta import relativedelta
 from odoo.tools import format_date, formatLang, frozendict
-from odoo import api, fields, models, _, Command
+from odoo import api, fields, models, _
 
 
 class AccountAccountType(models.Model):
     _inherit = "account.account"
 
-    related_user_account_name = fields.Selection(related='account_type')
+    related_user_account_name = fields.Selection(
+        name='Related user account name',
+        related='account_type'
+    )
 
 
 class AccountPaymentTermLine(models.Model):
     _inherit = "account.payment.term.line"
-
-    factor_round = fields.Float(
-        string="Factor de Redondeo",
-        digits="Account",
-        help="En este campo se colocará el factor por el cual quiere que se redondee la línea del término de plazo, si quiere que salga sin decimales, colocar 1.00.",
-    )
-
-    def _default_term_line_ids(self):
-        return [Command.create({'currency': 'balance', 'ledger_account': '', 'ledger_account_payable': ''})]
-
-    currency = fields.Many2one(
-        'res.currency',
-        string='Moneda',
-        required=False
-    )
-    ledger_account = fields.Many2one(
-        'account.account',
-        string='Cuenta contable por cobrar',
-        default=False,
-        help="Al colocar una cuenta contable, el plazo de pago se generará en esa cuenta contable.",
-        required=False,
-        company_dependent=True
-    )
-    ledger_account_payable = fields.Many2one(
-        'account.account',
-        string='Cuenta contable por pagar',
-        default=False,
-        required=False,
-        company_dependent=True
-    )
-    term_extension = fields.One2many(
-        'account.payment.term.line.extension',
-        string='Cuenta contables',
-        inverse_name='payment_term_line_id',
-        default=_default_term_line_ids,
-    )
 
     def _get_data_from_line_ids(self, date_ref):
         term_date = self._get_due_date(date_ref)
