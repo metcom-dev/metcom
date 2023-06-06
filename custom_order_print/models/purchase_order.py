@@ -24,28 +24,10 @@ class PurchaseOrder(models.Model):
     def _compute_allowed_bank_type_ids(self):
         for order in self:
             bank_type_ids = []
-            for bank in order.partner_id.bank_ids:
-                if bank.bank_id.id not in bank_type_ids:
-                    bank_type_ids.append(bank.bank_id.id)
-            if not bank_type_ids:
-                order.bank_type = False
-            order.allowed_bank_type_ids = bank_type_ids
-
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        if self.partner_id:
-            self.bank_type = False
-            bank_type_ids = []
-            if self.partner_id.bank_ids: 
-                for bank in self.partner_id.bank_ids:
+            if order.partner_id.bank_ids:
+                for bank in order.partner_id.bank_ids:
                     if bank.bank_id.id not in bank_type_ids:
                         bank_type_ids.append(bank.bank_id.id)
-                return {'domain': {'bank_type': [('id', 'in', bank_type_ids)]}}
-            else:
-                self.bank_type = False 
-                return {'domain': {'bank_type': []}}
-        else:
-            self.bank_type = False
-            return {'domain': {'bank_type': []}}
-        
+            order.allowed_bank_type_ids = self.env['res.bank'].browse(bank_type_ids)
+
     
