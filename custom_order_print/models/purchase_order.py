@@ -28,6 +28,6 @@ class PurchaseOrder(models.Model):
                 for bank in order.partner_id.bank_ids:
                     if bank.bank_id.id not in bank_type_ids:
                         bank_type_ids.append(bank.bank_id.id)
-            order.bank_type_domain = self.env['res.bank'].browse(bank_type_ids)
+            order.allowed_bank_type_ids = self.env['res.bank'].browse(bank_type_ids)
 
     
