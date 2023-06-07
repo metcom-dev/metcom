@@ -91,7 +91,7 @@ class ReportPreorderProject(models.AbstractModel):
             from 
                 purchase_preorder pp
                 left join project_project pp2 on pp2.id = pp.project_id
-                inner join purchase_order po on po.from_preorders = pp.name
+                left join purchase_order po on po.from_preorders = pp.name
                 left join res_partner rp on po.partner_id = rp.id
                 left join res_currency rc on po.currency_id = rc.id
                 left join res_users ru on po.user_id = ru.id
@@ -103,7 +103,9 @@ class ReportPreorderProject(models.AbstractModel):
                 --and po.state = 'purchase'
                 and pp2.id = %s
             group by 
-                pp.name, pp.date_order, pp2.name, rp.name, po.amount_untaxed, rc.name, po.date_approve, rp2.name, po.name 
+                pp.name, pp.date_order, pp2.name, rp.name, po.amount_untaxed, rc.name, po.date_approve, rp2.name, po.name
+            order by 
+	            pp2.name desc   
         """ % (id)
 
         self.env.cr.execute(query)
