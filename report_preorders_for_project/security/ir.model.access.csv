@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_preorder_for_project,wizard.preorder_for_project,model_wizard_preorder_for_project,,1,1,1,1

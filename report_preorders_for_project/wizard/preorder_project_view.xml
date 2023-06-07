@@ -1,0 +1,50 @@
+
+<odoo>
+
+    <record model="ir.ui.view" id="wizard_report_preorder_record_form">
+        <field name="name">wizard.preorder.for.project.form</field>
+        <field name="model">wizard.preorder_for_project</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="project_id" required="True" />
+                </group>
+                <footer>
+                    <button name="generate_report" type="object" context="{'xls_export': 1}" string="Generar Reporte" class="oe_highlight" icon="fa-print" />
+                    or
+                    <button string="Cancelar" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="wizard_report_preorder_record_action">
+        <field name="name">Reporte de Pre-ordenes por Proyecto</field>
+        <field name="res_model">wizard.preorder_for_project</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_report_preorder_record_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="report_preorders_project_record_xlsx" model="ir.actions.report">
+        <field name="name">Pre-ordenes por Proyecto XLS</field>
+        <field name="model">report.account_purchase_record</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">report_preorders_project.report_preorder_project_xlsx</field>
+        <field name="report_file">Pre-orden por Proyecto</field>
+    </record>
+
+    <menuitem 
+        id="menu_purchase_preorder_reports" 
+        name="Informes"
+        parent="purchase_preorder.preorder_root"
+		groups="purchase_preorder.group_preorder_user"
+		sequence="1"/>
+
+    <menuitem 
+        id="menu_purchase_preorder" 
+        name="Pre-ordenes por Proyecto"
+        parent="menu_purchase_preorder_reports"
+        action="wizard_report_preorder_record_action"/>
+
+</odoo>
