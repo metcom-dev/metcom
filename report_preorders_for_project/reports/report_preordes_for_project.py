@@ -77,7 +77,8 @@ class ReportPreorderProject(models.AbstractModel):
                 sheet.write(row, 6, item['cantidad_pedida'], formats['normal_center'])
                 sheet.write(row, 7, item['cantidad_atendida'], formats['normal_center'])
                 sheet.write(row, 8, item['materiale_stock'], formats['normal_center'])
-                sheet.write(row, 9, int(item['cantidad_pedida']) - int(item['materiale_stock']) , formats['normal_center'])
+                materiales_comprados = int(item['cantidad_pedida']) - int(item['materiale_stock']) 
+                sheet.write(row, 9, materiales_comprados if materiales_comprados > 0 else 0, formats['normal_center'])
 
                 sheet.write(row, 10, item['name_purchase_order'], formats['normal_center'])
                 sheet.write(row, 11, item['name_proveedor'], formats['normal_left'])
