@@ -1,10 +1,13 @@
+from dateutil.relativedelta import relativedelta
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_round
+
 from odoo import api, fields, models, Command, _
-from odoo.exceptions import UserError, ValidationError
 
 
 class PaymentTermLineExtension(models.Model):
     _name = "account.payment.term.line.extension"
-    _description = 'Account Payment Term Line Extension'
+    _description = 'Payment lines extension'
 
     payment_term_line_id = fields.Many2one('account.payment.term.line')
     currency = fields.Many2one(
@@ -29,6 +32,94 @@ class PaymentTermLineExtension(models.Model):
     )
 
 
+class AccountPaymentTerm(models.Model):
+    _inherit = "account.payment.term"
+
+    def _compute_terms_line_by_type(
+            self, line, term_vals, sign, currency, company, date_ref, company_currency, tax_amount,
+            tax_amount_currency, untaxed_amount, untaxed_amount_currency, tax_amount_left,
+            tax_amount_currency_left, untaxed_amount_left, untaxed_amount_currency_left,
+            total_amount, total_amount_currency
+    ):
+        if line.value == 'fixed':
+            company_proportion = tax_amount / untaxed_amount if untaxed_amount else 1
+            foreign_proportion = tax_amount_currency / untaxed_amount_currency if untaxed_amount_currency else 1
+
+            if line.factor_round > 0.00:
+                term_vals['company_amount'] = float_round(sign * company_currency.round(line.value_amount),
+                                                          precision_rounding=line.factor_round)
+                term_vals['foreign_amount'] = float_round(sign * currency.round(line.value_amount),
+                                                          precision_rounding=line.factor_round)
+                line_tax_amount = float_round(company_currency.round(line.value_amount * company_proportion) * sign,
+                                              precision_rounding=line.factor_round)
+                line_tax_amount_currency = float_round(currency.round(line.value_amount * foreign_proportion) * sign,
+                                                       precision_rounding=line.factor_round)
+            else:
+                term_vals['company_amount'] = sign * company_currency.round(line.value_amount)
+                term_vals['foreign_amount'] = sign * currency.round(line.value_amount)
+                line_tax_amount = company_currency.round(line.value_amount * company_proportion) * sign
+                line_tax_amount_currency = currency.round(line.value_amount * foreign_proportion) * sign
+
+            line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
+            line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
+        elif line.value == 'percent':
+            if line.factor_round > 0.00:
+                term_vals['company_amount'] = float_round(
+                    company_currency.round(total_amount * (line.value_amount / 100.0)),
+                    precision_rounding=line.factor_round)
+                term_vals['foreign_amount'] = float_round(
+                    currency.round(total_amount_currency * (line.value_amount / 100.0)),
+                    precision_rounding=line.factor_round)
+                line_tax_amount = float_round(company_currency.round(tax_amount * (line.value_amount / 100.0)),
+                                              precision_rounding=line.factor_round)
+                line_tax_amount_currency = float_round(
+                    currency.round(tax_amount_currency * (line.value_amount / 100.0)),
+                    precision_rounding=line.factor_round)
+            else:
+                term_vals['company_amount'] = company_currency.round(total_amount * (line.value_amount / 100.0))
+                term_vals['foreign_amount'] = currency.round(total_amount_currency * (line.value_amount / 100.0))
+                line_tax_amount = company_currency.round(tax_amount * (line.value_amount / 100.0))
+                line_tax_amount_currency = currency.round(tax_amount_currency * (line.value_amount / 100.0))
+
+            line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
+            line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
+        else:
+            line_tax_amount = line_tax_amount_currency = line_untaxed_amount = line_untaxed_amount_currency = 0.0
+        tax_amount_left -= line_tax_amount
+        tax_amount_currency_left -= line_tax_amount_currency
+        untaxed_amount_left -= line_untaxed_amount
+        untaxed_amount_currency_left -= line_untaxed_amount_currency
+        if line.value == 'balance':
+            if line.factor_round > 0.00:
+                term_vals['company_amount'] = float_round(tax_amount_left + untaxed_amount_left,
+                                                          precision_rounding=line.factor_round)
+                term_vals['foreign_amount'] = float_round(tax_amount_currency_left + untaxed_amount_currency_left,
+                                                          precision_rounding=line.factor_round)
+            else:
+                term_vals['company_amount'] = tax_amount_left + untaxed_amount_left
+                term_vals['foreign_amount'] = tax_amount_currency_left + untaxed_amount_currency_left
+
+            line_tax_amount = tax_amount_left
+            line_tax_amount_currency = tax_amount_currency_left
+            line_untaxed_amount = untaxed_amount_left
+            line_untaxed_amount_currency = untaxed_amount_currency_left
+
+        if line.discount_percentage:
+            if company.early_pay_discount_computation in ('excluded', 'mixed'):
+                term_vals['discount_balance'] = company_currency.round(
+                    term_vals['company_amount'] - line_untaxed_amount * line.discount_percentage / 100.0)
+                term_vals['discount_amount_currency'] = currency.round(
+                    term_vals['foreign_amount'] - line_untaxed_amount_currency * line.discount_percentage / 100.0)
+            else:
+                term_vals['discount_balance'] = company_currency.round(
+                    term_vals['company_amount'] * (1 - (line.discount_percentage / 100.0)))
+                term_vals['discount_amount_currency'] = currency.round(
+                    term_vals['foreign_amount'] * (1 - (line.discount_percentage / 100.0)))
+            term_vals['discount_date'] = date_ref + relativedelta(days=line.discount_days)
+        return tax_amount_left, tax_amount_currency_left, untaxed_amount_left, \
+            untaxed_amount_currency_left, total_amount, total_amount_currency
+
+
 class AccountPaymentTermLine(models.Model):
     _inherit = "account.payment.term.line"
 
@@ -41,14 +132,19 @@ class AccountPaymentTermLine(models.Model):
         help="En este campo se colocará el factor por el cual quiere que se redondee la línea del término de plazo, "
              "si quiere que salga sin decimales, colocar 1.00.",
     )
-    day_of_the_month = fields.Integer(string='Day of the month',
-                                      help="Day of the month on which the invoice must come to its term. If zero or negative, this value will be ignored, and no specific day will be set. If greater than the last day of a month, this number will instead select the last day of this month.")
+    day_of_the_month = fields.Integer(
+        string='Day of the month',
+        help="Day of the month on which the invoice must come to its term. If zero or negative, "
+             "this value will be ignored, and no specific day will be set. If greater than the last day of a month, "
+             "this number will instead select the last day of this month."
+    )
     option = fields.Selection([
         ('day_after_invoice_date', 'Day(s) after the invoice date'),
         ('after_invoice_month', 'After the invoice month'),
         ('day_following_month', 'Day(s) of the following month'),
         ('day_current_month', 'Day(s) of the current month')
-    ], string='Option', default='day_after_invoice_date')
+    ], string='Option', default='day_after_invoice_date'
+    )
     currency = fields.Many2one(
         'res.currency',
         string='Moneda',
