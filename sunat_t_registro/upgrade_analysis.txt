@@ -1,0 +1,3 @@
+---Models in module 'sunat_t_registro'---
+---Fields in module 'sunat_t_registro'---
+---XML records in module 'sunat_t_registro'---

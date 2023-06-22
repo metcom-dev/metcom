@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_third_staff_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.third.staff.view.tree</field>
+        <field name="model">hr.employee.third.staff</field>
+        <field name="arch" type="xml">
+            <tree string="Employee third" editable="bottom">
+                <field name="name"/>
+                <field name="contact_id"/>
+                <field name="type_identification_id"/>
+                <field name="document_country_id"/>
+                <field name="identification_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="sctr"/>
+                <field name="registered_t_register"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="hr_contract_third_staff_new_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.third.staff.new.view.form</field>
+        <field name="model">third.staff</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_files" string="Generar Archivos Personal de Tercero" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="ruc"/>
+                        <field name="risk_activity"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="type_service"/>
+
+                        <field name="med_filename" invisible="1"/>
+                        <field name="med_binary" filename="med_filename" readonly="1"/>
+                        <field name="ter_filename" invisible="1"/>
+                        <field name="ter_binary" filename="ter_filename" readonly="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Empleados" groups="hr.group_hr_user">
+                            <field name="employee_third" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_contract_third_staff_new_view_tree" model="ir.ui.view">
+        <field name="name">hr.contract.third.staff.new.view.tree</field>
+        <field name="model">third.staff</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="ruc"/>
+                <field name="risk_activity"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="type_service"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_menu_third_staff" model="ir.actions.act_window">
+        <field name="name">Personal de Tercero</field>
+        <field name="res_model">third.staff</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_base_hr_third_staff"
+              action="action_menu_third_staff"
+              name="Personal de Tercero"
+              parent="sunat_t_registro.menu_hr_localization_t_register"
+              sequence="2"
+    />
+
+</odoo>

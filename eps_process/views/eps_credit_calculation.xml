@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_eps_credit" model="ir.actions.act_window">
+        <field name="name">Crédito EPS</field>
+        <field name="res_model">eps.credit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_hr_eps_credit"
+              name="EPS"
+              parent="localization_menu.menu_hr_localization_datos_nomina"
+    />
+
+    <menuitem id="menu_hr_localization_form_eps_credit"
+              name="Crédito EPS"
+              parent="eps_process.menu_hr_localization_hr_eps_credit"
+              action="action_eps_credit"
+    />
+
+    <record id="eps_credit_tree_view" model="ir.ui.view">
+        <field name="name">eps.credit.tree.view</field>
+        <field name="model">eps.credit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="since"/>
+                <field name="until"/>
+                <field name="create_date" string="Creado"/>
+                <field name="final_eps_credit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="eps_credit_form_view" model="ir.ui.view">
+        <field name="name">eps.credit.form.view</field>
+        <field name="model">eps.credit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Calcular" name="compute_fields" type="object"
+                            default_focus="1"/>
+                </header>
+                <sheet>
+                    <group string="CÁLCULO DE LA EPS">
+                        <group>
+                            <group>
+                                <field name="since"/>
+                            </group>
+                            <group>
+                                <field name="until"/>
+                            </group>
+                        </group>
+                        <group string="TRABAJADORES AFILIADOS A LA EPS" colspan="3">
+                            <field name="affiliated_workers"/>
+                            <field name="computable_remuneration_health_input"/>
+                            <field name="eps_credit"/>
+                            <br/>
+                        </group>
+                        <br/>
+                        <group string="LÍMITES EPS" colspan="3">
+                            <field name="eps_service_cost"/>
+                            <field name="uit"/>
+                            <field name="uit_limit_affiliated_workers"/>
+                            <field name="adjustment"/>
+                            <br/>
+                            <field name="final_eps_credit"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_right_holders_view_form" model="ir.ui.view">
+        <field name="name">hr.right.holders.view.form</field>
+        <field name="model">hr.employee.right.holders</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_files" string="Generar Reporte Derechohabientes" type="object"/>
+                </header>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="company_id"/>
+                    <field name="employee_id"/>
+                    <field name="type"/>
+                </group>
+                <group string="Reportes" name="ple_inv_bal">
+                    <field name="txt_filename" invisible="1"/>
+                    <label string="Reporte .TXT" for="txt_binary"/>
+                    <field name="txt_binary" filename="txt_filename" readonly="1" nolabel="1"/>
+                </group>
+                <notebook>
+                    <page string="Derechohabientes">
+                        <field name="right_holders" nolabel="1"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_right_holders_view_tree" model="ir.ui.view">
+        <field name="name">hr.right.holders.view.tree</field>
+        <field name="model">hr.employee.right.holders</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="company_id"/>
+                <field name="type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_menu_right_holders" model="ir.actions.act_window">
+        <field name="name">Derechohabientes</field>
+        <field name="res_model">hr.employee.right.holders</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_base_hr_right_holders"
+              action="action_menu_right_holders"
+              name="Derechohabientes"
+              parent="sunat_t_registro.menu_hr_localization_t_register"
+              sequence="3"
+    />
+
+</odoo>

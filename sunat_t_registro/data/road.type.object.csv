@@ -1,0 +1,22 @@
+"id","code","name"
+road_type_object_1,1,AVENIDA
+road_type_object_2,2,JIRÓN
+road_type_object_3,3,CALLE
+road_type_object_4,4,PASAJE
+road_type_object_5,5,ALAMEDA
+road_type_object_6,6,MALECÓN
+road_type_object_7,7,OVALO
+road_type_object_8,8,PARQUE
+road_type_object_9,9,PLAZA
+road_type_object_10,10,CARRETERA
+road_type_object_13,13,TROCHA
+road_type_object_14,14,CAMINO RURAL
+road_type_object_15,15,BAJADA
+road_type_object_16,16,GALERIA
+road_type_object_17,17,PROLONGACIÓN
+road_type_object_18,18,PASEO
+road_type_object_19,19,PLAZUELA
+road_type_object_20,20,PORTAL
+road_type_object_21,21,CAMINO AFIRMADO
+road_type_object_22,22,TROCHA CARROZABLE
+road_type_object_99,99,OTROS
