@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
-from odoo.tools import format_date, formatLang, frozendict
-from odoo import api, fields, models, _
+from odoo.tools import format_date, frozendict
+
+from odoo import api, fields, models
 
 
 class AccountAccountType(models.Model):
@@ -35,7 +36,61 @@ class AccountPaymentTermLine(models.Model):
 class AccountPaymentTerm(models.Model):
     _inherit = "account.payment.term"
 
-    def _compute_terms(self, date_ref, currency, company, tax_amount, tax_amount_currency, sign, untaxed_amount, untaxed_amount_currency):
+    def _compute_terms_line_by_type(
+            self, line, term_vals, sign, currency, company, date_ref, company_currency, tax_amount,
+            tax_amount_currency, untaxed_amount, untaxed_amount_currency, tax_amount_left,
+            tax_amount_currency_left, untaxed_amount_left, untaxed_amount_currency_left,
+            total_amount, total_amount_currency
+    ):
+        if line.value == 'fixed':
+            term_vals['company_amount'] = sign * company_currency.round(line.value_amount)
+            term_vals['foreign_amount'] = sign * currency.round(line.value_amount)
+            company_proportion = tax_amount / untaxed_amount if untaxed_amount else 1
+            foreign_proportion = tax_amount_currency / untaxed_amount_currency if untaxed_amount_currency else 1
+            line_tax_amount = company_currency.round(line.value_amount * company_proportion) * sign
+            line_tax_amount_currency = currency.round(line.value_amount * foreign_proportion) * sign
+            line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
+            line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
+        elif line.value == 'percent':
+            term_vals['company_amount'] = company_currency.round(total_amount * (line.value_amount / 100.0))
+            term_vals['foreign_amount'] = currency.round(total_amount_currency * (line.value_amount / 100.0))
+            line_tax_amount = company_currency.round(tax_amount * (line.value_amount / 100.0))
+            line_tax_amount_currency = currency.round(tax_amount_currency * (line.value_amount / 100.0))
+            line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
+            line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
+        else:
+            line_tax_amount = line_tax_amount_currency = line_untaxed_amount = line_untaxed_amount_currency = 0.0
+
+        tax_amount_left -= line_tax_amount
+        tax_amount_currency_left -= line_tax_amount_currency
+        untaxed_amount_left -= line_untaxed_amount
+        untaxed_amount_currency_left -= line_untaxed_amount_currency
+
+        if line.value == 'balance':
+            term_vals['company_amount'] = tax_amount_left + untaxed_amount_left
+            term_vals['foreign_amount'] = tax_amount_currency_left + untaxed_amount_currency_left
+            line_tax_amount = tax_amount_left
+            line_tax_amount_currency = tax_amount_currency_left
+            line_untaxed_amount = untaxed_amount_left
+            line_untaxed_amount_currency = untaxed_amount_currency_left
+
+        if line.discount_percentage:
+            if company.early_pay_discount_computation in ('excluded', 'mixed'):
+                term_vals['discount_balance'] = company_currency.round(
+                    term_vals['company_amount'] - line_untaxed_amount * line.discount_percentage / 100.0)
+                term_vals['discount_amount_currency'] = currency.round(
+                    term_vals['foreign_amount'] - line_untaxed_amount_currency * line.discount_percentage / 100.0)
+            else:
+                term_vals['discount_balance'] = company_currency.round(
+                    term_vals['company_amount'] * (1 - (line.discount_percentage / 100.0)))
+                term_vals['discount_amount_currency'] = currency.round(
+                    term_vals['foreign_amount'] * (1 - (line.discount_percentage / 100.0)))
+            term_vals['discount_date'] = date_ref + relativedelta(days=line.discount_days)
+        return tax_amount_left, tax_amount_currency_left, untaxed_amount_left, untaxed_amount_currency_left, \
+            total_amount, total_amount_currency
+
+    def _compute_terms(self, date_ref, currency, company, tax_amount, tax_amount_currency, sign, untaxed_amount,
+                       untaxed_amount_currency):
         """
             Complete overwrite of compute method for adding method _get_data_from_line_ids.
         """
@@ -49,51 +104,14 @@ class AccountPaymentTerm(models.Model):
         total_amount_currency = tax_amount_currency + untaxed_amount_currency
         result = []
 
-        for line in self.line_ids.sorted(lambda line: line.value == 'balance'):
+        for line in self.line_ids.sorted(lambda x: x.value == 'balance'):
             term_vals = line._get_data_from_line_ids(date_ref)
-
-            if line.value == 'fixed':
-                term_vals['company_amount'] = sign * company_currency.round(line.value_amount)
-                term_vals['foreign_amount'] = sign * currency.round(line.value_amount)
-                company_proportion = tax_amount / untaxed_amount if untaxed_amount else 1
-                foreign_proportion = tax_amount_currency / untaxed_amount_currency if untaxed_amount_currency else 1
-                line_tax_amount = company_currency.round(line.value_amount * company_proportion) * sign
-                line_tax_amount_currency = currency.round(line.value_amount * foreign_proportion) * sign
-                line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
-                line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
-            elif line.value == 'percent':
-                term_vals['company_amount'] = company_currency.round(total_amount * (line.value_amount / 100.0))
-                term_vals['foreign_amount'] = currency.round(total_amount_currency * (line.value_amount / 100.0))
-                line_tax_amount = company_currency.round(tax_amount * (line.value_amount / 100.0))
-                line_tax_amount_currency = currency.round(tax_amount_currency * (line.value_amount / 100.0))
-                line_untaxed_amount = term_vals['company_amount'] - line_tax_amount
-                line_untaxed_amount_currency = term_vals['foreign_amount'] - line_tax_amount_currency
-            else:
-                line_tax_amount = line_tax_amount_currency = line_untaxed_amount = line_untaxed_amount_currency = 0.0
-
-            tax_amount_left -= line_tax_amount
-            tax_amount_currency_left -= line_tax_amount_currency
-            untaxed_amount_left -= line_untaxed_amount
-            untaxed_amount_currency_left -= line_untaxed_amount_currency
-
-            if line.value == 'balance':
-                term_vals['company_amount'] = tax_amount_left + untaxed_amount_left
-                term_vals['foreign_amount'] = tax_amount_currency_left + untaxed_amount_currency_left
-                line_tax_amount = tax_amount_left
-                line_tax_amount_currency = tax_amount_currency_left
-                line_untaxed_amount = untaxed_amount_left
-                line_untaxed_amount_currency = untaxed_amount_currency_left
-
-            if line.discount_percentage:
-                if company.early_pay_discount_computation in ('excluded', 'mixed'):
-                    term_vals['discount_balance'] = company_currency.round(term_vals['company_amount'] - line_untaxed_amount * line.discount_percentage / 100.0)
-                    term_vals['discount_amount_currency'] = currency.round(
-                        term_vals['foreign_amount'] - line_untaxed_amount_currency * line.discount_percentage / 100.0)
-                else:
-                    term_vals['discount_balance'] = company_currency.round(term_vals['company_amount'] * (1 - (line.discount_percentage / 100.0)))
-                    term_vals['discount_amount_currency'] = currency.round(term_vals['foreign_amount'] * (1 - (line.discount_percentage / 100.0)))
-                term_vals['discount_date'] = date_ref + relativedelta(days=line.discount_days)
-
+            tax_amount_left, tax_amount_currency_left, untaxed_amount_left, untaxed_amount_currency_left, total_amount, total_amount_currency = self._compute_terms_line_by_type(
+                line, term_vals, sign, currency, company, date_ref, company_currency, tax_amount,
+                tax_amount_currency, untaxed_amount, untaxed_amount_currency, tax_amount_left,
+                tax_amount_currency_left, untaxed_amount_left, untaxed_amount_currency_left,
+                total_amount, total_amount_currency
+            )
             result.append(term_vals)
         return result
 
@@ -138,7 +156,8 @@ class AccountMove(models.Model):
             'discount_percentage': term['discount_percentage']
         }
 
-    @api.depends('invoice_payment_term_id', 'invoice_date', 'currency_id', 'amount_total_in_currency_signed', 'invoice_date_due')
+    @api.depends('invoice_payment_term_id', 'invoice_date', 'currency_id', 'amount_total_in_currency_signed',
+                 'invoice_date_due')
     def _compute_needed_terms(self):
         for invoice in self:
             is_draft = invoice.id != invoice._origin.id
@@ -180,7 +199,7 @@ class AccountMove(models.Model):
                             # Campo que permite evitar la agrupacion por fecha en los terminos de pago cuando calcula
                             'tmp_date_maturity': fields.Date.to_date(term.get('tmp_date_maturity'))
                         })
-                        values = self._get_data_from_account_payment_term_lines(term)
+                        values = invoice._get_data_from_account_payment_term_lines(term)
                         if key not in invoice.needed_terms:
                             invoice.needed_terms[key] = values
                         else:

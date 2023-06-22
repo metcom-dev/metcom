@@ -1,6 +1,6 @@
 {
-    'name': 'payment term lines',
-    'version': '16.0.2.0.1',
+    'name': 'Payment term lines',
+    'version': '16.0.2.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'This module will create a field to force the exchange rate',
