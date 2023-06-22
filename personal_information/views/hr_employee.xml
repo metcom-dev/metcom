@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit_personal_information" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.personal_information</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='personal_information']/group/group/field[@name='address_home_id'] | //notebook/page[@name='personal_information']/group/group/group/field[@name='address_home_id']"
+                   position="before">
+                <field name="firstname"/>
+                <field name="lastname"/>
+                <field name="secondname"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.relatives</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+
+            <field name="spouse_complete_name" position="replace" />
+            <field name="spouse_birthdate" position="replace" />
+            <field name="children" position="replace" />
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Parientes" groups="hr.group_hr_user">
+                    <field name="relative_ids" nolabel="1" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
