@@ -1,0 +1,4 @@
+---Models in module 'conciliation_payroll'---
+changed -> adjust_credit for adjust_debit in line 193
+---Fields in module 'additional_fields_payroll'---
+---XML records in module 'additional_fields_payroll'---

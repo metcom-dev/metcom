@@ -1,0 +1,13 @@
+"id","code","name"
+zone_type_object_1,01,URB. URBANIZACIÓN
+zone_type_object_2,02,P.J. PUEBLO JOVEN
+zone_type_object_3,03,U.V. UNIDAD VECINAL
+zone_type_object_4,04,C.H. CONJUNTO HABITACIONAL
+zone_type_object_5,05,A.H. ASENTAMIENTO HUMANO
+zone_type_object_6,06,COO. COOPERATIVA
+zone_type_object_7,07,RES. RESIDENCIAL
+zone_type_object_8,08,Z.I. ZONA INDUSTRIAL
+zone_type_object_9,09,GRU. GRUPO
+zone_type_object_10,10,CAS. CASERÍO
+zone_type_object_11,11,FND. FUNDO
+zone_type_object_12,99,OTROS

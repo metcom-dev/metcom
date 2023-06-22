@@ -1,0 +1,3 @@
+---Models in module 'compensated_hours'---
+---Fields in module 'compensated_hours'---
+---XML records in module 'compensated_hours'---

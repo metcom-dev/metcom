@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_massive_payment_view_form_inherit_paid_state" model="ir.ui.view">
+        <field name="name">hr.massive.payment.form.paid_state</field>
+        <field name="model">hr.massive.payment</field>
+        <field name="inherit_id" ref="txt_bank_lo_pe.hr_massive_payment_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='generate_files']" position="replace">
+                <button name="generate_files" 
+                    string="Generar .TXT" 
+                    type="object" 
+                    class="btn-primary" 
+                    attrs="{'invisible': ['|', ('move_id', '!=', False), ('state', '!=', 'draft')]}"/>
+                <button name="action_payslip_paid" 
+                    string="Pagar" 
+                    type="object" 
+                    class="oe_highlight" 
+                    attrs="{'invisible': ['|', '|',('txt_binary','=', False), ('move_id', '!=', False), ('state', '!=', 'draft')]}"/>
+                <button name="action_payslip_draft" 
+                    string="Volver a borrador" 
+                    type="object" 
+                    class="btn-primary" 
+                    attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                <button name="action_reconciled" 
+                    string="Conciliar" 
+                    type="object" 
+                    class="btn-primary" 
+                    attrs="{'invisible': ['|' , '|', ('move_id', '=', False), ('state', '=', 'draft'), ('has_reconciled_entries', '=', True)]}"/>
+                <button 
+                    name="action_break_reconciled" 
+                    string="Romper Conciliación" 
+                    type="object" 
+                    class="btn-primary" 
+                    attrs="{'invisible': ['|', '|', ('move_id', '=', False), ('state', '=', 'draft'), ('has_reconciled_entries', '=', False)]}"/>
+                <field name="state" widget="statusbar"/>
+                <field name="has_reconciled_entries" invisible="1" />
+            </xpath>
+            <xpath expr="//group" position="before">
+                <div name="button_box" class="oe_button_box">
+                    <button name="open_reconcile_view"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            type="object"
+                            attrs="{'invisible': ['|', ('move_id', '=', False), ('state', '=', 'draft')]}"
+                            string="Asientos conciliados">
+                    </button>
+                </div>
+            </xpath>
+            <field name="txt_binary2" position="after">
+                <field name="move_id"/>
+            </field>
+            <field name="payslip_ids" position="replace">
+                <field name="payslip_ids" domain="[('state','=','done')]" attrs="{'readonly': [('state', '=', 'paid')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="account_journal_inherit_type_general_view_form" model="ir.ui.view">
+        <field name="name">account_journal_inherit_type_general_view_form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="default_credit_account_id" attrs="{'invisible': [('type', '!=', 'general')]}"/>
+                <field name="default_debit_account_id" attrs="{'invisible': [('type', '!=', 'general')]}"/>
+                <field name="sequence_number_next" attrs="{'invisible': [('type', '!=', 'general')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

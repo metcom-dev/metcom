@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_form_view_inherit_payroll_utilities" model="ir.ui.view">
+        <field name="name">hr.payslip.form.view.inherit.payroll_utilities</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='code']" position="after">
+                <field name="utilities" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_form_view_inherit_payroll_utilities" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.view.payroll_utilities</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="setting_rules_payroll.hr_salary_rule_form_view_inherit_setting_rules_payroll"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='configuration']/group[@name='conf_group']" position="inside">
+                <field name="utilities"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_type_form_view_inherit_payroll_utilities" model="ir.ui.view">
+        <field name="name">hr.work.entry.type.form.view.inherit.payroll_utilities</field>
+        <field name="model">hr.work.entry.type</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="utilities"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_type_form_view_inherit_payroll_utilities" model="ir.ui.view">
+        <field name="name">hr.leave.type.form.view.inherit.payroll_utilities</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="utilities"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

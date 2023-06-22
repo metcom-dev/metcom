@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherited_hr_attendance_view_filter_difference" model="ir.ui.view">
+        <field name="name">hr.attendance.inherit.filter.difference</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter" position="after">
+                <filter name="difference" string="Diferencia No permitida" domain="[('difference', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form_inherit_dayofweek" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit.dayofweek</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="extra_hours"/>
+                <field name="hours_part"/>
+                <field name="difference" invisible="1"/>
+            </field>
+            <field name="employee_id" position="after">
+                <field name="dayofweek"/>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Detalle de Horas extra" name="extra_hours_detail">
+                        <field name="extra_hours_ids"
+                               context="{'form_view_ref': 'extra_hours.hr_timesheet_line_form_inherited_extra_hours'}">
+                            <tree string="Detalle de Horas extra" create="false">
+                                <field name="date" required="1"/>
+                                <field name="employee_id" required="1" options="{'no_open': True}"/>
+                                <field name="user_id" invisible="1" modifiers="{'column_invisible':true}"/>
+                                <field name="name" required="1"/>
+                                <field name="project_id" required="1" can_create="true" can_write="true"/>
+                                <field name="employee_id"/>
+                                <field name="task_id" context="{'default_project_id': project_id}"
+                                       domain="[('project_id', '=', project_id)]"/>
+                                <field name="extra_hours"/>
+                                <field name="hours_compensate"/>
+                                <field name="extra_hours_morning"/>
+                                <field name="extra_hour_25" readonly="1"/>
+                                <field name="extra_hour_35" readonly="1"/>
+                                <field name="r_extra_hour_25" readonly="1"/>
+                                <field name="r_extra_hour_35" readonly="1"/>
+                                <field name="r_hours_compensate"/>
+                                <field name="night_hours" readonly="1"/>
+                                <field name="pay_date"/>
+                                <field name="unit_amount" sum="Total" string="Duration (Hora(s))"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_tree_inherit_tolerance_tardiness" model="ir.ui.view">
+        <field name="name">hr.attendance.view.tree.tolerance.tardiness</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="dayofweek"/>
+                <field name="extra_hours"/>
+                <field name="hours_part"/>
+                <field name="difference" invisible="1"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">difference == True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_migrate_extra_hours_hr_attendance" model="ir.actions.server">
+        <field name="name">Calcular Horas extras</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_calc_extra_hours()
+        </field>
+    </record>
+
+    <record id="action_migrate_hours_part_hr_attendance" model="ir.actions.server">
+        <field name="name">Migrar Parte de hora</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="binding_model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_get_extra_hours_lines()
+        </field>
+    </record>
+
+</odoo>

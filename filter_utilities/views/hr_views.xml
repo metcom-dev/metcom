@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_holidays_filter_inherit_utilities" model="ir.ui.view">
+        <field name="model">hr.leave.filter.inherit_utilities</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='approve']" position="before">
+                <separator/>
+                <filter string="Utilidades" name="utilities_filter"
+                        domain="['|', '|',('utilities','=', True),('holiday_status_id', '=', False),('code_holiday', 'in', ['WORK100', 'GLOBAL', 'DDO'])]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherited_hr_attendance_view_filter_cts_grati" model="ir.ui.view">
+        <field name="name">hr.attendance.inherit.filter.cts_grati</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter" position="after">
+                <separator/>
+                <filter string="Utilidades" name="utilities_filter" domain="['|', ('utilities','=', True),('holiday_status_id', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_worked_days_filter_inherit_utilities" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.filter.inherit_utilities</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="inherit_id" ref="payroll_fields.hr_payslip_worked_days_view_filter_payroll_fields"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter" position="after">
+                <separator/>
+                <filter string="Utilidades" name="utilities_filter" domain="['|', ('utilities','=', True),('code', 'in', ['WORK100', 'GLOBAL', 'DDO'])]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_line_filter_inherit_utilities" model="ir.ui.view">
+        <field name="name">hr.payslip.line.filter.inherit_utilities</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="payroll_fields.hr_payslip_line_view_filter_payroll_fields"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter" position="after">
+                <separator/>
+                <filter string="Utilidades" name="utilities_filter" domain="[('utilities','=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_payslip_worked_days_form_view_inherit_filter_utilities" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.form.view.inherit.filter_utilities</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="inherit_id" ref="payroll_fields.hr_payslip_worked_days_view_tree_payroll_fields"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="utilities" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_leave_view_tree_view_inherit_filter_utilities" model="ir.ui.view">
+        <field name="name">hr.leave.tree.view.inherit.filter_utilities</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="message_needaction" position="after">
+                <field name="utilities" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_attendance_tree_view_inherit_filter_utilities" model="ir.ui.view">
+        <field name="name">hr.attendance.tree.view.inherit.filter_utilities</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="absence_manager.hr_attendance_view_tree_inherit_absence_manager"/>
+        <field name="arch" type="xml">
+            <field name="holiday_status_id" position="after">
+                <field name="utilities" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_payslip_line_tree_view_inherit_filter_utilities" model="ir.ui.view">
+        <field name="name">hr.payslip.line.tree.view.inherit.filter_utilities</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="payroll_fields.hr_payslip_line_view_tree_payroll_fields"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="utilities" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

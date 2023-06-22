@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="data_utilities_tree_view" model="ir.ui.view">
+        <field name="name">data.utilities.tree.view</field>
+        <field name="model">data.utilities</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="annual_rent_before_tax"/>
+                <field name="percent"/>
+                <field name="amount"/>
+                <field name="nro_employees"/>
+                <field name="nro_days"/>
+                <field name="total_amount"/>
+                <field name="factor_days"/>
+                <field name="factor_amount"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="data_utilities_form_view" model="ir.ui.view">
+        <field name="name">data.utilities.form.view</field>
+        <field name="model">data.utilities</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="compute_fields" string="Calcular" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <label for="date_from" string="Periodo"/>
+                        <div>
+                            <field name="date_from" class="oe_inline" on_change="1"
+                                   modifiers="{'readonly': [['state', 'not in', ['draft']]], 'required': true}"/>
+                            -
+                            <field name="date_to" class="oe_inline" on_change="1"
+                                   modifiers="{'readonly': [['state', 'not in', ['draft']]], 'required': true}"/>
+                        </div>
+                        <field name="annual_rent_before_tax"/>
+                        <field name="percent"/>
+                        <field name="difference"/>
+                        <field name="amount"/>
+                        <field name="nro_employees"/>
+                        <field name="nro_days"/>
+                        <field name="total_amount"/>
+                        <field name="factor_days"/>
+                        <field name="factor_amount"/>
+                        <field name="is_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_data_utilities" model="ir.actions.act_window">
+        <field name="name">Proceso de Utilidades</field>
+        <field name="res_model">data.utilities</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hr_localization_menu_root_data_utilities"
+              name="Proceso de Utilidades"
+              parent="hr_localization_menu.hr_localization_menu_root"
+              action="action_data_utilities"
+    />
+
+</odoo>

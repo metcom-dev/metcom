@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="base.af" model="res.country">
+        <field name="cod_pas_only">004</field>
+        <field name="nacionality_code_rc">9013</field>
+    </record>
+
+    <record id="base.al" model="res.country">
+        <field name="cod_pas_only">008</field>
+        <field name="nacionality_code_rc">9017</field>
+    </record>
+
+    <record id="base.aq" model="res.country">
+        <field name="cod_pas_only">010</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+
+    <record id="base.dz" model="res.country">
+        <field name="cod_pas_only">012</field>
+        <field name="nacionality_code_rc">9059</field>
+    </record>
+
+    <record id="base.ws" model="res.country">
+        <field name="cod_pas_only">016</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+
+    <record id="base.ad" model="res.country">
+        <field name="cod_pas_only">020</field>
+        <field name="nacionality_code_rc">9037</field>
+    </record>
+
+    <record id="base.ao" model="res.country">
+        <field name="cod_pas_only">024</field>
+        <field name="nacionality_code_rc">9040</field>
+    </record>
+
+    <record id="base.ag" model="res.country">
+        <field name="cod_pas_only">028</field>
+        <field name="nacionality_code_rc">9043</field>
+    </record>
+    <record id="base.az" model="res.country">
+        <field name="cod_pas_only">031</field>
+        <field name="nacionality_code_rc">9074</field>
+    </record>
+
+    <record id="base.ar" model="res.country">
+        <field name="cod_pas_only">032</field>
+        <field name="nacionality_code_rc">9063</field>
+    </record>
+
+    <record id="base.au" model="res.country">
+        <field name="cod_pas_only">036</field>
+        <field name="nacionality_code_rc">9069</field>
+    </record>
+
+    <record id="base.at" model="res.country">
+        <field name="cod_pas_only">040</field>
+        <field name="nacionality_code_rc">9072</field>
+    </record>
+
+    <record id="base.bs" model="res.country">
+        <field name="cod_pas_only">044</field>
+        <field name="nacionality_code_rc">9077</field>
+    </record>
+
+    <record id="base.bh" model="res.country">
+        <field name="cod_pas_only">048</field>
+        <field name="nacionality_code_rc">9080</field>
+    </record>
+
+    <record id="base.am" model="res.country">
+        <field name="cod_pas_only">051</field>
+        <field name="nacionality_code_rc">9026</field>
+    </record>
+
+    <record id="base.bb" model="res.country">
+        <field name="cod_pas_only">052</field>
+        <field name="nacionality_code_rc">9083</field>
+    </record>
+
+    <record id="base.bd" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9081</field>
+    </record>
+
+    <record id="base.be" model="res.country">
+        <field name="cod_pas_only">056</field>
+        <field name="nacionality_code_rc">9088</field>
+    </record>
+    <record id="base.bm" model="res.country">
+        <field name="cod_pas_only">060</field>
+        <field name="nacionality_code_rc">9090</field>
+    </record>
+    <record id="base.bt" model="res.country">
+        <field name="cod_pas_only">064</field>
+        <field name="nacionality_code_rc">9119</field>
+    </record>
+    <record id="base.bo" model="res.country">
+        <field name="cod_pas_only">068</field>
+        <field name="nacionality_code_rc">9097</field>
+    </record>
+    <record id="base.ba" model="res.country">
+        <field name="cod_pas_only">070</field>
+        <field name="nacionality_code_rc">9029</field>
+    </record>
+    <record id="base.bw" model="res.country">
+        <field name="cod_pas_only">072</field>
+        <field name="nacionality_code_rc">9101</field>
+    </record>
+    <record id="base.bv" model="res.country">
+        <field name="cod_pas_only">074</field>
+        <field name="nacionality_code_rc">9001</field>
+    </record>
+    <record id="base.br" model="res.country">
+        <field name="cod_pas_only">076</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.bz" model="res.country">
+        <field name="cod_pas_only">084</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.io" model="res.country">
+        <field name="cod_pas_only">086</field>
+        <field name="nacionality_code_rc">9787</field>
+    </record>
+    <record id="base.sb" model="res.country">
+        <field name="cod_pas_only">090</field>
+        <field name="nacionality_code_rc">9677</field>
+    </record>
+    <record id="base.vg" model="res.country">
+        <field name="cod_pas_only">092</field>
+        <field name="nacionality_code_rc">9863</field>
+    </record>
+    <record id="base.bn" model="res.country">
+        <field name="cod_pas_only">096</field>
+        <field name="nacionality_code_rc">9108</field>
+    </record>
+    <record id="base.bg" model="res.country">
+        <field name="cod_pas_only">100</field>
+        <field name="nacionality_code_rc">9111</field>
+    </record>
+    <record id="base.mm" model="res.country">
+        <field name="cod_pas_only">104</field>
+        <field name="nacionality_code_rc">9093</field>
+    </record>
+    <record id="base.bi" model="res.country">
+        <field name="cod_pas_only">108</field>
+        <field name="nacionality_code_rc">9115</field>
+    </record>
+    <record id="base.by" model="res.country">
+        <field name="cod_pas_only">112</field>
+        <field name="nacionality_code_rc">9091</field>
+    </record>
+    <record id="base.kh" model="res.country">
+        <field name="cod_pas_only">116</field>
+        <field name="nacionality_code_rc">9141</field>
+    </record>
+    <record id="base.cm" model="res.country">
+        <field name="cod_pas_only">120</field>
+        <field name="nacionality_code_rc">9145</field>
+    </record>
+    <record id="base.ca" model="res.country">
+        <field name="cod_pas_only">124</field>
+        <field name="nacionality_code_rc">9149</field>
+    </record>
+    <record id="base.cv" model="res.country">
+        <field name="cod_pas_only">132</field>
+        <field name="nacionality_code_rc">9127</field>
+    </record>
+    <record id="base.ky" model="res.country">
+        <field name="cod_pas_only">136</field>
+        <field name="nacionality_code_rc">9137</field>
+    </record>
+    <record id="base.cf" model="res.country">
+        <field name="cod_pas_only">140</field>
+        <field name="nacionality_code_rc">9640</field>
+    </record>
+    <record id="base.lk" model="res.country">
+        <field name="cod_pas_only">144</field>
+        <field name="nacionality_code_rc">9750</field>
+    </record>
+
+    <record id="base.cl" model="res.country">
+        <field name="cod_pas_only">152</field>
+        <field name="nacionality_code_rc">9211</field>
+    </record>
+    <record id="base.cn" model="res.country">
+        <field name="cod_pas_only">156</field>
+        <field name="nacionality_code_rc">9215</field>
+    </record>
+    <record id="base.tw" model="res.country">
+        <field name="cod_pas_only">158</field>
+        <field name="nacionality_code_rc">9218</field>
+    </record>
+    <record id="base.cx" model="res.country">
+        <field name="cod_pas_only">162</field>
+        <field name="nacionality_code_rc">9511</field>
+    </record>
+    <record id="base.cc" model="res.country">
+        <field name="cod_pas_only">166</field>
+        <field name="nacionality_code_rc">9165</field>
+    </record>
+    <record id="base.co" model="res.country">
+        <field name="cod_pas_only">170</field>
+        <field name="nacionality_code_rc">9169</field>
+    </record>
+    <record id="base.km" model="res.country">
+        <field name="cod_pas_only">174</field>
+        <field name="nacionality_code_rc">9173</field>
+    </record>
+    <record id="base.yt" model="res.country">
+        <field name="cod_pas_only">175</field>
+        <field name="nacionality_code_rc">9007</field>
+    </record>
+    <record id="base.cg" model="res.country">
+        <field name="cod_pas_only">178</field>
+        <field name="nacionality_code_rc">9177</field>
+    </record>
+    <record id="base.cd" model="res.country">
+        <field name="cod_pas_only">180</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.ck" model="res.country">
+        <field name="cod_pas_only">184</field>
+        <field name="nacionality_code_rc">9183</field>
+    </record>
+    <record id="base.cr" model="res.country">
+        <field name="cod_pas_only">188</field>
+        <field name="nacionality_code_rc">9196</field>
+    </record>
+    <record id="base.hr" model="res.country">
+        <field name="cod_pas_only">191</field>
+        <field name="nacionality_code_rc">9198</field>
+    </record>
+    <record id="base.cu" model="res.country">
+        <field name="cod_pas_only">192</field>
+        <field name="nacionality_code_rc">9199</field>
+    </record>
+    <record id="base.td" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9203</field>
+    </record>
+    <record id="base.cy" model="res.country">
+        <field name="cod_pas_only">196</field>
+        <field name="nacionality_code_rc">9221</field>
+    </record>
+    <record id="base.cz" model="res.country">
+        <field name="cod_pas_only">203</field>
+        <field name="nacionality_code_rc">9644</field>
+    </record>
+    <record id="base.bj" model="res.country">
+        <field name="cod_pas_only">204</field>
+        <field name="nacionality_code_rc">9229</field>
+    </record>
+    <record id="base.dk" model="res.country">
+        <field name="cod_pas_only">208</field>
+        <field name="nacionality_code_rc">9232</field>
+    </record>
+    <record id="base.dm" model="res.country">
+        <field name="cod_pas_only">212</field>
+        <field name="nacionality_code_rc">9235</field>
+    </record>
+    <record id="base.do" model="res.country">
+        <field name="cod_pas_only">214</field>
+        <field name="nacionality_code_rc">9647</field>
+    </record>
+    <record id="base.ec" model="res.country">
+        <field name="cod_pas_only">218</field>
+        <field name="nacionality_code_rc">9239</field>
+    </record>
+    <record id="base.sv" model="res.country">
+        <field name="cod_pas_only">222</field>
+        <field name="nacionality_code_rc">9242</field>
+    </record>
+    <record id="base.gq" model="res.country">
+        <field name="cod_pas_only">226</field>
+        <field name="nacionality_code_rc">9331</field>
+    </record>
+    <record id="base.et" model="res.country">
+        <field name="cod_pas_only">231</field>
+        <field name="nacionality_code_rc">9253</field>
+    </record>
+    <record id="base.er" model="res.country">
+        <field name="cod_pas_only">232</field>
+        <field name="nacionality_code_rc">9243</field>
+    </record>
+    <record id="base.ee" model="res.country">
+        <field name="cod_pas_only">233</field>
+        <field name="nacionality_code_rc">9251</field>
+    </record>
+    <record id="base.fo" model="res.country">
+        <field name="cod_pas_only">234</field>
+        <field name="nacionality_code_rc">9259</field>
+    </record>
+    <record id="base.fk" model="res.country">
+        <field name="cod_pas_only">238</field>
+        <field name="nacionality_code_rc">9003</field>
+    </record>
+    <record id="base.gs" model="res.country">
+        <field name="cod_pas_only">239</field>
+        <field name="nacionality_code_rc">9008</field>
+    </record>
+    <record id="base.fj" model="res.country">
+        <field name="cod_pas_only">242</field>
+        <field name="nacionality_code_rc">9870</field>
+    </record>
+    <record id="base.fi" model="res.country">
+        <field name="cod_pas_only">246</field>
+        <field name="nacionality_code_rc">9271</field>
+    </record>
+    <record id="base.ax" model="res.country">
+        <field name="cod_pas_only">248</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.fr" model="res.country">
+        <field name="cod_pas_only">250</field>
+        <field name="nacionality_code_rc">9275</field>
+    </record>
+    <record id="base.gf" model="res.country">
+        <field name="cod_pas_only">254</field>
+        <field name="nacionality_code_rc">9325</field>
+    </record>
+    <record id="base.pf" model="res.country">
+        <field name="cod_pas_only">258</field>
+        <field name="nacionality_code_rc">9599</field>
+    </record>
+    <record id="base.tf" model="res.country">
+        <field name="cod_pas_only">260</field>
+        <field name="nacionality_code_rc">9005</field>
+    </record>
+    <record id="base.dj" model="res.country">
+        <field name="cod_pas_only">262</field>
+        <field name="nacionality_code_rc">9783</field>
+    </record>
+    <record id="base.ga" model="res.country">
+        <field name="cod_pas_only">266</field>
+        <field name="nacionality_code_rc">9281</field>
+    </record>
+    <record id="base.ge" model="res.country">
+        <field name="cod_pas_only">268</field>
+        <field name="nacionality_code_rc">9287</field>
+    </record>
+    <record id="base.gm" model="res.country">
+        <field name="cod_pas_only">270</field>
+        <field name="nacionality_code_rc">9285</field>
+    </record>
+    <record id="base.de" model="res.country">
+        <field name="cod_pas_only">276</field>
+        <field name="nacionality_code_rc">9023</field>
+    </record>
+    <record id="base.gh" model="res.country">
+        <field name="cod_pas_only">288</field>
+        <field name="nacionality_code_rc">9289</field>
+    </record>
+    <record id="base.gi" model="res.country">
+        <field name="cod_pas_only">292</field>
+        <field name="nacionality_code_rc">9293</field>
+    </record>
+    <record id="base.ki" model="res.country">
+        <field name="cod_pas_only">296</field>
+        <field name="nacionality_code_rc">9411</field>
+    </record>
+    <record id="base.gr" model="res.country">
+        <field name="cod_pas_only">300</field>
+        <field name="nacionality_code_rc">9301</field>
+    </record>
+    <record id="base.gl" model="res.country">
+        <field name="cod_pas_only">304</field>
+        <field name="nacionality_code_rc">9305</field>
+    </record>
+    <record id="base.gd" model="res.country">
+        <field name="cod_pas_only">308</field>
+        <field name="nacionality_code_rc">9297</field>
+    </record>
+    <record id="base.gp" model="res.country">
+        <field name="cod_pas_only">312</field>
+        <field name="nacionality_code_rc">9309</field>
+    </record>
+    <record id="base.gu" model="res.country">
+        <field name="cod_pas_only">316</field>
+        <field name="nacionality_code_rc">9313</field>
+    </record>
+    <record id="base.gt" model="res.country">
+        <field name="cod_pas_only">320</field>
+        <field name="nacionality_code_rc">9317</field>
+    </record>
+    <record id="base.gn" model="res.country">
+        <field name="cod_pas_only">324</field>
+        <field name="nacionality_code_rc">9329</field>
+    </record>
+    <record id="base.gy" model="res.country">
+        <field name="cod_pas_only">328</field>
+        <field name="nacionality_code_rc">9337</field>
+    </record>
+    <record id="base.ht" model="res.country">
+        <field name="cod_pas_only">332</field>
+        <field name="nacionality_code_rc">9341</field>
+    </record>
+    <record id="base.hm" model="res.country">
+        <field name="cod_pas_only">334</field>
+        <field name="nacionality_code_rc">9006</field>
+    </record>
+    <record id="base.va" model="res.country">
+        <field name="cod_pas_only">336</field>
+        <field name="nacionality_code_rc">9159</field>
+    </record>
+
+    <record id="base.hn" model="res.country">
+        <field name="cod_pas_only">340</field>
+        <field name="nacionality_code_rc">9345</field>
+    </record>
+
+    <record id="base.hk" model="res.country">
+        <field name="cod_pas_only">344</field>
+        <field name="nacionality_code_rc">9351</field>
+    </record>
+
+    <record id="base.hu" model="res.country">
+        <field name="cod_pas_only">348</field>
+        <field name="nacionality_code_rc">9355</field>
+    </record>
+
+    <record id="base.is" model="res.country">
+        <field name="cod_pas_only">352</field>
+        <field name="nacionality_code_rc">9379</field>
+    </record>
+
+    <record id="base.in" model="res.country">
+        <field name="cod_pas_only">356</field>
+        <field name="nacionality_code_rc">9361</field>
+    </record>
+
+    <record id="base.id" model="res.country">
+        <field name="cod_pas_only">360</field>
+        <field name="nacionality_code_rc">9365</field>
+    </record>
+
+    <record id="base.ir" model="res.country">
+        <field name="cod_pas_only">364</field>
+        <field name="nacionality_code_rc">9372</field>
+    </record>
+
+    <record id="base.iq" model="res.country">
+        <field name="cod_pas_only">368</field>
+        <field name="nacionality_code_rc">9369</field>
+    </record>
+
+    <record id="base.ie" model="res.country">
+        <field name="cod_pas_only">372</field>
+        <field name="nacionality_code_rc">9375</field>
+    </record>
+
+    <record id="base.il" model="res.country">
+        <field name="cod_pas_only">376</field>
+        <field name="nacionality_code_rc">9383</field>
+    </record>
+
+    <record id="base.it" model="res.country">
+        <field name="cod_pas_only">380</field>
+        <field name="nacionality_code_rc">9386</field>
+    </record>
+
+    <record id="base.ci" model="res.country">
+        <field name="cod_pas_only">384</field>
+        <field name="nacionality_code_rc">9193</field>
+    </record>
+
+    <record id="base.jm" model="res.country">
+        <field name="cod_pas_only">388</field>
+        <field name="nacionality_code_rc">9391</field>
+    </record>
+
+    <record id="base.jp" model="res.country">
+        <field name="cod_pas_only">392</field>
+        <field name="nacionality_code_rc">9399</field>
+    </record>
+    <record id="base.kz" model="res.country">
+        <field name="cod_pas_only">398</field>
+        <field name="nacionality_code_rc">9412</field>
+    </record>
+
+    <record id="base.jo" model="res.country">
+        <field name="cod_pas_only">400</field>
+        <field name="nacionality_code_rc">9403</field>
+    </record>
+
+    <record id="base.ke" model="res.country">
+        <field name="cod_pas_only">404</field>
+        <field name="nacionality_code_rc">9410</field>
+    </record>
+
+    <record id="base.kp" model="res.country">
+        <field name="cod_pas_only">408</field>
+        <field name="nacionality_code_rc">9187</field>
+    </record>
+
+    <record id="base.kr" model="res.country">
+        <field name="cod_pas_only">410</field>
+        <field name="nacionality_code_rc">9190</field>
+    </record>
+    <record id="base.kw" model="res.country">
+        <field name="cod_pas_only">414</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.kg" model="res.country">
+        <field name="cod_pas_only">417</field>
+        <field name="nacionality_code_rc">9412</field>
+    </record>
+    <record id="base.la" model="res.country">
+        <field name="cod_pas_only">418</field>
+        <field name="nacionality_code_rc">9420</field>
+    </record>
+    <record id="base.lb" model="res.country">
+        <field name="cod_pas_only">422</field>
+        <field name="nacionality_code_rc">9431</field>
+    </record>
+    <record id="base.ls" model="res.country">
+        <field name="cod_pas_only">426</field>
+        <field name="nacionality_code_rc">9426</field>
+    </record>
+    <record id="base.lv" model="res.country">
+        <field name="cod_pas_only">428</field>
+        <field name="nacionality_code_rc">9429</field>
+    </record>
+    <record id="base.lr" model="res.country">
+        <field name="cod_pas_only">430</field>
+        <field name="nacionality_code_rc">9343</field>
+    </record>
+    <record id="base.li" model="res.country">
+        <field name="cod_pas_only">438</field>
+        <field name="nacionality_code_rc">9440</field>
+    </record>
+    <record id="base.ly" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9438</field>
+    </record>
+    <record id="base.lt" model="res.country">
+        <field name="cod_pas_only">440</field>
+        <field name="nacionality_code_rc">9443</field>
+    </record>
+    <record id="base.lu" model="res.country">
+        <field name="cod_pas_only">442</field>
+        <field name="nacionality_code_rc">9445</field>
+    </record>
+    <record id="base.mo" model="res.country">
+        <field name="cod_pas_only">446</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.mg" model="res.country">
+        <field name="cod_pas_only">450</field>
+        <field name="nacionality_code_rc">9450</field>
+    </record>
+    <record id="base.mw" model="res.country">
+        <field name="cod_pas_only">454</field>
+        <field name="nacionality_code_rc">9458</field>
+    </record>
+    <record id="base.my" model="res.country">
+        <field name="cod_pas_only">458</field>
+        <field name="nacionality_code_rc">9455</field>
+    </record>
+    <record id="base.mv" model="res.country">
+        <field name="cod_pas_only">462</field>
+        <field name="nacionality_code_rc">9461</field>
+    </record>
+    <record id="base.ml" model="res.country">
+        <field name="cod_pas_only">466</field>
+        <field name="nacionality_code_rc">9464</field>
+    </record>
+    <record id="base.mt" model="res.country">
+        <field name="cod_pas_only">470</field>
+        <field name="nacionality_code_rc">9467</field>
+    </record>
+    <record id="base.mq" model="res.country">
+        <field name="cod_pas_only">474</field>
+        <field name="nacionality_code_rc">9477</field>
+    </record>
+    <record id="base.mr" model="res.country">
+        <field name="cod_pas_only">478</field>
+        <field name="nacionality_code_rc">9488</field>
+    </record>
+    <record id="base.mx" model="res.country">
+        <field name="cod_pas_only">484</field>
+        <field name="nacionality_code_rc">9493</field>
+    </record>
+    <record id="base.mc" model="res.country">
+        <field name="cod_pas_only">492</field>
+        <field name="nacionality_code_rc">9498</field>
+    </record>
+    <record id="base.mn" model="res.country">
+        <field name="cod_pas_only">496</field>
+        <field name="nacionality_code_rc">9497</field>
+    </record>
+    <record id="base.md" model="res.country">
+        <field name="cod_pas_only">498</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.me" model="res.country">
+        <field name="cod_pas_only">499</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.ms" model="res.country">
+        <field name="cod_pas_only">500</field>
+        <field name="nacionality_code_rc">9501</field>
+    </record>
+    <record id="base.ma" model="res.country">
+        <field name="cod_pas_only">504</field>
+        <field name="nacionality_code_rc">9474</field>
+    </record>
+    <record id="base.mz" model="res.country">
+        <field name="cod_pas_only">508</field>
+        <field name="nacionality_code_rc">9505</field>
+    </record>
+    <record id="base.om" model="res.country">
+        <field name="cod_pas_only">512</field>
+        <field name="nacionality_code_rc">9556</field>
+    </record>
+    <record id="base.na" model="res.country">
+        <field name="cod_pas_only">516</field>
+        <field name="nacionality_code_rc">9507</field>
+    </record>
+    <record id="base.nr" model="res.country">
+        <field name="cod_pas_only">520</field>
+        <field name="nacionality_code_rc">9508</field>
+    </record>
+    <record id="base.np" model="res.country">
+        <field name="cod_pas_only">524</field>
+        <field name="nacionality_code_rc">9517</field>
+    </record>
+    <record id="base.nl" model="res.country">
+        <field name="cod_pas_only">528</field>
+        <field name="nacionality_code_rc">9573</field>
+    </record>
+    <record id="base.aw" model="res.country">
+        <field name="cod_pas_only">533</field>
+        <field name="nacionality_code_rc">9027</field>
+    </record>
+    <record id="base.nc" model="res.country">
+        <field name="cod_pas_only">540</field>
+        <field name="nacionality_code_rc">9542</field>
+    </record>
+    <record id="base.vu" model="res.country">
+        <field name="cod_pas_only">548</field>
+        <field name="nacionality_code_rc">9551</field>
+    </record>
+    <record id="base.nz" model="res.country">
+        <field name="cod_pas_only">554</field>
+        <field name="nacionality_code_rc">9548</field>
+    </record>
+    <record id="base.ni" model="res.country">
+        <field name="cod_pas_only">558</field>
+        <field name="nacionality_code_rc">9521</field>
+    </record>
+    <record id="base.ne" model="res.country">
+        <field name="cod_pas_only">562</field>
+        <field name="nacionality_code_rc">9525</field>
+    </record>
+    <record id="base.ng" model="res.country">
+        <field name="cod_pas_only">566</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.nu" model="res.country">
+        <field name="cod_pas_only">570</field>
+        <field name="nacionality_code_rc">9531</field>
+    </record>
+    <record id="base.nf" model="res.country">
+        <field name="cod_pas_only">574</field>
+        <field name="nacionality_code_rc">9535</field>
+    </record>
+    <record id="base.no" model="res.country">
+        <field name="cod_pas_only">578</field>
+        <field name="nacionality_code_rc">9538</field>
+    </record>
+    <record id="base.mp" model="res.country">
+        <field name="cod_pas_only">580</field>
+        <field name="nacionality_code_rc">9469</field>
+    </record>
+    <record id="base.um" model="res.country">
+        <field name="cod_pas_only">581</field>
+        <field name="nacionality_code_rc">9010</field>
+    </record>
+    <record id="base.um" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9472</field>
+    </record>
+    <record id="base.fm" model="res.country">
+        <field name="cod_pas_only">583</field>
+        <field name="nacionality_code_rc">9494</field>
+    </record>
+    <record id="base.pw" model="res.country">
+        <field name="cod_pas_only">585</field>
+        <field name="nacionality_code_rc">9578</field>
+    </record>
+    <record id="base.ps" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9579</field>
+    </record>
+    <record id="base.pk" model="res.country">
+        <field name="cod_pas_only">586</field>
+        <field name="nacionality_code_rc">9576</field>
+    </record>
+    <record id="base.pa" model="res.country">
+        <field name="cod_pas_only">591</field>
+        <field name="nacionality_code_rc">9580</field>
+    </record>
+    <record id="base.pg" model="res.country">
+        <field name="cod_pas_only">598</field>
+        <field name="nacionality_code_rc">9545</field>
+    </record>
+    <record id="base.py" model="res.country">
+        <field name="cod_pas_only">600</field>
+        <field name="nacionality_code_rc">9586</field>
+    </record>
+    <record id="base.pe" model="res.country">
+        <field name="cod_pas_only">604</field>
+        <field name="nacionality_code_rc">9589</field>
+    </record>
+    <record id="base.ph" model="res.country">
+        <field name="cod_pas_only">608</field>
+        <field name="nacionality_code_rc">9267</field>
+    </record>
+    <record id="base.pn" model="res.country">
+        <field name="cod_pas_only">612</field>
+        <field name="nacionality_code_rc">9593</field>
+    </record>
+    <record id="base.pl" model="res.country">
+        <field name="cod_pas_only">616</field>
+        <field name="nacionality_code_rc">9603</field>
+    </record>
+    <record id="base.pt" model="res.country">
+        <field name="cod_pas_only">620</field>
+        <field name="nacionality_code_rc">9607</field>
+    </record>
+    <record id="base.gw" model="res.country">
+        <field name="cod_pas_only">624</field>
+        <field name="nacionality_code_rc">9334</field>
+    </record>
+    <record id="base.tl" model="res.country">
+        <field name="cod_pas_only">626</field>
+        <field name="nacionality_code_rc">9788</field>
+    </record>
+    <record id="base.pr" model="res.country">
+        <field name="cod_pas_only">630</field>
+        <field name="nacionality_code_rc">9611</field>
+    </record>
+    <record id="base.qa" model="res.country">
+        <field name="cod_pas_only">634</field>
+        <field name="nacionality_code_rc">9618</field>
+    </record>
+    <record id="base.re" model="res.country">
+        <field name="cod_pas_only">638</field>
+        <field name="nacionality_code_rc">9660</field>
+    </record>
+    <record id="base.ro" model="res.country">
+        <field name="cod_pas_only">642</field>
+        <field name="nacionality_code_rc">9670</field>
+    </record>
+    <record id="base.ru" model="res.country">
+        <field name="cod_pas_only">643</field>
+        <field name="nacionality_code_rc">9676</field>
+    </record>
+    <record id="base.rw" model="res.country">
+        <field name="cod_pas_only">646</field>
+        <field name="nacionality_code_rc">9675</field>
+    </record>
+    <record id="base.bl" model="res.country">
+        <field name="cod_pas_only">652</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.sh" model="res.country">
+        <field name="cod_pas_only">654</field>
+        <field name="nacionality_code_rc">9028</field>
+    </record>
+    <record id="base.kn" model="res.country">
+        <field name="cod_pas_only">659</field>
+        <field name="nacionality_code_rc">9695</field>
+    </record>
+    <record id="base.ai" model="res.country">
+        <field name="cod_pas_only">660</field>
+        <field name="nacionality_code_rc">9041</field>
+    </record>
+    <record id="base.lc" model="res.country">
+        <field name="cod_pas_only">662</field>
+        <field name="nacionality_code_rc">9715</field>
+    </record>
+    <record id="base.mf" model="res.country">
+        <field name="cod_pas_only">663</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.pm" model="res.country">
+        <field name="cod_pas_only">666</field>
+        <field name="nacionality_code_rc">9700</field>
+    </record>
+    <record id="base.vc" model="res.country">
+        <field name="cod_pas_only">670</field>
+        <field name="nacionality_code_rc">9705</field>
+    </record>
+    <record id="base.sm" model="res.country">
+        <field name="cod_pas_only">674</field>
+        <field name="nacionality_code_rc">9697</field>
+    </record>
+    <record id="base.st" model="res.country">
+        <field name="cod_pas_only">678</field>
+        <field name="nacionality_code_rc">9720</field>
+    </record>
+    <record id="base.sa" model="res.country">
+        <field name="cod_pas_only">682</field>
+        <field name="nacionality_code_rc">9053</field>
+    </record>
+    <record id="base.sn" model="res.country">
+        <field name="cod_pas_only">686</field>
+        <field name="nacionality_code_rc">9728</field>
+    </record>
+    <record id="base.rs" model="res.country">
+        <field name="cod_pas_only">688</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.sc" model="res.country">
+        <field name="cod_pas_only">690</field>
+        <field name="nacionality_code_rc">9731</field>
+    </record>
+    <record id="base.sl" model="res.country">
+        <field name="cod_pas_only">694</field>
+        <field name="nacionality_code_rc">9735</field>
+    </record>
+    <record id="base.sg" model="res.country">
+        <field name="cod_pas_only">702</field>
+        <field name="nacionality_code_rc">9741</field>
+    </record>
+    <record id="base.sk" model="res.country">
+        <field name="cod_pas_only">703</field>
+        <field name="nacionality_code_rc">9246</field>
+    </record>
+    <record id="base.vn" model="res.country">
+        <field name="cod_pas_only">704</field>
+        <field name="nacionality_code_rc">9855</field>
+    </record>
+    <record id="base.si" model="res.country">
+        <field name="cod_pas_only">705</field>
+        <field name="nacionality_code_rc">9247</field>
+    </record>
+    <record id="base.so" model="res.country">
+        <field name="cod_pas_only">706</field>
+        <field name="nacionality_code_rc">9748</field>
+    </record>
+    <record id="base.za" model="res.country">
+        <field name="cod_pas_only">710</field>
+        <field name="nacionality_code_rc">9756</field>
+    </record>
+    <record id="base.zw" model="res.country">
+        <field name="cod_pas_only">716</field>
+        <field name="nacionality_code_rc">9665</field>
+    </record>
+    <record id="base.es" model="res.country">
+        <field name="cod_pas_only">724</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.eh" model="res.country">
+        <field name="cod_pas_only">732</field>
+        <field name="nacionality_code_rc">9685</field>
+    </record>
+    <record id="base.sd" model="res.country">
+        <field name="cod_pas_only">736</field>
+        <field name="nacionality_code_rc">9759</field>
+    </record>
+    <record id="base.sr" model="res.country">
+        <field name="cod_pas_only">740</field>
+        <field name="nacionality_code_rc">9770</field>
+    </record>
+    <record id="base.sj" model="res.country">
+        <field name="cod_pas_only">744</field>
+        <field name="nacionality_code_rc">9009</field>
+    </record>
+    <record id="base.sz" model="res.country">
+        <field name="cod_pas_only">748</field>
+        <field name="nacionality_code_rc">9645</field>
+    </record>
+    <record id="base.se" model="res.country">
+        <field name="cod_pas_only">752</field>
+        <field name="nacionality_code_rc">9764</field>
+    </record>
+    <record id="base.ch" model="res.country">
+        <field name="cod_pas_only">756</field>
+        <field name="nacionality_code_rc">0000</field>
+    </record>
+    <record id="base.sy" model="res.country">
+        <field name="cod_pas_only">760</field>
+        <field name="nacionality_code_rc">9744</field>
+    </record>
+    <record id="base.tj" model="res.country">
+        <field name="cod_pas_only">762</field>
+        <field name="nacionality_code_rc">9774</field>
+    </record>
+    <record id="base.th" model="res.country">
+        <field name="cod_pas_only">764</field>
+        <field name="nacionality_code_rc">9776</field>
+    </record>
+    <record id="base.tg" model="res.country">
+        <field name="cod_pas_only">768</field>
+        <field name="nacionality_code_rc">9800</field>
+    </record>
+    <record id="base.tk" model="res.country">
+        <field name="cod_pas_only">772</field>
+        <field name="nacionality_code_rc">9805</field>
+    </record>
+    <record id="base.to" model="res.country">
+        <field name="cod_pas_only">776</field>
+        <field name="nacionality_code_rc">9810</field>
+    </record>
+    <record id="base.tt" model="res.country">
+        <field name="cod_pas_only">780</field>
+        <field name="nacionality_code_rc">9815</field>
+    </record>
+    <record id="base.ae" model="res.country">
+        <field name="cod_pas_only">784</field>
+        <field name="nacionality_code_rc">9244</field>
+    </record>
+    <record id="base.tn" model="res.country">
+        <field name="cod_pas_only">788</field>
+        <field name="nacionality_code_rc">9646</field>
+    </record>
+    <record id="base.tr" model="res.country">
+        <field name="cod_pas_only">792</field>
+        <field name="nacionality_code_rc">9827</field>
+    </record>
+    <record id="base.tm" model="res.country">
+        <field name="cod_pas_only">795</field>
+        <field name="nacionality_code_rc">9825</field>
+    </record>
+    <record id="base.tc" model="res.country">
+        <field name="cod_pas_only">796</field>
+        <field name="nacionality_code_rc">9823</field>
+    </record>
+    <record id="base.tv" model="res.country">
+        <field name="cod_pas_only">798</field>
+        <field name="nacionality_code_rc">9828</field>
+    </record>
+    <record id="base.ug" model="res.country">
+        <field name="cod_pas_only">800</field>
+        <field name="nacionality_code_rc">9833</field>
+    </record>
+    <record id="base.ua" model="res.country">
+        <field name="cod_pas_only">804</field>
+        <field name="nacionality_code_rc">9830</field>
+    </record>
+    <record id="base.mk" model="res.country">
+        <field name="cod_pas_only">807</field>
+        <field name="nacionality_code_rc">9448</field>
+    </record>
+    <record id="base.eg" model="res.country">
+        <field name="cod_pas_only">818</field>
+        <field name="nacionality_code_rc">9240</field>
+    </record>
+    <record id="base.uk" model="res.country">
+        <field name="cod_pas_only">826</field>
+        <field name="nacionality_code_rc">9628</field>
+    </record>
+    <record id="base.gg" model="res.country">
+        <field name="cod_pas_only">831</field>
+        <field name="nacionality_code_rc">9327</field>
+    </record>
+    <record id="base.je" model="res.country">
+        <field name="cod_pas_only">832</field>
+        <field name="nacionality_code_rc">9401</field>
+    </record>
+    <record id="base.tz" model="res.country">
+        <field name="cod_pas_only">834</field>
+        <field name="nacionality_code_rc">9780</field>
+    </record>
+    <record id="base.us" model="res.country">
+        <field name="cod_pas_only">840</field>
+        <field name="nacionality_code_rc">9249</field>
+    </record>
+    <record id="base.vi" model="res.country">
+        <field name="cod_pas_only">850</field>
+        <field name="nacionality_code_rc">9866</field>
+    </record>
+    <record id="base.bf" model="res.country">
+        <field name="cod_pas_only">854</field>
+        <field name="nacionality_code_rc">9031</field>
+    </record>
+    <record id="base.uy" model="res.country">
+        <field name="cod_pas_only">858</field>
+        <field name="nacionality_code_rc">9845</field>
+    </record>
+    <record id="base.uz" model="res.country">
+        <field name="cod_pas_only">860</field>
+        <field name="nacionality_code_rc">9847</field>
+    </record>
+    <record id="base.ve" model="res.country">
+        <field name="cod_pas_only">862</field>
+        <field name="nacionality_code_rc">9850</field>
+    </record>
+    <record id="base.wf" model="res.country">
+        <field name="cod_pas_only">876</field>
+        <field name="nacionality_code_rc">9875</field>
+    </record>
+    <record id="base.ws" model="res.country">
+        <field name="cod_pas_only">882</field>
+        <field name="nacionality_code_rc">9687</field>
+    </record>
+    <record id="base.ye" model="res.country">
+        <field name="cod_pas_only">887</field>
+        <field name="nacionality_code_rc">9880</field>
+    </record>
+    <record id="base.zm" model="res.country">
+        <field name="cod_pas_only">894</field>
+        <field name="nacionality_code_rc">9890</field>
+    </record>
+    <record id="base.as" model="res.country">
+        <field name="cod_pas_only">000</field>
+        <field name="nacionality_code_rc">9690</field>
+    </record>
+
+</odoo>

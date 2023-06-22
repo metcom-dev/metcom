@@ -1,0 +1,3 @@
+---Models in module 'automatic_timesheets'---
+---Fields in module 'automatic_timesheets'---
+---XML records in module 'automatic_timesheets'---

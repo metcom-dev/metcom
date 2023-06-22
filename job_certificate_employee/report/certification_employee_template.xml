@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="template_job_certification_employee">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div>
+                        <div style="text-align:right">
+                            <strong t-field="o.date_today"/>
+                        </div>
+                        <div style="text-align:left">
+                            <img style="width: 275px; height: 100px;" t-attf-src="data:image/*;base64,{{o.company_id.logo}}"/>
+                        </div>
+                    </div>
+                    <div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <strong t-field="o.company_id.name"/>
+                        <br/>
+                        <br/>
+                        <strong t-field="o.company_id.vat"/>
+                        <br/>
+                        <div>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="subtitulo" style="text-align:center">
+                            <strong>Certificado de trabajo</strong>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div>
+                            <strong>Nombre del trabajador:</strong>
+                            <span t-field="o.name"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>T.Doc:</strong>
+                            <span t-field="o.type_identification_id.name"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Documento:</strong>
+                            <span t-field="o.identification_id"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Cargo:</strong>
+                            <span t-field="o.job_id.name"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Departamento:</strong>
+                            <span t-field="o.department_id.name"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Salario:</strong>
+                            <span t-field="o.contract_id.wage"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Rem. variable:</strong>
+                            <span t-field="o.contract_id.variable_payment_id.name"/>
+                            <br/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <strong>Fecha inicio:</strong>
+                            <span t-field="o.service_start_date"/>
+                            <br/>
+                        </div>
+                        <div>
+                            <strong>Fecha cese:</strong>
+                            <span t-field="o.service_termination_date"/>
+                            <br/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div>
+                            <strong>Tiempo de servicio :</strong>
+                            <span t-field="o.service_duration_years"/>
+                            año(s)
+                            <span t-esc="o.service_duration_months"/>
+                            mes(s)
+                            <span t-esc="o.service_duration_days"/>
+                            dia(s)
+                            <br/>
+                        </div>
+                        <div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div style="text-align:center">
+                            <img style="width: 165px; height: 60px;" t-attf-src="data:image/*;base64,{{o.search_employee().employer_sign}}"/>
+                        </div>
+                        <div style="text-align:center">
+                            <strong>___________________________________________</strong>
+                        </div>
+                        <div style="text-align:center">
+                            <strong>
+                                <span t-esc="o.search_employee().address_home_id.name"/>
+                            </strong>
+                        </div>
+                        <div style="text-align:center">
+                            <strong>Empleador</strong>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+
+            </t>
+        </t>
+
+    </template>
+
+    <template id="report_job_certificate_employee">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="job_certificate_employee.template_job_certification_employee"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

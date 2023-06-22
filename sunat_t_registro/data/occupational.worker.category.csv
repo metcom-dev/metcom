@@ -1,0 +1,12 @@
+"id","code","name","private_sector","public_sector","other_entities"
+occupational_worker_category_1,01,EJECUTIVO,A,N.A,A
+occupational_worker_category_2,02,OBRERO,A,N.A,A
+occupational_worker_category_3,03,EMPLEADO,A,N.A,A
+occupational_worker_category_4,11,FUNCIONARIO,N.A,A,A
+occupational_worker_category_5,12,PROFESIONAL,N.A,A,A
+occupational_worker_category_6,13,TÉCNICO,N.A,A,A
+occupational_worker_category_7,14,AUXILIAR,N.A,A,A
+occupational_worker_category_8,21,FUNCIONARIO PÚBLICO - LEY 30057,N.A,A,A
+occupational_worker_category_9,22,DIRECTIVO PÚBLICO - LEY 30057,N.A,A,A
+occupational_worker_category_10,23,SERVIDOR CIVIL DE CARRERA - LEY 30057,N.A,A,A
+occupational_worker_category_11,24,SERVIDOR DE ACTIVIDADES COMPLEMENTARIAS - LEY 30057,N.A,A

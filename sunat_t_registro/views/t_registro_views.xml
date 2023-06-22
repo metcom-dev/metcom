@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_contract_t_registro_new_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.t.registro.new.view.form</field>
+        <field name="model">sunat.t.registro</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_files" string="Generar Archivos T-Registro" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="company_id"/>
+
+                        <field name="esp_filename" invisible="1"/>
+                        <field name="esp_binary" filename="esp_filename" readonly="1"/>
+                        <field name="edd_filename" invisible="1"/>
+                        <field name="edd_binary" filename="edd_filename" readonly="1"/>
+                        <field name="idd_filename" invisible="1"/>
+                        <field name="idd_binary" filename="idd_filename" readonly="1"/>
+                        <field name="ide_filename" invisible="1"/>
+                        <field name="ide_binary" filename="ide_filename" readonly="1"/>
+                        <field name="tra_filename" invisible="1"/>
+                        <field name="tra_binary" filename="tra_filename" readonly="1"/>
+                        <field name="pen_filename" invisible="1"/>
+                        <field name="pen_binary" filename="pen_filename" readonly="1"/>
+                        <field name="pfl_filename" invisible="1"/>
+                        <field name="pfl_binary" filename="pfl_filename" readonly="1"/>
+                        <field name="per_filename" invisible="1"/>
+                        <field name="per_binary" filename="per_filename" readonly="1"/>
+                        <field name="per_filename2" invisible="1"/>
+                        <field name="per_binary2" filename="per_filename2" readonly="1"/>
+                        <field name="cta_filename" invisible="1"/>
+                        <field name="cta_binary" filename="cta_filename" readonly="1"/>
+                        <field name="edu_filename" invisible="1"/>
+                        <field name="edu_binary" filename="edu_filename" readonly="1"/>
+                        <field name="est_filename" invisible="1"/>
+                        <field name="est_binary" filename="est_filename" readonly="1"/>
+                        <field name="lug_filename" invisible="1"/>
+                        <field name="lug_binary" filename="lug_filename" readonly="1"/>
+                    </group>
+
+                    <field name="employees_lines_ids_t" widget="many2many">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_contract_t_registro_new_view_tree" model="ir.ui.view">
+        <field name="name">hr.contract.t.registro.new.view.tree</field>
+        <field name="model">sunat.t.registro</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_menu_t_registro" model="ir.actions.act_window">
+        <field name="name">Generar archivos T-Registro</field>
+        <field name="res_model">sunat.t.registro</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Localización" id="menu_hr_localization_t_register" parent="hr.menu_hr_root" sequence="100"/>
+
+    <menuitem id="menu_base_hr_t_register"
+              action="action_menu_t_registro"
+              name="T-Registro"
+              parent="sunat_t_registro.menu_hr_localization_t_register"
+              sequence="1"
+    />
+
+
+    <record id="res_config_settings_form_view_inherit_t_register" model="ir.ui.view">
+        <field name="name">res.config.settings.form.view.inherit.t_register</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('app_settings_block')][@data-key='hr_payroll']" position="inside">
+                <h2>ARCHIVOS T-REGISTRO</h2>
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_right_pane">
+                        <div class="content-group">
+                            <div class="mt16 row">
+                                <label for="risk_activities_sctr" class="col-3 col-lg-3 o_light_label"/>
+                                <field name="risk_activities_sctr" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
