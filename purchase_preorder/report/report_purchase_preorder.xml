@@ -24,7 +24,7 @@
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" style="font-size: 0.9rem;">
 								<div class="col-6">
 									<strong>Ubicación de Almacén:</strong> <span t-field="doc.location_id"/><br/>
 									<strong>Usuario:</strong> <span t-field="doc.user_id"/><br/>
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<br/>
-							<div class="row">
+							<div class="row" style="font-size: 0.8rem;">
 								<div class="col-12">
 									<table class="table table-condensed">
 										<thead>
