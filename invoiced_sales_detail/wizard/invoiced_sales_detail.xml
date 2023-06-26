@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record model="ir.ui.view" id="report_invoiced_sales_detail_form">
+        <field name="name">wizard.invoiced_sales_detail.form</field>
+        <field name="model">report.invoiced_sales_detail</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="company_id" options="{'no_open': True, 'no_create': 1, 'no_create_edit': 1}" groups="base.group_multi_company"/>
+                    <field name="date_from" required="True"/>
+                    <field name="date_to" required="True"/>
+                </group>
+                <footer>
+                    <button name="print_report" type="object" string="Generar Reporte" class="oe_highlight" icon="fa-print" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_invoiced_sales_detail">
+        <field name="name">Ventas detalladas</field>
+        <field name="res_model">report.invoiced_sales_detail</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <report
+        id="report_invoiced_sales_detail_xlsx"
+        string="Ventas detalladas XLS"
+        model="report.invoiced_sales_detail"
+        report_type="xlsx"
+        name="invoiced_sales_detail.invoiced_sales_detail_xls.xlsx"
+        file="Ventas detalladas"
+        menu="False"
+        attachment_use="False"/>
+
+    <menuitem 
+        id="menu_account_invoiced_sales_detail" 
+        name="Ventas detalladas" 
+        action="action_invoiced_sales_detail" 
+       	parent="account.account_reports_management_menu"
+        sequence="5"/>
+
+
+</odoo>
