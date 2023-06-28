@@ -96,10 +96,11 @@
 								<div class="text-center" style="font-size: 0.7rem;">
 									<div class="important_container"  style="text-align: justify;">
 										<b>Informacion Importante:</b>
-										<span t-esc="doc.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos <br/> obligados a retener el 
-										3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura <br/> y adjuntar el documento impreso en la factura.
+										<span t-esc="doc.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados a retener el 
+										3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.
 										El horario de Recepcion de Facturas sera hasta las 13:00 horas
 									</div>
+									<br/>
 									<div t-field="doc.company_id.report_footer"/>
 								</div>
 							</div>
