@@ -180,8 +180,6 @@ class PleReportSale(models.Model):
 
     def action_rollback(self):
         super(PleReportSale, self).action_rollback()
-        for move in self.move_ids:
-            move.write({'ple_its_declared': False})
         self.write({
             'txt_binary': False,
             'txt_filename': False,

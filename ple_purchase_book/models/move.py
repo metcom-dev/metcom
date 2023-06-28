@@ -218,12 +218,14 @@ class AccountMove(models.Model):
         cond22 = fiscal_position_name == "IMPORTACIONES"
         cond24 = cond14
 
+        account_type_dict = dict(self.env['account.account']._fields['account_type']._description_selection(self.env))
+
         if cond11 and cond12 and self.is_nodomicilied and cond14 and cond15:
 
             # Monto de retencion de igv
             move_line_ret_igv = None
             for line in self.line_ids:
-                if line.account_id.user_type_id.name == 'Activos Circulantes':
+                if account_type_dict[line.account_id.account_type] == 'Activos Circulantes':
                     move_line_ret_igv = line
                     break
 
@@ -232,7 +234,7 @@ class AccountMove(models.Model):
             # Renta bruta
             move_line_hard_rent = None
             for line in self.line_ids:
-                if line.account_id.user_type_id.name == 'Por pagar':
+                if account_type_dict[line.account_id.account_type] == 'Por pagar':
                     move_line_hard_rent = line
                     break
 
@@ -253,7 +255,7 @@ class AccountMove(models.Model):
                 # Impuesto Retenido
                 move_line_ret = None
                 for line in self.line_ids:
-                    if line.account_id.user_type_id.name == 'Pasivos Circulantes' and line.account_id.code[:5] == '40174':
+                    if account_type_dict[line.account_id.account_type] == 'Pasivos Circulantes' and line.account_id.code[:5] == '40174':
                         move_line_ret = line
                         break
 
@@ -278,7 +280,7 @@ class AccountMove(models.Model):
         elif cond21 and cond22 and self.is_nodomicilied and cond24:
             move_line_hard_rent = None
             for line in self.line_ids:
-                if line.account_id.user_type_id.name == 'Por pagar':
+                if account_type_dict[line.account_id.account_type] == 'Por pagar':
                     move_line_hard_rent = line
                     break
 
