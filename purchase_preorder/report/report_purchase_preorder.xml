@@ -42,7 +42,7 @@
 									<table class="table table-condensed">
 										<thead>
 											<tr>
-												<th>Producto</th>
+												<th style="width:30%">Producto</th>
 												<th class="text-right">Cantidad requerida</th>
 												<th>UdM</th>
 												<th class="text-right">Cantidad en stock</th>
@@ -55,7 +55,7 @@
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
 												<tr t-if="line.state!='cancel'">
-													<td>
+													<td style="width:30%">
 														<span t-field="line.product_id"/>
 													</td>
 													<td class="text-right">
