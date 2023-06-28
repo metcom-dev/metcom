@@ -42,20 +42,20 @@
 									<table class="table table-condensed">
 										<thead>
 											<tr>
-												<th>Producto</th>
-												<th class="text-right">Cantidad requerida</th>
-												<th>UdM</th>
-												<th class="text-right">Cantidad en stock</th>
-												<th>UdM</th>
-												<th>Fecha de stock</th>
-												<th class="text-right">Cantidad a comprar</th>
-												<th>UdM</th>
+												<th style="width:50%; background-color: #f0f0f0;">Producto</th>
+												<th class="text-right" style="width:8%;">Cantidad requerida</th> 
+												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th class="text-right" style="width:9%;">Cantidad en stock</th> 
+												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th style="width:9%;">Fecha de stock</th>
+												<th class="text-right" style="width:9%; background-color: #f0f0f0;">Cantidad a comprar</th> 
+												<th style="width:5%;">UdM</th>
 											</tr>
 										</thead>
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
 												<tr t-if="line.state!='cancel'">
-													<td>
+													<td style="width:30%">
 														<span t-field="line.product_id"/>
 													</td>
 													<td class="text-right">
