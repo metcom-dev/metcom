@@ -21,7 +21,7 @@
 							<!-- <div class="oe_structure"/> -->
 							<div class="row">
 								<div class="col-12" style="text-align:center;">
-									<h3 style="font-size: 0.8rem;">Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
+									<h3 style="font-size: 0.9rem;">Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
 							</div>
 							<div class="row">
