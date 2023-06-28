@@ -42,14 +42,14 @@
 									<table class="table table-condensed">
 										<thead>
 											<tr>
-												<th style="width:30%">Producto</th>
-												<th class="text-right">Cantidad requerida</th>
-												<th>UdM</th>
-												<th class="text-right">Cantidad en stock</th>
-												<th>UdM</th>
-												<th>Fecha de stock</th>
-												<th class="text-right">Cantidad a comprar</th>
-												<th>UdM</th>
+												<th style="width:45%; background-color: #f0f0f0;">Producto</th>
+												<th class="text-right" style="width:10%;">Cantidad requerida</th>
+												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th class="text-right" style="width:10%;">Cantidad en stock</th>
+												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th style="width:10%;">Fecha de stock</th>
+												<th class="text-right" style="width:10%; background-color: #f0f0f0;">Cantidad a comprar</th>
+												<th style="width:5%;">UdM</th>
 											</tr>
 										</thead>
 										<tbody>
