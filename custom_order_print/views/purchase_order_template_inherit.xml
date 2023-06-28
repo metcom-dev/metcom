@@ -196,7 +196,7 @@
         <xpath expr="//div[@t-field='company.report_footer']" position="before">
             <div class="important_container"  style="text-align: justify;">
                 <b>Informacion Importante:</b>
-                METCOM M&S EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos <br/> obligados a retener el 
+                METCOM M&amp;S EIRL es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos <br/> obligados a retener el 
                 3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura <br/> y adjuntar el documento impreso en la factura.
                 El horario de Recepcion de Facturas sera hasta las 13:00 horas
             </div> 
