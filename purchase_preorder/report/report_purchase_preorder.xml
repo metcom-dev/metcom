@@ -19,9 +19,9 @@
 					<t t-call="web.external_layout">
 						<div class="page" style="font-size: 0.6rem;">
 							<!-- <div class="oe_structure"/> -->
-							<div class="row" style="font-size: 0.8rem;">
+							<div class="row">
 								<div class="col-12" style="text-align:center;">
-									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
+									<h3 style="font-size: 0.8rem;">Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
 							</div>
 							<div class="row">
@@ -101,12 +101,6 @@
 										El horario de Recepcion de Facturas sera hasta las 13:00 horas
 									</div>
 									<div t-field="doc.company_id.report_footer"/>
-									<div t-if="report_type == 'pdf'">
-										Page: <span class="page"/> / <span class="topage"/>
-									</div>
-									<div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
-										<span t-field="o.name"/>
-									</div>
 								</div>
 							</div>
 						</div>
