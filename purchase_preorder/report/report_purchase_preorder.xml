@@ -19,7 +19,7 @@
 					<t t-call="web.external_layout">
 						<div class="page" style="font-size: 0.6rem;">
 							<!-- <div class="oe_structure"/> -->
-							<div class="row" style="font-size: 0.9rem;">
+							<div class="row" style="font-size: 0.8rem;">
 								<div class="col-12" style="text-align:center;">
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
@@ -93,7 +93,7 @@
 								</div>
 							</div>
 							<div class="footer o_boxed_footer">
-								<div class="text-center" style="font-size: 0.6rem;">
+								<div class="text-center" style="font-size: 0.7rem;">
 									<div class="important_container"  style="text-align: justify;">
 										<b>Informacion Importante:</b>
 										<span t-esc="doc.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos <br/> obligados a retener el 
