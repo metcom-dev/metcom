@@ -17,14 +17,14 @@
 			<t t-call="web.html_container">
 				<t t-foreach="docs" t-as="doc">
 					<t t-call="web.external_layout">
-						<div class="page">
+						<div class="page" style="font-size: 0.6rem;">
 							<!-- <div class="oe_structure"/> -->
-							<div class="row">
+							<div class="row" style="font-size: 0.9rem;">
 								<div class="col-12" style="text-align:center;">
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
 								</div>
 							</div>
-							<div class="row" style="font-size: 0.9rem;">
+							<div class="row">
 								<div class="col-6">
 									<strong>Ubicación de Almacén:</strong> <span t-field="doc.location_id"/><br/>
 									<strong>Usuario:</strong> <span t-field="doc.user_id"/><br/>
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<br/>
-							<div class="row" style="font-size: 0.8rem;">
+							<div class="row">
 								<div class="col-12">
 									<table class="table table-condensed">
 										<thead>
@@ -54,16 +54,32 @@
 										</thead>
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
-											<tr t-if="line.state!='cancel'">
-												<td><span t-field="line.product_id"/></td>
-												<td class="text-right"><span t-field="line.product_qty"/></td>
-												<td><span t-field="line.product_uom"/></td>
-												<td class="text-right"><span t-field="line.stock_qty"/></td>
-												<td><span t-field="line.product_stock_uom"/></td>
-												<td><span t-field="line.stock_date"/></td>
-												<td class="text-right"><span t-field="line.purchase_product_qty"/></td>
-												<td><span t-field="line.purchase_product_uom"/></td>
-											</tr>
+												<tr t-if="line.state!='cancel'">
+													<td>
+														<span t-field="line.product_id"/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.product_qty"/>
+													</td>
+													<td>
+														<span t-field="line.product_uom"/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.stock_qty"/>
+													</td>
+													<td>
+														<span t-field="line.product_stock_uom"/>
+													</td>
+													<td>
+														<span t-field="line.stock_date" t-options='{"widget": "date"}'/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.purchase_product_qty"/>
+													</td>
+													<td>
+														<span t-field="line.purchase_product_uom"/>
+													</td>
+												</tr>
 											</t>
 										</tbody>
 									</table>
@@ -74,6 +90,23 @@
 								<div class="col-8" t-if="doc.note">
 									<strong>Notas:</strong><br/>
 									<span t-field="doc.note"/>
+								</div>
+							</div>
+							<div class="footer o_boxed_footer">
+								<div class="text-center" style="font-size: 0.6rem;">
+									<div class="important_container"  style="text-align: justify;">
+										<b>Informacion Importante:</b>
+										<span t-esc="doc.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos <br/> obligados a retener el 
+										3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura <br/> y adjuntar el documento impreso en la factura.
+										El horario de Recepcion de Facturas sera hasta las 13:00 horas
+									</div>
+									<div t-field="doc.company_id.report_footer"/>
+									<div t-if="report_type == 'pdf'">
+										Page: <span class="page"/> / <span class="topage"/>
+									</div>
+									<div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+										<span t-field="o.name"/>
+									</div>
 								</div>
 							</div>
 						</div>
