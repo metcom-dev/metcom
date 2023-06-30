@@ -18,7 +18,12 @@
 				<t t-foreach="docs" t-as="doc">
 					<t t-call="web.external_layout">
 						<div class="page" style="font-size: 0.6rem;">
-							<!-- <div class="oe_structure"/> -->
+							<style>
+								.last-element {
+									background-color: white !important;
+									color: black !important;
+								}
+							</style>
 							<div class="row">
 								<div class="col-12" style="text-align:center;">
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
@@ -54,7 +59,7 @@
 										</thead>
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
-												<tr t-if="line.state!='cancel'" style="background-color: white; color: black;">
+												<tr t-attf-class="#{line == doc.line_ids[-1] and 'last-element' or ''}" t-if="line.state!='cancel'" style="background-color: white; color: black;">
 													<td>
 														<span t-field="line.product_id"/>
 													</td>
