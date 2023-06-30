@@ -30,8 +30,7 @@
 								.table-cell {
 									display: table-cell;
 									padding: 4px 2px;
-									border-left: 0.9px solid black;
-    								border-right: 0.9px solid black;
+									border: 0.9px solid black;
 								}
 								.table-header .table-cell {
 									text-align: center; 
@@ -134,25 +133,25 @@
 												<div class="table-cell">
 													<span t-field="line.product_id"/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.product_qty"/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.product_uom"/>
 												</div>
-											 	<div class="table-cell">
+											 	<div class="table-cell text-center">
 													<span t-field="line.stock_qty"/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.product_stock_uom"/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.stock_date" t-options='{"widget": "date"}'/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.purchase_product_qty"/>
 												</div>
-												<div class="table-cell">
+												<div class="table-cell text-center">
 													<span t-field="line.purchase_product_uom"/>
 												</div>
 											</div>
