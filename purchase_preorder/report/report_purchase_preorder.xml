@@ -39,23 +39,23 @@
 							<br/>
 							<div class="row">
 								<div class="col-12">
-									<table class="table table-condensed">
+									<table class="table table-sm o_main_table table-borderless">
 										<thead>
-											<tr>
-												<th style="width:50%; background-color: #f0f0f0;">Producto</th>
+											<tr class="bg-200">
+												<th style="width:50%;">Producto</th>
 												<th class="text-right" style="width:8%;">Cantidad requerida</th> 
-												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th style="width:5%;">UdM</th>
 												<th class="text-right" style="width:9%;">Cantidad en stock</th> 
-												<th style="width:5%; background-color: #f0f0f0;">UdM</th>
+												<th style="width:5%;">UdM</th>
 												<th style="width:9%;">Fecha de stock</th>
-												<th class="text-right" style="width:9%; background-color: #f0f0f0;">Cantidad a comprar</th> 
+												<th class="text-right" style="width:9%;">Cantidad a comprar</th> 
 												<th style="width:5%;">UdM</th>
 											</tr>
 										</thead>
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
 												<tr t-if="line.state!='cancel'">
-													<td style="width:30%">
+													<td>
 														<span t-field="line.product_id"/>
 													</td>
 													<td class="text-right">
@@ -100,7 +100,6 @@
 										a retener el 3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.<br/>
 										El horario de Recepcion de Facturas sera hasta las 13:00 horas
 									</div>
-									<br/>
 									<div t-field="doc.company_id.report_footer"/>
 								</div>
 							</div>
