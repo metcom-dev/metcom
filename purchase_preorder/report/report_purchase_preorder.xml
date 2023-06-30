@@ -54,7 +54,7 @@
 										</thead>
 										<tbody>
 											<t t-foreach="doc.line_ids" t-as="line">
-												<tr t-if="line.state!='cancel'">
+												<tr class="fw-bold o_line_section" t-if="line.state!='cancel'">
 													<td>
 														<span t-field="line.product_id"/>
 													</td>
