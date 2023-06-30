@@ -58,8 +58,9 @@
 											</tr>
 										</thead>
 										<tbody>
+											<t t-set="last_line" t-value="doc.line_ids[-1] if doc.line_ids else False"/>
 											<t t-foreach="doc.line_ids" t-as="line">
-												<tr t-attf-class="#{line == doc.line_ids[-1] and 'last-element' or ''}" t-if="line.state!='cancel'" style="background-color: white; color: black;">
+												<tr t-attf-class="#{line == last_line and 'last-element' or ''}" t-if="line.state!='cancel'" style="background-color: white; color: black;">
 													<td>
 														<span t-field="line.product_id"/>
 													</td>
