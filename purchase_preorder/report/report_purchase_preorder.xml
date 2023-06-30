@@ -19,7 +19,7 @@
 					<t t-call="web.external_layout">
 						<div class="page" style="font-size: 0.6rem;">
 							<style>
-								.table {
+								.table-div {
 									display: table;
 									width: 100%;
 									border-collapse: collapse;
@@ -118,7 +118,7 @@
 										</tbody>
 									</table> -->
 
-									<div class="table">
+									<div class="table-div">
 										<div class="table-header bg-200">
 											<div class="table-cell" style="width:50%;">Producto</div>
 											<div class="table-cell" style="width:8%;">Cantidad requerida</div>
