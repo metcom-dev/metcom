@@ -40,14 +40,11 @@
 									border-bottom: 1px solid black;
 									text-transform: uppercase;
     								color: darkblue;
+									padding-top: 3px;
+									padding-bottom: 3px;
 								}
 								.table-cell.text-right {
 									text-align: right;
-								}
-								.last-element {
-									background-color: white;
-									color: black;
-									border-bottom: 1px solid black;
 								}
 							</style>
 							<div class="row">
