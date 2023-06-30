@@ -19,9 +19,35 @@
 					<t t-call="web.external_layout">
 						<div class="page" style="font-size: 0.6rem;">
 							<style>
+								.table {
+									display: table;
+									width: 100%;
+									border-collapse: collapse;
+								}
+								.table-header, .table-row {
+									display: table-row;
+								}
+								.table-cell {
+									display: table-cell;
+									padding: 2px;
+									border-left: 1px solid black;
+    								border-right: 1px solid black;
+								}
+								.table-header .table-cell {
+									text-align: center; 
+									font-weight: bold; 
+									border-top: 1px solid black;
+									border-bottom: 1px solid black;
+									text-transform: uppercase;
+    								color: darkblue;
+								}
+								.table-cell.text-right {
+									text-align: right;
+								}
 								.last-element {
-									background-color: white !important;
-									color: black !important;
+									background-color: white;
+									color: black;
+									border-bottom: 1px solid black;
 								}
 							</style>
 							<div class="row">
@@ -44,7 +70,7 @@
 							<br/>
 							<div class="row">
 								<div class="col-12">
-									<table class="table table-sm o_main_table table-borderless">
+									<!-- <table class="table table-sm o_main_table table-borderless">
 										<thead>
 											<tr class="bg-200">
 												<th style="width:50%;">Producto</th>
@@ -88,7 +114,48 @@
 												</tr>
 											</t>
 										</tbody>
-									</table>
+									</table> -->
+
+									<div class="table">
+										<div class="table-header bg-200">
+											<div class="table-cell" style="width:50%;">Producto</div>
+											<div class="table-cell" style="width:8%;">Cantidad requerida</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+											<div class="table-cell" style="width:9%;">Cantidad en stock</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+											<div class="table-cell" style="width:9%;">Fecha de stock</div>
+											<div class="table-cell" style="width:9%;">Cantidad a comprar</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+										</div>
+										<t t-foreach="doc.line_ids" t-as="line">
+											<div t-attf-class="table-row #{line == doc.line_ids[-1] and 'last-element' or ''}" t-if="line.state!='cancel'">
+												<div class="table-cell">
+													<span t-field="line.product_id"/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.product_qty"/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.product_uom"/>
+												</div>
+											 	<div class="table-cell">
+													<span t-field="line.stock_qty"/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.product_stock_uom"/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.stock_date" t-options='{"widget": "date"}'/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.purchase_product_qty"/>
+												</div>
+												<div class="table-cell">
+													<span t-field="line.purchase_product_uom"/>
+												</div>
+											</div>
+										</t>
+									</div>
 								</div>
 							</div>
 							<br/>
