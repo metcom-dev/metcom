@@ -92,7 +92,7 @@ class ReportPreorderProject(models.AbstractModel):
 
     def get_data(self, id):
         query = """
-            select 
+            (SELECT 
                 pp.name, 
                 pp.date_order, 
                 pp2.name as name_project,
@@ -103,30 +103,59 @@ class ReportPreorderProject(models.AbstractModel):
                 po.date_approve as fecha_compra, 
                 rp2.name as usuario_emisor,
                 ppl.product_qty as cantidad_pedida,
-                ppl.purchase_product_qty as cantidad_atendida,
+                pol.product_qty as cantidad_atendida,
                 ppl.stock_qty as materiale_stock,
                 pt."name" as nombre_material,
-                pt.default_code as codigo_material,
+                pt.default_code as codigo_material, 
                 uu.name as unidad_medida
-            from 
+            FROM 
                 purchase_preorder pp
-                left join project_project pp2 on pp2.id = pp.project_id
-                left join purchase_order po on po.from_preorders = pp.name
-                left join res_partner rp on po.partner_id = rp.id
-                left join res_currency rc on po.currency_id = rc.id
-                left join res_users ru on po.user_id = ru.id
-                left join res_partner rp2 on ru.partner_id = rp2.id
-                left join purchase_preorder_line ppl on ppl.preorder_id = pp.id
-                left join product_product pp3 on ppl.product_id = pp3.id
-                left join product_template pt on pt.id = pp3.product_tmpl_id
-                left join uom_uom uu on pt.uom_id = uu.id
-            where 
+                LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
+                LEFT JOIN purchase_preorder_line ppl ON ppl.preorder_id = pp.id
+                LEFT JOIN purchase_order po ON po.from_preorders = pp.name
+                INNER JOIN purchase_order_line pol ON pol.order_id = po.id AND pol.product_id = ppl.product_id
+                LEFT JOIN res_partner rp ON po.partner_id = rp.id
+                LEFT JOIN res_currency rc ON po.currency_id = rc.id
+                LEFT JOIN res_users ru ON po.user_id = ru.id
+                LEFT JOIN res_partner rp2 ON ru.partner_id = rp2.id
+                INNER JOIN product_product pp3 ON ppl.product_id = pp3.id
+                LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
+                LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
+            WHERE 
+                pp.project_id = %s)
+            UNION ALL
+            (SELECT 
+                pp.name, 
+                pp.date_order, 
+                pp2.name as name_project,
+                NULL name_purchase_order,
+                NULL as name_proveedor, 
+                NULL as monto_sin_igv,
+                NULL as tipo_moneda, 
+                NULL as fecha_compra, 
+                NULL as usuario_emisor,
+                ppl.product_qty as cantidad_pedida,
+                NULL as cantidad_atendida,
+                ppl.stock_qty as materiale_stock,
+                pt."name" as nombre_material,
+                pt.default_code as codigo_material, 
+                uu.name as unidad_medida
+            FROM 
+                purchase_preorder pp
+                LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
+                LEFT JOIN purchase_preorder_line ppl ON ppl.preorder_id = pp.id
+                LEFT JOIN product_product pp3 ON ppl.product_id = pp3.id
+                LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
+                LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
+            WHERE 
                 pp.project_id = %s
-            group by 
-                pp.name, pp.date_order, pp2.name, rp.name, po.amount_untaxed, rc.name, po.date_approve, rp2.name, 
-                po.name, pt."name", pt.default_code, uu."name", ppl.product_qty, ppl.stock_qty, ppl.purchase_product_qty
-            order by 
-                pp2.name desc 
+                AND NOT EXISTS (
+                    SELECT 1 
+                    FROM purchase_order po 
+                    INNER JOIN purchase_order_line pol ON pol.order_id = po.id 
+                    WHERE po.from_preorders = pp.name AND pol.product_id = ppl.product_id))
+            ORDER BY 
+                name_project DESC 
         """ % (id)
 
         self.env.cr.execute(query)

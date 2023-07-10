@@ -13,7 +13,7 @@ class Project(models.Model):
                 if not rec.backup_restrict_group_id:
                     group = self.env['res.groups'].create({
                         'name': _('Project %s ' % self.name),
-                        'users': [(6, 0, [self.user_id.id])]
+                        'users': [(6, 0, [self.user_id.id, 6, 9, 7, 8])]
                     })
                 else:
                     group = rec.backup_restrict_group_id
