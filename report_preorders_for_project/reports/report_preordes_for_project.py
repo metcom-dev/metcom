@@ -98,7 +98,7 @@ class ReportPreorderProject(models.AbstractModel):
                 pp2.name as name_project,
                 po.name name_purchase_order,
                 rp.name as name_proveedor, 
-                po.amount_untaxed as monto_sin_igv,
+                pol.price_subtotal as monto_sin_igv,
                 rc.name as tipo_moneda, 
                 po.date_approve as fecha_compra, 
                 rp2.name as usuario_emisor,
