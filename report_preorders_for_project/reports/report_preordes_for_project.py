@@ -156,7 +156,7 @@ class ReportPreorderProject(models.AbstractModel):
                     WHERE po.from_preorders = pp.name AND pol.product_id = ppl.product_id))
             ORDER BY 
                 name_project DESC 
-        """ % (id)
+        """ % (id, id)
 
         self.env.cr.execute(query)
         return self.env.cr.dictfetchall()
