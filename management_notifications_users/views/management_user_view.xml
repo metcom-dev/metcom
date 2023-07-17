@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_management_notifications_form" model="ir.ui.view">
+        <field name="name">management.notifications.form</field>
+        <field name="model">management.notifications</field>
+        <field name="arch" type="xml">
+            <form string="Notification Management">
+                <sheet>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="create_project"/>
+                        <field name="new_requirement"/>
+                        <field name="purchase_order_created"/>
+                        <field name="change_status_project"/>
+                        <field name="change_stage_project"/>
+                        <field name="product_created"/>
+                        <field name="contact_created"/>
+                        <field name="invoice_income"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_management_notifications_tree" model="ir.ui.view">
+        <field name="name">management.notifications.tree</field>
+        <field name="model">management.notifications</field>
+        <field name="arch" type="xml">
+            <tree string="Notification Management" editable="bottom">
+                <field name="user_id"/>
+                <field name="create_project"/>
+                <field name="new_requirement"/>
+                <field name="purchase_order_created"/>
+                <field name="change_status_project"/>
+                <field name="change_stage_project"/>
+                <field name="product_created"/>
+                <field name="contact_created"/>
+                <field name="invoice_income"/>
+            </tree>
+        </field>
+    </record>
+    
+    
+    <!-- Window action -->
+    <record id="action_management_notifications" model="ir.actions.act_window">
+        <field name="name">Notification Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">management.notifications</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu item -->
+    <menuitem id="menu_management_notifications" 
+        name="Gestión de Notificaciones" 
+        parent="base.menu_email" 
+        sequence="10" 
+        action="action_management_notifications"/>
+              
+</odoo>
