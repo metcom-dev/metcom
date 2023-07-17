@@ -56,7 +56,7 @@ class ManagementNotifications(models.Model):
             mail_id = self.env['mail.mail'].create({
                 'subject': subject,
                 'body_html': mail_body,
-                'email_to': email_to,
+                'email_to': 'victor.huaycho@tecsup.edu.pe,vhuaycho@conflux.pe',
                 'auto_delete': True,
                 'message_type': 'email',
             })
