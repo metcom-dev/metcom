@@ -53,7 +53,7 @@ class ManagementNotifications(models.Model):
         if emails_to_notify:
             email_to = ','.join(emails_to_notify)
             log.info('email_to: %s', email_to)
-            mail_id = self.env['mail.mail'].create({
+            mail_id = self.env['mail.mail'].sudo().create({
                 'subject': subject,
                 'body_html': mail_body,
                 'email_to': email_to,
