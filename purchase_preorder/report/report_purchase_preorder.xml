@@ -124,6 +124,7 @@
 											<div class="table-cell" style="width:5%;">UdM</div>
 											<div class="table-cell" style="width:9%;">Fecha de stock</div>
 											<div class="table-cell" style="width:9%;">Cantidad a comprar</div>
+											<div class="table-cell" style="width:9%;">Precio Unitario</div>
 											<div class="table-cell" style="width:5%;">UdM</div>
 										</div>
 										<t t-foreach="doc.line_ids" t-as="line">
@@ -148,6 +149,9 @@
 												</div>
 												<div class="table-cell text-center">
 													<span t-field="line.purchase_product_qty"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.product_id.standard_price"/>
 												</div>
 												<div class="table-cell text-center">
 													<span t-field="line.purchase_product_uom"/>
