@@ -57,7 +57,7 @@ class PurchaseOrder(models.Model):
         product_liens = dict()
         for line in self.order_line:
             date_planned_value = line.date_planned
-            if line.date_planned:
+            if not line.display_type:
                 date_planned_value = datetime.strftime(line.date_planned - timedelta(hours=5), '%d/%m/%Y %H:%M:%S')
             if not product_liens.get(line.product_id.id, False):
                 product_liens[line.product_id.id] = {
