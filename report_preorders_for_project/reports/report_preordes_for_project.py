@@ -59,10 +59,11 @@ class ReportPreorderProject(models.AbstractModel):
         sheet.write(row_header, 9, 'Materiales comprados', formats['bold_center'])
         sheet.write(row_header, 10, 'Orden de Compra', formats['bold_center'])
         sheet.write(row_header, 11, 'Proveedor', formats['bold_center'])
-        sheet.write(row_header, 12, 'Monto sin IGV', formats['bold_center'])
-        sheet.write(row_header, 13, 'Moneda', formats['bold_center'])
-        sheet.write(row_header, 14, 'Fecha de Compra', formats['bold_center'])
-        sheet.write(row_header, 15, 'Usuario Emisor', formats['bold_center'])
+        sheet.write(row_header, 12, 'Precio Unitario sin IGV', formats['bold_center'])
+        sheet.write(row_header, 13, 'Monto sin IGV', formats['bold_center'])
+        sheet.write(row_header, 14, 'Moneda', formats['bold_center'])
+        sheet.write(row_header, 15, 'Fecha de Compra', formats['bold_center'])
+        sheet.write(row_header, 16, 'Usuario Emisor', formats['bold_center'])
 
         row = 4
         if len(data) > 0:
@@ -72,7 +73,7 @@ class ReportPreorderProject(models.AbstractModel):
                 # sheet.write(row, 3, item.get('name_project').get(user_lang, ''), formats['normal_left'])
                 sheet.write(row, 3, item['codigo_material'], formats['normal_center'])
                 sheet.write(row, 4, item.get('nombre_material').get(user_lang, ''), formats['normal_left'])
-                sheet.write(row, 5, item.get('unidad_medida').get(user_lang, ''), formats['normal_center'])
+                sheet.write(row, 5, item.get('unidadmedida').get(user_lang, ''), formats['normal_center'])
 
                 sheet.write(row, 6, item['cantidad_pedida'], formats['normal_center'])
                 sheet.write(row, 7, item['cantidad_atendida'], formats['normal_center'])
@@ -82,33 +83,42 @@ class ReportPreorderProject(models.AbstractModel):
 
                 sheet.write(row, 10, item['name_purchase_order'], formats['normal_center'])
                 sheet.write(row, 11, item['name_proveedor'], formats['normal_left'])
-                sheet.write(row, 12, item['monto_sin_igv'], formats['normal_center'])
-                sheet.write(row, 13, item['tipo_moneda'], formats['normal_center'])
-                sheet.write(row, 14, item['fecha_compra'], formats['date_format'])
-                sheet.write(row, 15, item['usuario_emisor'], formats['normal_center'])
+                sheet.write(row, 12, item['precio_unitario'], formats['normal_center'])
+                sheet.write(row, 13, item['monto_sin_igv'], formats['normal_center'])
+                sheet.write(row, 14, item['tipo_moneda'], formats['normal_center'])
+                sheet.write(row, 15, item['fecha_compra'], formats['date_format'])
+                sheet.write(row, 16, item['usuario_emisor'], formats['normal_center'])
                 row += 1
         else:
             sheet.write(row, 0, 'NO HAY DATOS / REPORTE EN CONSTRUCCION', )
 
+    def get_unit_price_from_product(self, product_id):
+        product = self.env['product.template'].browse(product_id)
+        standard_price = product.standard_price
+        return standard_price if standard_price else 0
+
     def get_data(self, id):
         query = """
-            (SELECT 
-                pp.name, 
-                pp.date_order, 
+            (SELECT
+                pp.name,
+                pp.date_order,
                 pp2.name as name_project,
                 po.name name_purchase_order,
-                rp.name as name_proveedor, 
+                po.id as id_purchase_order,
+                rp.name as name_proveedor,
                 pol.price_subtotal as monto_sin_igv,
-                rc.name as tipo_moneda, 
-                po.date_approve as fecha_compra, 
+                rc.name as tipo_moneda,
+                po.date_approve as fecha_compra,
                 rp2.name as usuario_emisor,
                 ppl.product_qty as cantidad_pedida,
                 pol.product_qty as cantidad_atendida,
+                pol.price_unit as precio_unitario,
                 ppl.stock_qty as materiale_stock,
                 pt."name" as nombre_material,
-                pt.default_code as codigo_material, 
-                uu.name as unidad_medida
-            FROM 
+                pt.default_code as codigo_material,
+                uu.name as unidadmedida,
+                pt.id as id_product
+            FROM
                 purchase_preorder pp
                 LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
                 LEFT JOIN purchase_preorder_line ppl ON ppl.preorder_id = pp.id
@@ -121,42 +131,49 @@ class ReportPreorderProject(models.AbstractModel):
                 INNER JOIN product_product pp3 ON ppl.product_id = pp3.id
                 LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
                 LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
-            WHERE 
+            WHERE
                 pp.project_id = %s)
+
             UNION ALL
-            (SELECT 
-                pp.name, 
-                pp.date_order, 
+
+            (SELECT
+                pp.name,
+                pp.date_order,
                 pp2.name as name_project,
                 NULL name_purchase_order,
-                NULL as name_proveedor, 
+                NULL as id_purchase_order,
+                NULL as name_proveedor,
                 NULL as monto_sin_igv,
-                NULL as tipo_moneda, 
-                NULL as fecha_compra, 
+                NULL as tipo_moneda,
+                NULL as fecha_compra,
                 NULL as usuario_emisor,
                 ppl.product_qty as cantidad_pedida,
                 NULL as cantidad_atendida,
+                NULL as precio_unitario,
                 ppl.stock_qty as materiale_stock,
                 pt."name" as nombre_material,
-                pt.default_code as codigo_material, 
-                uu.name as unidad_medida
-            FROM 
+                pt.default_code as codigo_material,
+                uu.name as unidadmedida,
+                pt.id as id_product
+            FROM
                 purchase_preorder pp
                 LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
                 LEFT JOIN purchase_preorder_line ppl ON ppl.preorder_id = pp.id
                 LEFT JOIN product_product pp3 ON ppl.product_id = pp3.id
                 LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
                 LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
-            WHERE 
+            WHERE
                 pp.project_id = %s
                 AND NOT EXISTS (
-                    SELECT 1 
-                    FROM purchase_order po 
-                    INNER JOIN purchase_order_line pol ON pol.order_id = po.id 
+                    SELECT 1
+                    FROM purchase_order po
+                    INNER JOIN purchase_order_line pol ON pol.order_id = po.id
                     WHERE po.from_preorders = pp.name AND pol.product_id = ppl.product_id))
-            ORDER BY 
-                name_project DESC 
+
+            ORDER BY name_project desc;
         """ % (id, id)
+
+        log.info(query)
 
         self.env.cr.execute(query)
         return self.env.cr.dictfetchall()
