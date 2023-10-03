@@ -59,7 +59,7 @@ class ReportPreorderProject(models.AbstractModel):
         sheet.write(row_header, 9, 'Materiales comprados', formats['bold_center'])
         sheet.write(row_header, 10, 'Orden de Compra', formats['bold_center'])
         sheet.write(row_header, 11, 'Proveedor', formats['bold_center'])
-        sheet.write(row_header, 12, 'Precio Unitario', formats['bold_center'])
+        sheet.write(row_header, 12, 'Precio Unitario sin IGV', formats['bold_center'])
         sheet.write(row_header, 13, 'Monto sin IGV', formats['bold_center'])
         sheet.write(row_header, 14, 'Moneda', formats['bold_center'])
         sheet.write(row_header, 15, 'Fecha de Compra', formats['bold_center'])
@@ -83,7 +83,7 @@ class ReportPreorderProject(models.AbstractModel):
 
                 sheet.write(row, 10, item['name_purchase_order'], formats['normal_center'])
                 sheet.write(row, 11, item['name_proveedor'], formats['normal_left'])
-                sheet.write(row, 12, self.get_unit_price_from_product(item['id_product']), formats['normal_center'])
+                sheet.write(row, 12, item['precio_unitario'], formats['normal_center'])
                 sheet.write(row, 13, item['monto_sin_igv'], formats['normal_center'])
                 sheet.write(row, 14, item['tipo_moneda'], formats['normal_center'])
                 sheet.write(row, 15, item['fecha_compra'], formats['date_format'])
@@ -104,6 +104,7 @@ class ReportPreorderProject(models.AbstractModel):
                 pp.date_order,
                 pp2.name as name_project,
                 po.name name_purchase_order,
+                po.id as id_purchase_order,
                 rp.name as name_proveedor,
                 pol.price_subtotal as monto_sin_igv,
                 rc.name as tipo_moneda,
@@ -111,6 +112,7 @@ class ReportPreorderProject(models.AbstractModel):
                 rp2.name as usuario_emisor,
                 ppl.product_qty as cantidad_pedida,
                 pol.product_qty as cantidad_atendida,
+                pol.price_unit as precio_unitario,
                 ppl.stock_qty as materiale_stock,
                 pt."name" as nombre_material,
                 pt.default_code as codigo_material,
@@ -139,6 +141,7 @@ class ReportPreorderProject(models.AbstractModel):
                 pp.date_order,
                 pp2.name as name_project,
                 NULL name_purchase_order,
+                NULL as id_purchase_order,
                 NULL as name_proveedor,
                 NULL as monto_sin_igv,
                 NULL as tipo_moneda,
@@ -146,6 +149,7 @@ class ReportPreorderProject(models.AbstractModel):
                 NULL as usuario_emisor,
                 ppl.product_qty as cantidad_pedida,
                 NULL as cantidad_atendida,
+                NULL as precio_unitario,
                 ppl.stock_qty as materiale_stock,
                 pt."name" as nombre_material,
                 pt.default_code as codigo_material,
@@ -168,6 +172,8 @@ class ReportPreorderProject(models.AbstractModel):
 
             ORDER BY name_project desc;
         """ % (id, id)
+
+        log.info(query)
 
         self.env.cr.execute(query)
         return self.env.cr.dictfetchall()
