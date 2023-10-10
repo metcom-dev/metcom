@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_stock_quant_action_no_sincronizado" model="ir.actions.server">
+        <field name="name">No Informar</field>
+        <field name="model_id" ref="model_stock_quant"/>
+        <field name="binding_model_id" ref="model_stock_quant"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.no_report_stock_inventory()
+        </field>
+    </record>
+    <record id="model_stock_quant_action_sync_tinka_inventory" model="ir.actions.server">
+        <field name="name">Sync La Tinka</field>
+        <field name="model_id" ref="model_stock_quant"/>
+        <field name="binding_model_id" ref="model_stock_quant"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_sync_tinka_stock_inventory()
+        </field>
+    </record>
+    <record id="stock_quant_tree_view_inherit_intralot" model="ir.ui.view">
+        <field name="name">stock_quant_tree_view_inherit_intralot</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="sync_status_inventory" widget="state_selection" readonly="True" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+---Models in module 'rent_5ta'---
+---Fields in module 'rent_5ta'---
+---XML records in module 'rent_5ta'---
+---Test in mobule 'rent_5ta'---

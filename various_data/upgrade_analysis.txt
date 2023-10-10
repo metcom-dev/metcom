@@ -1,0 +1,6 @@
+---Models in module 'various_data'---
+---Fields in module 'various_data'---
+Se cambió el campo name por name_id y paso a ser de tipo char a many2one
+Agregada la función _check_employee_overlap
+---XML records in module 'various_data'---
+Se cambio el inherit de hr_employee_form_view_inherit_various_data

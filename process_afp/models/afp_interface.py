@@ -44,7 +44,8 @@ class AfpInterface(models.Model):
             if obj.start_date > obj.end_date:
                 raise ValidationError('La fecha "Desde" no puede ser mayor que la fecha "Hasta".')
             values = []
-            
+            start_m = int(obj.start_date.strftime('%m'))
+            start_y = int(obj.start_date.strftime('%Y'))
             payslip = self.env['hr.payslip'].search([
                 ('date_from', '>=', obj.start_date),
                 ('date_to', '<=', obj.end_date),

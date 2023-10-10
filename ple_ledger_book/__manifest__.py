@@ -1,6 +1,6 @@
 {
     'name': 'Accounting ledger PLE - SUNAT (Perú)',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.1.0',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Accounting ledger PLE - SUNAT (Perú)',

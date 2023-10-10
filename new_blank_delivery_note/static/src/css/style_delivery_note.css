@@ -1,0 +1,138 @@
+#header_layout_blank_delivery_note{
+    height: 360px;
+    width: 840px;
+    padding: 30px 1px 0px 30px;
+}
+.part_one_blank_delivery_note_one {
+    width: 100%;
+    margin-top: 130px ;
+    font-size: 22px;
+}
+.part_one_blank_delivery_note_one .picking_number {
+    float: right;
+    margin-right: 118px;
+    font-weight: 700;
+}
+.part_one_blank_delivery_note_two {
+    width: 100%;
+    margin-top: 180px ;
+    font-size: 15px;
+}
+.part_one_blank_delivery_note_two .date_done {
+    float: left;
+    margin-left: 180px;
+    margin-right: 90px;
+}
+.part_two_blank_delivery_note {
+    margin-top: 27px;
+    width: 100%;
+    font-size: 15px;
+}
+.part_two_blank_delivery_note .address_origin {
+    float: left;
+    width: 350px;
+    height : 60px;
+    float: left;
+    position: relative;
+    margin-left: 68px;
+    margin-right: 20px;
+}
+.part_two_blank_delivery_note .address_arrival{
+    width: 350px;
+    height : 60px;
+    float: left;
+    position: relative;
+}
+.part_three_blank_delivery_note{
+    margin-top: 13px;
+    font-size: 15px;
+    margin-left: 190px;
+}
+.part_three_blank_delivery_note .transfer_start_date{
+    width: 190px;
+    height : 60px;
+    float: left;
+    position: relative;
+}
+.part_three_blank_delivery_note .block_sub_three{
+    width: 310px;
+    height : 60px;
+    margin-left: 115px;
+    float: left;
+    position: relative;
+}
+.part_three_blank_delivery_note .block_sub_three .contact {
+    height : 25px;
+    margin-left: 50px;
+}
+.part_three_blank_delivery_note .block_sub_three .vat {
+    height : 35px;
+    padding-top: 7px;
+    margin-left: 50px;
+}
+.part_four_blank_delivery_note{
+    margin-top: 38px;
+    font-size:15px;
+    margin-left: 200px;
+}
+.part_four_blank_delivery_note .block_sub_one_four{
+    width: 190px;
+    height : 60px;
+    float: left;
+    position: relative;
+}
+.part_four_blank_delivery_note .block_sub_one_four .plate_number {
+    height : 40px;
+    margin-left: 20px;
+}
+.part_four_blank_delivery_note .block_sub_one_four .driver_license {
+    height : 40px;
+    padding-top: 7px;
+    margin-left: 20px;
+}
+.part_four_blank_delivery_note .block_sub_two_four{
+    width: 310px;
+    height : 60px;
+    margin-left: 100px;
+    float: left;
+    position: relative;
+}
+.part_four_blank_delivery_note .block_sub_two_four .carrier_partner_id_name {
+    height : 40px;
+    margin-left: 70px;
+}
+.part_four_blank_delivery_note .block_sub_two_four .carrier_partner_id_vat {
+    height : 40px;
+    padding-top: 7px;
+    margin-left: 40px;
+}
+.part_five_blank_delivery_note {
+    padding-top: 17px;
+    margin-left: 33px;
+    width: 840px;
+    font-size: 15px;
+}
+.part_five_blank_delivery_note table{
+    margin-top: 28px;
+    width: 100%;
+}
+.part_five_blank_delivery_note table td{
+    width: 25%;
+    text-align: center;
+    padding: 0.3em;
+    margin-top: 20px;
+
+}
+#footer_blank_delivery_note{
+    margin-left: 30px;
+    width: 840px;
+    height: 120px;
+    font-size: 17px;
+}
+
+.type_and_number_doc{
+    color:black;
+    padding-left:250px;
+    padding-top:120px;
+    font-size:17px;
+}

@@ -4,9 +4,9 @@
     <record id="hr_employee_view_form_inherit_additional_fields_voucher" model="ir.ui.view">
         <field name="name">hr.employee.view.form.inherit.additional_fields_voucher</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='registration_number']" position="after">
+            <xpath expr="//notebook/page[@name='hr_settings']/group/group/field[@name='user_id']" position="after">
                 <field name="is_employer"/>
                 <div>
                     <field name="employer_sign" widget="image"

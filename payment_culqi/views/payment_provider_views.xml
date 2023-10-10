@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Culqi Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position="inside">
+                <group attrs="{'invisible': [('code', '!=', 'culqi')]}">
+                    <field name="culqi_public_key" attrs="{'required': [('code', '=', 'culqi'), ('state', '!=', 'disabled')]}"/>
+                    <field name="culqi_private_key" attrs="{'required': [('code', '=', 'culqi'), ('state', '!=', 'disabled')]}" password="True"/>
+                    <a colspan="2" href="https://docs.google.com/document/d/1SXbRfQMAqkFFGBx5n2aauf7v60cmjqI53RwKZuAQAjM/edit?usp=sharing" target="_blank" attrs="{'invisible': [('code', '!=', 'culqi')]}">¿Cómo configurar tu cuenta de Culqi?</a>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

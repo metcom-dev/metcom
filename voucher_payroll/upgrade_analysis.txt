@@ -1,0 +1,3 @@
+---Models in module 'voucher_payroll'---
+---Fields in module 'voucher_payroll'---
+---XML records in module 'voucher_payroll'---

@@ -10,7 +10,6 @@
                 <field name="pension_system_id" groups="hr_contract.group_hr_contract_manager"/>
                 <field name="commission_type" attrs="{'invisible': [('is_cuspp', '=', False)]}" groups="hr_contract.group_hr_contract_manager"/>
                 <field name="cuspp" attrs="{'invisible': [('is_cuspp', '=', False)]}" groups="hr_contract.group_hr_contract_manager"/>
-                <field name="pension_sctr" groups="hr_contract.group_hr_contract_manager"/>
                 <field name="is_cuspp" invisible="1"/>
             </xpath>
         </field>

@@ -171,6 +171,12 @@ class PleReportPurchase(models.Model):
                 'P_TAX_OTHER': tax_data[9],
                 'AMOUNT_TOTAL': tax_data[10],
             })
+            country_name = obj_line.get('country_name')
+            if isinstance(country_name, dict):
+                ultima_clave = list(country_name.keys())[-1]
+                new_country_name = country_name[ultima_clave]
+            else:
+                new_country_name = country_name or ''
             value = {
                 'period': obj_line.get('period', ''),
                 'number_origin': obj_line.get('number_origin', ''),
@@ -221,7 +227,7 @@ class PleReportPurchase(models.Model):
                 'inv_correlative': obj_line.get('inv_correlative', ''),
                 'inv_retention_igv': obj_line.get('inv_retention_igv', '0.00'),
                 'country_code': obj_line.get('country_code', ''),
-                'partner_street': "{} {} {} {} {}".format(obj_line.get('country_name', ''),
+                'partner_street': "{} {} {} {} {}".format(new_country_name,
                                                           obj_line.get('state_name', ''), obj_line.get('city', ''),
                                                           obj_line.get('street', ''),
                                                           obj_line.get('street2', '')).strip(),

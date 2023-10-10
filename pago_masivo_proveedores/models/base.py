@@ -167,6 +167,10 @@ class AccountBatchPayment(models.Model):
                 if account != ' '.ljust(20, ' '):
                     total_account = total_account + int(account.replace('-', ''))
 
+                payment_amount_str = str(payment.amount)
+                if len(payment_amount_str.split('.')) < 2:
+                    payment_amount_str += '.0'
+
                 values = {
                     'id': '2',
                     'bank_cod': bank_cod,
@@ -178,7 +182,7 @@ class AccountBatchPayment(models.Model):
                     'ref': str(payment.partner_id.name[:75]).ljust(75, ' '),
                     'reference': str(self.name[:40]).ljust(40, ' '),
                     'currency': '0001' if payment.currency_id.name == 'PEN' or not payment.currency_id else '1001',
-                    'amount': (str(payment.amount) + '0').rjust(17, '0') if len(str(payment.amount).split('.')[1]) < 2 else str(round(payment.amount, 2)).rjust(17, '0'),
+                    'amount': (payment_amount_str + '0').rjust(17, '0') if len(payment_amount_str.split('.')[1]) < 2 else str(round(payment.amount, 2)).rjust(17, '0'),
                     'N': 'S',
                 }
                 line_data.append(values)
@@ -208,6 +212,9 @@ class AccountBatchPayment(models.Model):
                 line_data_2.append(values)
 
             total_account = total_account + int((self.journal_id.bank_account_id.acc_number).replace('-', ''))
+            amount_total_str = str(amount_total)
+            if len(amount_total_str.split('.')) < 2:
+                amount_total_str += '.0'
             list_data = {
                 'id': '1',
                 'lines_total': str(lines).rjust(6, '0'),
@@ -215,7 +222,7 @@ class AccountBatchPayment(models.Model):
                 'c': 'C',
                 'currency': '0001' if self.journal_id.currency_id.name == 'PEN' or not self.journal_id.currency_id else '1001',
                 'acc_number': str(self.journal_id.bank_account_id.acc_number).ljust(20, ' '),
-                'amount_total': (str(amount_total) + '0').rjust(17, '0') if len(str(amount_total).split('.')[1]) < 2 else str(round(amount_total, 2)).rjust(17, '0'),
+                'amount_total': (amount_total_str + '0').rjust(17, '0') if len(amount_total_str.split('.')[1]) < 2 else str(round(amount_total, 2)).rjust(17, '0'),
                 'reference': str(self.name).ljust(40, ' '),
                 'N': 'N',
                 'abono': str(total_account)[-15:].rjust(15, '0'),
@@ -284,7 +291,10 @@ class AccountBatchPayment(models.Model):
                 }
                 line_data.append(values)
 
-            amount_total = str(amount_total) + '0' if len(str(amount_total).split('.')[1]) < 2 else str(round(amount_total, 2))
+            amount_total_str = str(amount_total)
+            if len(amount_total_str.split('.')) < 2:
+                amount_total_str += '.0'
+            amount_total = amount_total_str + '0' if len(amount_total_str.split('.')[1]) < 2 else str(round(amount_total, 2))
 
             list_data = {
                 'company_code': self.journal_id.company_code,

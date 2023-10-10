@@ -21,6 +21,7 @@ class HrSalaryAdvance(models.Model):
                               ('submit', 'Submitted'),
                               ('waiting_approval', 'Waiting Approval'),
                               ('approve', 'Approved'),
+                              ('paid', 'Paid'),
                               ('cancel', 'Cancelled'),
                               ('reject', 'Rejected')], string='Status', default='draft')
     employee_id = fields.Many2one(
@@ -231,12 +232,13 @@ class HrSalaryAdvance(models.Model):
                 credit_sum += credit_line[2]['credit'] - credit_line[2]['debit']
 
             move.update({'line_ids': line_ids})
-            move_obj.create(move)
-            self.update_seat()
+            new_move = move_obj.create(move)
+            
             try:
-                move_obj.action_post()
+                new_move.action_post()
             except Exception:
                 _logger.debug('Error publishing move: {}'.format(move_obj))
+            self.update_seat()
         return True
 
     def update_seat(self):
@@ -244,3 +246,75 @@ class HrSalaryAdvance(models.Model):
             move_obj = self.env['account.move'].search([('ref', '=', record.name)])
             self.write({'move_id':move_obj.id if move_obj else False})
         return True
+    
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+    
+    @api.depends('full_reconcile_id.name', 'matched_debit_ids', 'matched_credit_ids')
+    def _compute_matching_number(self):
+        res = super(AccountMoveLine,self)._compute_matching_number()
+        
+        for record in self:
+            if record.full_reconcile_id:
+                record.matching_number = record.full_reconcile_id.name
+            elif record.matched_debit_ids or record.matched_credit_ids:
+                record.matching_number = 'P'
+            else:
+                record.matching_number = None
+        
+            match = record.matching_number
+            if match and match != 'P' and match != False:
+                self.env.cr.execute("""
+                    UPDATE hr_salary_advance AS sa
+                    SET state = 'paid'
+                    FROM hr_payslip AS hp
+                    WHERE sa.employee_id IS NOT NULL
+                        AND sa.state = 'approve'
+                        AND sa.employee_id = hp.employee_id
+                        AND hp.state = 'done'
+                        AND EXISTS (
+                            SELECT 1
+                            FROM account_move_line AS aml
+                            WHERE aml.move_id = hp.move_id
+                        AND aml.matching_number IS NOT NULL
+                        AND aml.matching_number != 'P'
+                        AND (aml.matching_number != 'None' OR aml.matching_number != 'False')
+                        AND aml.name = 'Adelanto de sueldo'
+                        );
+                """)
+            
+                self.env.cr.execute("""
+                    SELECT
+                        hl.move_id AS move_id,
+                        MAX(hl.installment) AS max_installment,
+                        hl.loan_amount,
+                        hl.amount_paid,
+                        hl.amount_owed,
+                        COUNT(CASE WHEN aml.matching_number IS NOT NULL AND aml.matching_number <> 'P' THEN 1 ELSE NULL END) AS reconciled_installments,
+                        hl.state
+                    FROM hr_loan AS hl
+                    INNER JOIN account_move_line AS aml ON hl.move_id = aml.move_id
+                    WHERE hl.move_id = %s
+                    GROUP BY hl.move_id, hl.loan_amount, hl.amount_paid, hl.amount_owed, hl.state;    
+                """,(record.move_id.id,))
+            
+                results = self.env.cr.fetchall()
+                        
+                if results:
+                    for record in results:                   
+                        move_id,max_installment,loan_amount,amount_paid,amount_owed,reconciled,state = record        
+                        if state != 'paid':
+                            reconciled +=1                               
+                            res = loan_amount / max_installment
+                            amount_paid = res * reconciled
+                            amount_owed = loan_amount - amount_paid            
+                        if max_installment == reconciled:                  
+                            state = 'paid'             
+                        hr_loan = self.env['hr.loan'].search([('move_id', '=', move_id)])
+                        if hr_loan:
+                            hr_loan.write({'state': state, 'amount_paid': amount_paid, 'amount_owed': amount_owed})
+                                                 
+        return res
+    
+    
+        

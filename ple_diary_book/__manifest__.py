@@ -1,6 +1,6 @@
 {
     'name': 'Electronic Journal Perú',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.1.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Generate Electronic Journal for PLE SUNAT',

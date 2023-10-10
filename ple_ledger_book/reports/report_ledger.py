@@ -95,7 +95,7 @@ class LedgerReportExcel(object):
             ws.write(i, 3, value['correlative_line'], style_content)
             ws.write(i, 4, value['account_code'], style_content)
             ws.write(i, 5, value['unit_code'], style_content)
-            ws.write(i, 6, '', style_content)
+            ws.write(i, 6, value['analytic_distribution'], style_content)
             ws.write(i, 7, value['currency_name'], style_content)
             ws.write(i, 8, value['partner_document_type_code'], style_content)
             ws.write(i, 9, value['partner_document_number'], style_content)
@@ -131,7 +131,7 @@ class LedgerReportTxt(object):
     def get_content(self):
         raw = ''
         template = '{period_name}|{move_name}|{correlative_line}|'\
-                   '{account_code}|{unit_code}|{center_cost_code}|'\
+                   '{account_code}|{unit_code}|{analytic_distribution}|{center_cost_code}|'\
                    '{currency_name}|{partner_document_type_code}|'\
                    '{partner_document_number}|{invoice_document_type_code}|{invoice_serie}|'\
                    '{invoice_correlative}|{ml_date}|{ml_date_due}|'\
@@ -144,6 +144,7 @@ class LedgerReportTxt(object):
                 correlative_line=value['correlative_line'],
                 account_code=value['account_code'],
                 unit_code=value['unit_code'],
+                analytic_distribution=value['analytic_distribution'],
                 center_cost_code='',
 
                 currency_name=value['currency_name'],

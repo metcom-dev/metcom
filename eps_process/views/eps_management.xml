@@ -65,11 +65,16 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='personal_information']/group/group[last()-3]" position="inside">
+           <xpath expr="//notebook/page[@name='personal_information']/group" position="inside">
+            <group string="Salud" name="health" groups="hr.group_hr_user">
+                <field name="disability"/>
+                <field name="health_regime_id"/>
                 <field name="exists_eps"/>
                 <field name="management_eps" attrs="{'invisible':[('exists_eps','!=', True)]}"/>
-            </xpath>
-        </field>
+             </group>
+          </xpath>
+      </field>
+
     </record>
 
 </odoo>

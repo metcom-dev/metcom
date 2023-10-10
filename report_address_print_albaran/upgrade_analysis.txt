@@ -1,0 +1,3 @@
+---Models in module 'print_report_address_albaran'---
+---Fields in module 'print_report_address_albaran'---
+---XML records in module 'print_report_address_albaran'---

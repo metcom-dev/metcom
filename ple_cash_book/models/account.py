@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models,api
 
 
 class AccountAccount(models.Model):
@@ -30,12 +30,21 @@ class AccountPayment(models.Model):
     
 class AccountPaymentRegister(models.TransientModel):
     _inherit = 'account.payment.register'
+    
+    inv = fields.Boolean(string="Invisible",  store=False)
 
     def _get_default_means_payment(self):
         means_payment_id = self.env['payment.methods.codes'].search([('code', '=', '003')])
         if means_payment_id:
             return means_payment_id.id
-
+        
+    @api.onchange('journal_id')
+    def _onchange_journal_id(self):        
+        if self.journal_id.type == 'cash':            
+            self.inv = False
+        else:          
+            self.inv = True
+        
     means_payment_id = fields.Many2one(
         comodel_name='payment.methods.codes',
         string="Medio de pago - libro de bancos",

@@ -130,7 +130,7 @@ def _action_done2(self):
                         # the fly before assigning it to the move line if the user checked both
                         # `use_create_lots` and `use_existing_lots`.
                         if ml.lot_name and not ml.lot_id:
-                            lot = self.env['stock.production.lot'].search([
+                            lot = self.env['stock.lot'].search([
                                 ('company_id', '=', ml.company_id.id),
                                 ('product_id', '=', ml.product_id.id),
                                 ('name', '=', ml.lot_name),

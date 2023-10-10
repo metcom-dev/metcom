@@ -261,8 +261,8 @@
                     </group>
                 </group>
             </xpath>
-            <xpath expr="//field[@name='health_regime_id']" position="after">
-                <field name="category_employee"/>
+              <xpath expr="//notebook/page[@name='personal_information']/group/group[@name='health']" position="inside">
+                <field name="category_employee" invisible="1"/>
                 <field name="inv_eps" invisible="1"/>
                 <field name="eps_services_propios" attrs="{'invisible':[('inv_eps','not in', ['01','03'])]}"/>
             </xpath>

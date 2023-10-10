@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--"hr.work.entry.type"-->
+
+        <record id="hr_work_entry_type_dias_002" model="hr.work.entry.type">
+            <field name="code">DIAS_002</field>
+            <field name="name">Dias Trabajados CTS</field>
+        </record>
+
+        <record id="hr_work_entry_type_mes_001" model="hr.work.entry.type">
+            <field name="code">MES_001</field>
+            <field name="name">Meses completados CTS</field>
+        </record>
+
+        <record id="hr_work_entry_type_mes_002" model="hr.work.entry.type">
+            <field name="code">MES_002</field>
+            <field name="name">Meses CTS Truncas</field>
+        </record>
+
+        <record id="hr_work_entry_type_dias_003" model="hr.work.entry.type">
+            <field name="code">DIAS_003</field>
+            <field name="name">Dias CTS truncas</field>
+        </record>
+
+        <record id="hr_work_entry_type_mes_003" model="hr.work.entry.type">
+            <field name="code">MES_003</field>
+            <field name="name">Meses Gratificaciones truncas</field>
+        </record>
+
+        <record id="hr_work_entry_type_mes_004" model="hr.work.entry.type">
+            <field name="code">MES_004</field>
+            <field name="name">Meses completados Gratificaciones</field>
+        </record>
+
+        <record id="hr_work_entry_type_tdm_001" model="hr.work.entry.type">
+            <field name="code">TDM_001</field>
+            <field name="name">Descanso Medico CTS</field>
+        </record>
+
+        <record id="hr_work_entry_type_tdi_001" model="hr.work.entry.type">
+            <field name="code">TDI_001</field>
+            <field name="name">Días inasistencias cts</field>
+        </record>
+
+        <record id="hr_work_entry_type_tdl_001" model="hr.work.entry.type">
+            <field name="code">TDL_001</field>
+            <field name="name">Días de licencias CTS</field>
+        </record>
+
+        <record id="hr_work_entry_type_tdl_002" model="hr.work.entry.type">
+            <field name="code">TDL_002</field>
+            <field name="name">Días de licencias Grati.</field>
+        </record>
+
+        <record id="hr_work_entry_type_tdi_002" model="hr.work.entry.type">
+            <field name="code">TDI_002</field>
+            <field name="name">Días inasistencias Grati.</field>
+        </record>
+
+    </data>
+</odoo>

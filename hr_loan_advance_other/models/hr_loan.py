@@ -60,6 +60,7 @@ class HrLoan(models.Model):
         ('waiting_approval_1', 'Submitted'),
         ('waiting_approval_2', 'Waiting Approval'),
         ('approve', 'Approved'),
+        ('paid','Paid'),
         ('refuse', 'Refused'),
         ('cancel', 'Canceled'),
     ], string="State", default='draft', copy=False )
@@ -77,6 +78,9 @@ class HrLoan(models.Model):
         readonly=True,
         copy=False
     )
+    
+    amount_paid = fields.Float(string="Amount Paid")
+    amount_owed = fields.Float(string="Amount Owed")
 
 
 
@@ -144,6 +148,7 @@ class HrLoan(models.Model):
         if not self.treasury_account_id or not self.emp_account_id or not self.journal_id:
             raise AccessError("You must enter Debit & Credit account and journal to approve.")
         
+        self.state = 'approve'
         self.update_seat()
         if self.move_id:
             return True        
@@ -198,48 +203,58 @@ class HrLoan(models.Model):
                 credit_sum += credit_line[2]['credit'] - credit_line[2]['debit']
 
             move.update({'line_ids': line_ids})
-            move_obj.create(move)
-            self.update_seat()
+            new_move = move_obj.create(move)
             try:
-                move_obj.action_post()
+                new_move.action_post()
             except Exception:
                 _logger.debug('Error publishing move: {}'.format(move_obj))
-            request.state = 'approve'
+            self.update_seat()
+            
+        for loan in self:
+            date_start = datetime.strptime(str(loan.payment_date), '%Y-%m-%d')
+            loan.amount_owed = loan.loan_amount
+            if loan.loan_type == 'daily':
+                relative_values = relativedelta(days=1)
+            elif loan.loan_type == 'weekly':
+                relative_values = relativedelta(days=7)
+            elif loan.loan_type == 'monthly':
+                relative_values = relativedelta(months=1)
+            elif loan.loan_type == 'quarterly':
+                relative_values = relativedelta(months=3)
+            else:
+                relative_values = relativedelta(years=1)
+            
+            self.env.cr.execute("""
+                SELECT
+                    aml.id,
+                    aml.move_id,
+                    aml.account_id,
+                    aml.name,
+                    aml.date_maturity
+                FROM account_move_line AS aml
+                WHERE aml.move_id = %s
+                    AND aml.account_id NOT IN (
+                        SELECT DISTINCT treasury_account_id
+                        FROM hr_loan
+                        WHERE move_id = aml.move_id
+                            AND treasury_account_id IS NOT NULL
+                    );
+            """,(loan.move_id.id,))
+            
+            record_ids = [record[0] for record in self.env.cr.fetchall()]
+            sorted_record_ids = sorted(record_ids)
+            sorted_record_ids = sorted_record_ids[:-1]
+            
+            for record_id in sorted_record_ids:
+                self.env.cr.execute("""
+                    UPDATE account_move_line 
+                        SET date_maturity = %s 
+                    WHERE id = %s;
+                """, (date_start, record_id))
+        
+                date_start = date_start + relative_values       
         return True
     
-    def action_payment_anticipated(self):
-        for data in self:
-            if not data.loan_lines:
-                raise ValidationError(_("Please Compute installment"))
-        self.ensure_one()
-        form = self.env.ref('hr_loan_advance_other.payment_anticipated_loan_view_form')
-        payment_anticipated_loan_id = self.env['payment.anticipated.loan'].create({
-            'employee_id': self.employee_id.id
-        })
-        loan_lines_ids = []
-        for loan in self.loan_lines.filtered(lambda loan: not loan.paid):
-            payment_anticipated_loan_line_id = self.env['payment.anticipated.loan.line'].create({
-                'payment_anticipated_loan_id': payment_anticipated_loan_id.id,
-                'date': loan.date,
-                'amount': loan.amount,
-                'paid': loan.paid,
-                'employee_id': loan.employee_id.id,
-                'receivable': loan.receivable,
-                'struct_id': loan.struct_id.id,
-                'loan_lines_id': loan.id
-            })
-            loan_lines_ids.append(payment_anticipated_loan_line_id.id)
-        return {
-            'name': 'Pago anticipado',
-            'res_model': 'payment.anticipated.loan',
-            'view_mode': 'form',
-            'views': [(form.id, 'form')],
-            'context': {'default_loan_lines_ids': loan_lines_ids},
-            'view_id': form.id,
-            'type': 'ir.actions.act_window',
-            'target': 'new'
-        }
-
     def update_seat(self):
         for record in self:
             move_obj = self.env['account.move'].search([('ref', '=', record.name)])

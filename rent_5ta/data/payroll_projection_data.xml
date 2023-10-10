@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="payroll_projection_exception_10_meses_ant" model="payroll.projection.exception">
+            <field name="name">Remuneraciones percibidas en meses anteriores</field>
+            <field name="is_active">0</field>
+        </record>
+
+        <record id="payroll_projection_exception_ajus_grati" model="payroll.projection.exception">
+            <field name="name">Ajuste de Gratificación</field>
+            <field name="is_active">0</field>
+        </record>
+
+        <record id="payroll_projection_exception_total_grati" model="payroll.projection.exception">
+            <field name="name">Total Gratificación</field>
+            <field name="is_active">0</field>
+        </record>
+
+        <record id="payroll_projection_exception_type" model="payroll.projection.exception">
+            <field name="name">Tipo de Proyeccion</field>
+            <field name="is_active">0</field>
+        </record>
+    </data>
+</odoo>

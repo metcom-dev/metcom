@@ -16,7 +16,7 @@ LEFT JOIN account_move_line  aml ON  am.id=aml.move_id
 LEFT JOIN account_journal  aj    ON  am.journal_id=aj.id
 WHERE
 aj.type in ('purchase','sale') and  aml.serie_correlative=sc_id
-and aj.ple_no_include IS NULL and aml.matching_number IS NOT NULL;
+and aml.matching_number IS NOT NULL;
 END;
 $$ 
 LANGUAGE plpgsql;

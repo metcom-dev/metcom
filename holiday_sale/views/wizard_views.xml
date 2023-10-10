@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="holiday_settlement_wizard_view_form_inherit" model="ir.ui.view">
+        <field name="name">holiday.settlement.wizard.view.form.inherit.holiday.sale</field>
+        <field name="model">holiday.petition.wizard</field>
+        <field name="inherit_id" ref="holiday_process.holiday_settlement_wizard_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_settlement']" position="before">
+                <field name="hr_leave_id"
+                       domain="[('pending_holiday','>',0),('employee_id', '=', employee_id)]"
+                       options="{'no_create': True}" attrs="{'invisible': [('is_generated', '=', True)]}"
+                        context="{'form_view_ref' : 'holiday_process.hr_leave_allocation_form_view_employee_holiday_process'}"
+                      />
+            </xpath>
+            <xpath expr="//field[@name='is_settlement']" position="after">
+                <label for="date_from" string="Periodo de Compensación" attrs="{'invisible': ['|', ('holiday_status_code', '!=', '90'), ('is_generated', '=', True)]}"/>
+                <div>
+                    <span class="oe_inline" attrs="{'invisible': ['|', ('holiday_status_code', '!=', '90'), ('is_generated', '=', True)]}">
+                    Desde
+                    </span>
+                    <field name="date_from" nolabel="1" class="oe_inline" attrs="{'invisible': ['|', ('holiday_status_code', '!=', '90'), ('is_generated', '=', True)], 'required': [('holiday_status_code', '=', '90')]}"/>
+                    <span>  </span>
+                    <span class="oe_inline" attrs="{'invisible': ['|', ('holiday_status_code', '!=', '90'), ('is_generated', '=', True)]}">
+                    Hasta
+                    </span>
+                    <field name="date_to" nolabel="1" class="oe_inline" attrs="{'invisible': ['|', ('holiday_status_code', '!=', '90'), ('is_generated', '=', True)], 'required': [('holiday_status_code', '=', '90')]}"/>
+                    <field name="holiday_status_code" invisible="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

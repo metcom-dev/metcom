@@ -1,0 +1,10 @@
+---Models in module 'location_restriction_by_user'---
+---Fields in module 'location_restriction_by_user'---
+    se agregó el campo usser_logger para que se encargue de asignar los dominios sobre picking_type_id y location_id
+---XML records in module 'location_restriction_by_user'---
+    Se agregó el campo user_logger encima del picking_type_id
+
+
+Nota:
+    Se modificó el método _compute_location_id debido a que este setea por defecto algunos valores en el form los cuales no se
+    encuentran en el dominio de los usuarios asignados.

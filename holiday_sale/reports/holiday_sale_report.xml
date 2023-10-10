@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_report_holiday_sale" model="report.paperformat">
+        <field name="name">Holiday Sale Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">18</field>
+        <field name="margin_bottom">18</field>
+        <field name="margin_left">30</field>
+        <field name="margin_right">30</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_holiday_sale_report" model="ir.actions.report">
+        <field name="name">Contrato De Venta De Vacaciones</field>
+        <field name="model">hr.leave</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">holiday_sale.print_holiday_sale</field>
+        <field name="report_file">holiday_sale.print_holiday_sale</field>
+        <field name="print_report_name">'Contrato De Venta De Vacaciones - %s' % (object.employee_id.name)</field>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="holiday_sale.paperformat_report_holiday_sale"/>
+    </record>
+
+</odoo>
+

@@ -1,0 +1,17 @@
+---Models in module 'ple_inv_and_bal_0320_ee'---
+---Fields in module 'ple_inv_and_bal_0320_ee'---
+---XML records in module 'ple_inv_and_bal_0320_ee'---
+--- Se cambió 'account.financial.html.report.line' por 'account.report.line' en la clase AccountReportLineInherit ya que en la versión 16 es diferente.
+
+--- Se cambió 'account.financial.html.report' por 'account.html.report' en la clase AccountReportLineInherit ya que en la versión 16 es diferente.
+
+---- Se reutilizó la función _generate_periods_options_list del modelo de enterprise account.report de la v.15 , ya que en la versión 16 no existe.
+
+---- Se reutilizó la función _compute_sum del modelo de enterprise account.report de la v.15, ya que en la versión 16 no existe.
+
+---- Se creó el field date_scope para acceder a date_scope de expression_ids
+
+---- Se creó la función _get_subformula_results para obtener la subformula y utilizarla en el model wizard_report
+
+--- En el código de la vista wizard_report_view.xml se le agregó unos corchetes [] dentro de '('txt_filename', '=', False)'
+ ------ quedando de la siguiente manera attrs="{'invisible': [('txt_filename', '=', False)]}" , ya que en la v.16 tiene esa sintaxis.

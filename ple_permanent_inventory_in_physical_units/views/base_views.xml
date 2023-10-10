@@ -69,12 +69,13 @@
         <field name="inherit_id" ref="stock.view_move_form"/>
         <field name="arch" type="xml">
             <group name="linked_group" position="after">
-                <newline/>
+                <newline>
                 <group name="stock_valuation" string="Stock Valuation">
                     <field name="product_qty"/>
                     <field name="stock_valuation_layer_ids"/>
                     <field name="move_line_ids"/>
                 </group>
+                </newline>
             </group>
         </field>
     </record>

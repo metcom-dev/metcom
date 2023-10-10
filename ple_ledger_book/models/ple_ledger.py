@@ -29,8 +29,37 @@ class PleLedger(models.Model):
                 coalesce(res_currency.name, 'PEN') as currency_name,
                 coalesce(l10n_latam_identification_type.l10n_pe_vat_code, '') as partner_document_type_code,
                 coalesce(res_partner.vat, '') as partner_document_number,
-                LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 1), '-', '0000'), ''), 4) AS invoice_serie,
-                LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 2), '-', '00000000'), ''), 8) AS invoice_correlative,
+                
+                (CASE WHEN (account_journal.type = 'sale' AND account_move_line__move_id.move_type in ('out_invoice', 'out_refund')) 
+                THEN (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',1), '\r|\n|\s', '', 'g')),4) 
+                WHEN account_move_line.move_name IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.move_name,'-',1), '\r|\n|\s', '', 'g')),4) 
+                ELSE '0000' END)
+                WHEN (account_journal.type = 'purchase' AND account_move_line__move_id.move_type in ('in_invoice', 'in_refund'))
+                THEN 
+                (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',1), '\r|\n|\s', '', 'g')),4)
+                WHEN account_move_line.ref IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.ref,'-',1), '\r|\n|\s', '', 'g')),4)
+                ELSE '00000' END)
+                WHEN (account_journal.type in ('cash', 'bank', 'general') AND account_move_line__move_id.move_type = 'entry')
+                THEN 
+                (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',1), '\r|\n|\s', '', 'g')),4)
+                ELSE '0000' END)
+                ELSE '0000'  END)
+                AS invoice_serie,
+                
+                (CASE WHEN (account_journal.type = 'sale' AND account_move_line__move_id.move_type in ('out_invoice', 'out_refund')) 
+                THEN (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',2), '\r|\n|\s', '', 'g')),8)
+                 WHEN account_move_line.move_name IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.move_name,'-',2), '\r|\n|\s', '', 'g')),8)
+                 ELSE '00000000' END)
+                 WHEN (account_journal.type = 'purchase' AND account_move_line__move_id.move_type in ('in_invoice', 'in_refund'))
+                 THEN 
+                 (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',2), '\r|\n|\s', '', 'g')),8)
+                 WHEN account_move_line.ref IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.ref,'-',2), '\r|\n|\s', '', 'g')),8)
+                 ELSE '00000000' END)
+                 WHEN (account_journal.type in ('cash', 'bank', 'general') AND account_move_line__move_id.move_type = 'entry')
+                 THEN (CASE WHEN account_move_line.serie_correlative IS NOT NULL THEN LEFT(TRIM(regexp_replace(SPLIT_PART(account_move_line.serie_correlative,'-',2), '\r|\n|\s', '', 'g')),8)
+                 ELSE '00000000' END)
+                 ELSE '00000000' END) AS invoice_correlative,
+                 
                 validate_string(COALESCE(split_part(replace(account_move_line__move_id.name, ' ', ''), '-', 1), '0000'),20) AS invoice_serie_oo,
                 coalesce(left(split_part(replace(account_move_line__move_id.name, ' ', ''), '-', 2),20),'') AS invoice_correlative_oo,               
                 coalesce(TO_CHAR(account_move_line.date, 'DD/MM/YYYY'), '') as ml_date,
@@ -44,6 +73,7 @@ class PleLedger(models.Model):
                 account_move_line__move_id.payment_reference as payment_reference,
                 account_move_line.debit as debit,
                 account_move_line.credit as credit,
+                to_json(account_move_line.analytic_distribution) as analytic_distribution,
                 (SELECT get_data_structured_ledger(account_journal.type, account_journal.ple_no_include, account_move.is_nodomicilied, account_move.name, 
                 account_move.date) 
                     FROM account_move
@@ -91,28 +121,38 @@ class PleLedger(models.Model):
     def action_generate_report(self, data_aml):
 
         list_data = []
+        account_analytic_data = list(map(lambda x: (x.id, x.name), self.env['account.analytic.account'].search([])))
+
         for obj_move_line in data_aml:
-            if obj_move_line.get('ml_name') == ' ' or obj_move_line.get('ml_name') == '' or not obj_move_line.get('ml_name'):
+            if obj_move_line.get('ml_name') == ' ' or obj_move_line.get('ml_name') == '' or not obj_move_line.get(
+                    'ml_name'):
                 ml_name = obj_move_line.get('ml_name2')
             else:
                 ml_name = obj_move_line.get('ml_name')
 
-            if obj_move_line.get('move_type') in ('entry','in_invoice','in_refund','in_receipt'):
+            if obj_move_line.get('move_type') in ('entry', 'in_invoice', 'in_refund', 'in_receipt'):
                 if obj_move_line.get('reference') == ' ' or not obj_move_line.get('reference'):
                     reference = obj_move_line.get('ml_name2')
                 else:
                     reference = obj_move_line.get('reference')
             else:
-                if obj_move_line.get('payment_reference') == ' ' or obj_move_line.get('payment_reference') == '' or not obj_move_line.get('payment_reference'):
+                if obj_move_line.get('payment_reference') == ' ' or obj_move_line.get(
+                        'payment_reference') == '' or not obj_move_line.get('payment_reference'):
                     reference = obj_move_line.get('ml_name2')
                 else:
-                    reference=obj_move_line.get('payment_reference')
+                    reference = obj_move_line.get('payment_reference')
+
+            analytic_distribution = obj_move_line.get('analytic_distribution').keys() if obj_move_line.get('analytic_distribution') else ''
+            nueva_lista = list(map(lambda clave: [elemento[1] for elemento in account_analytic_data if str(elemento[0]) == clave][0] if any(str(elemento[0]) == clave for elemento in account_analytic_data) else None,
+                    list(analytic_distribution)))
+
             values = {
                 'period_name': obj_move_line.get('period_name', ''),
                 'move_name': obj_move_line.get('move_name', ''),
                 'correlative_line': obj_move_line.get('correlative_line', ''),
                 'account_code': obj_move_line.get('account_code', ''),
                 'unit_code': '',
+                'analytic_distribution':', '.join(nueva_lista),
                 'currency_name': obj_move_line.get('currency_name', ''),
                 'partner_document_type_code': obj_move_line.get('partner_document_type_code', ''),
                 'partner_document_number': obj_move_line.get('partner_document_number', ''),
@@ -124,7 +164,7 @@ class PleLedger(models.Model):
                 'ml_date_issue': obj_move_line.get('ml_date_issue', ''),
                 'ml_name': ml_name.replace('\n', ' ')[:200],
                 'reference': reference.replace('\n', ' ')[:200],
-                'debit': "{0:.2f}".format(obj_move_line.get('debit','')),
+                'debit': "{0:.2f}".format(obj_move_line.get('debit', '')),
                 'credit': "{0:.2f}".format(obj_move_line.get('credit')),
                 'data_structured': obj_move_line.get('data_structured', ''),
                 'state': '1',

@@ -50,11 +50,12 @@ class AccountMove(models.Model):
             move.fix_prefix_name()
 
     def action_post(self):
-        if self.l10n_latam_document_type_id in self.partner_id.l10n_latam_identification_type_id.invoice_validation_document or self.move_type == "entry" or not self.move_type:
-            return super(AccountMove, self).action_post()
-        else:
-            raise UserError(
-                _('El tipo de documento que está intentando publicar, NO es el permitido, por favor verificar si es el que es el que está permitido'))
+        for move in self:
+            if move.l10n_latam_document_type_id in move.partner_id.l10n_latam_identification_type_id.invoice_validation_document or move.move_type == "entry" or not move.move_type:
+                super(AccountMove, move).action_post()
+            else:
+                raise UserError(
+                    _('El tipo de documento que está intentando publicar, NO es el permitido, por favor verificar si es el que es el que está permitido'))
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -109,5 +110,6 @@ class AccountMove(models.Model):
                 self.fix_prefix_name()
                 if all_prefix:
                     for prefix in all_prefix:
-                        if self.l10n_latam_document_number[:2] == prefix + ' ':
-                            self.l10n_latam_document_number = self.l10n_latam_document_number.replace(prefix + ' ', '')
+                        if prefix:
+                            if self.l10n_latam_document_number and self.l10n_latam_document_number[:2] and self.l10n_latam_document_number[:2] == prefix + ' ':
+                                self.l10n_latam_document_number = self.l10n_latam_document_number.replace(prefix + ' ', '')

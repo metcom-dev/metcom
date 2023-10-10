@@ -56,6 +56,16 @@ msgid "Loan Amount"
 msgstr "Monto del préstamo"
 
 #. module: hr_loan_advance_other
+#: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_loan__amount_paid
+msgid "Amount Paid"
+msgstr "Monto Pagado"
+
+#. module: hr_loan_advance_other
+#: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_loan__amount_owed
+msgid "Amount Owed"
+msgstr "Monto Adeudado"
+
+#. module: hr_loan_advance_other
 #: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_other_discounts__discount_amount
 msgid "Discount Amount"
 msgstr "Monto del descuento"
@@ -110,6 +120,16 @@ msgstr "Estado"
 #: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_other_discounts_form_view
 msgid "Draft"
 msgstr "Borrador"
+
+#. module: hr_loan_advance_other
+#: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_loan__state__paid
+#: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_salary_advance__state__paid
+#: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_other_discounts__state__paid
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_loan_form_view
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_salary_advance_form_view
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_other_discounts_form_view
+msgid "Paid"
+msgstr "Pagado"
 
 #. module: hr_loan_advance_other
 #: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_loan__state__waiting_approval_1
@@ -246,6 +266,12 @@ msgstr "Rechazar"
 #: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_other_discounts_form_view
 msgid "Approve"
 msgstr "Aprobado"
+
+#. module: hr_loan_advance_other
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_loan_form_view
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_other_discounts_form_view
+msgid "Paid"
+msgstr "Pagado"
 
 
 #. module: hr_loan_advance_other
@@ -454,6 +480,11 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: hr_loan_advance_other
+#: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_salary_advance__state__paid
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: hr_loan_advance_other
 #: model:ir.model.fields.selection,name:hr_loan_advance_other.selection__hr_salary_advance__state__reject
 msgid "Rejected"
 msgstr "Rechazado"
@@ -472,6 +503,11 @@ msgstr "Rechazar"
 #: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_salary_advance_form_view
 msgid "Approve"
 msgstr "Aprobado"
+
+#. module: hr_loan_advance_other
+#: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_salary_advance_form_view
+msgid "Paid"
+msgstr "Pagado"
 
 #. module: hr_loan_advance_other
 #: model_terms:ir.ui.view,arch_db:hr_loan_advance_other.hr_salary_advance_form_view

@@ -1,6 +1,6 @@
 {
     'name': 'Register of Cash and banks PLE - SUNAT (Perú)',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.1.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Register of Cash and banks PLE - SUNAT (Perú).',

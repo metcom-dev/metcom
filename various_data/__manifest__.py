@@ -1,13 +1,15 @@
 {
     'name': 'Various data',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.1.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """
     Creates the tax data menu in location, where the models of Minimum Vital Remuneration, UIT, SIS, SCTR are created
     """,
     'depends': ['localization_menu',
-                'hr'],
+                'hr',
+                'types_system_pension',
+                'eps_process'],
     'data': [
         'security/ir.model.access.csv',
         'views/hr_views.xml',

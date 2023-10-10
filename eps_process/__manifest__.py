@@ -1,6 +1,6 @@
 {
     'name': 'employee eps management',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': "This module allows you to manage the hiring process and eps control",
@@ -9,7 +9,8 @@
     'depends': [
         'hr_payroll',
         'localization_menu',
-        'personal_information'
+        'additional_fields_employee',
+        'personal_information',
     ],
     'data': [
         'security/ir.model.access.csv',

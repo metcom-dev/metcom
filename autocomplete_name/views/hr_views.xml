@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit_autocomplete_name" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.autocomplete_name</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="personal_information.hr_employee_view_form_inherit_personal_information"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='personal_information']/group/group/field[@name='firstname']"
+                   position="replace">
+                <field name="firstname" required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

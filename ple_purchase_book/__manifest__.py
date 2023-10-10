@@ -1,6 +1,6 @@
 {
     'name': 'Electronic Purchase Record',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'Generate your Electronic Purchase Record for PLE SUNAT',

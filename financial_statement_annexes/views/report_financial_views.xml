@@ -19,7 +19,7 @@
                 <field name="account_ids"/>
                 <footer>
                     <button string="Descargar en Excel" name="action_generate_excel" type="object" default_focus="1" class="oe_highlight"/>
-                    <field name="xls_binary" filename="xls_filename" readonly="1" attrs="{'invisible': ('xls_filename', '=', False)}"/>
+                    <field name="xls_binary" filename="xls_filename" readonly="1" attrs="{'invisible': [('xls_filename', '=', False)]}"/>
                     or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>

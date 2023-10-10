@@ -1,6 +1,6 @@
 {
     'name': 'Pago Masivo de Proveedores',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'live_test_url': 'https://www.ganemo.co/demo',

@@ -40,9 +40,9 @@
                             <div t-field="company.partner_id.vat"/>
                             <br/>
                             <div>
-                                <strong>APELLIDOS Y NOMBRES, DENOMINACIÓN O RAZÓN SOCIAL :&amp;nbsp;</strong>
+                                <strong>APELLIDOS Y NOMBRES, DENOMINACIÓN O RAZÓN SOCIAL: &amp;nbsp;</strong>
                             </div>
-                            <div t-field="company.partner_id.name"/>
+                            <div t-field="company.partner_id.name"  style="display: inline-block; vertical-align: top;"/>
                         </div>
                         <br/>
                         <div class="div_one">

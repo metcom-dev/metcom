@@ -18,7 +18,7 @@
     <record id="hr_leave_type_form_view_inherit_filter_payroll" model="ir.ui.view">
         <field name="name">hr.leave.type.view.form.view.inherit.filter_payroll</field>
         <field name="model">hr.leave.type</field>
-        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="inherit_id" ref="absence_manager.hr_leave_type_data_form_inherit"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='code']" position="after">
                 <field name="is_calc_own_rule" invisible="1"/>

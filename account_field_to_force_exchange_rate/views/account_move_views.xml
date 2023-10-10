@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="account_move_form_view_inherit_account_exchange_currency" model="ir.ui.view">
+        <field name="name">account.move.form.view.inherit.account_exchange_currency</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account_exchange_currency.account_move_form_view_inherit_account_exchange_currency"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='exchange_rate']" position="after">
+                <field name="to_force_exchange_rate" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

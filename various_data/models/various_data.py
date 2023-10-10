@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class VariousDataRMV(models.Model):
@@ -22,7 +23,8 @@ class VariousDataSCTR(models.Model):
     health_percent = fields.Float(string='Salud %')
     pension_amount = fields.Float(string='Pensión Importe')
     health_amount = fields.Float(string='Salud Importe')
-    name = fields.Char(
+    name_id = fields.Many2one(
+        comodel_name='res.partner',
         string='Nombre de la entidad',
         required=True
     )
@@ -32,6 +34,29 @@ class VariousDataSCTR(models.Model):
         string='Empleados'
     )
 
+    @api.constrains('register_date', 'due_date')
+    def _check_employee_overlap(self):
+        for record in self:
+            overlap_records = self.env['various.data.sctr'].search([
+                ('id', '!=', record.id),
+                ('name_id.employee_ids', 'in', record.name_id.employee_ids.ids),
+                '|',
+                ('register_date', '<=', record.register_date),
+                ('register_date', '<=', record.due_date),
+                '|',
+                ('due_date', '>=', record.register_date),
+                ('due_date', '>=', record.due_date),
+            ])
+            if overlap_records:
+                raise ValidationError(
+                    "Las fechas de esta póliza se superponen con otra póliza para uno o más empleados.")
+                
+    def name_get(self):
+        res = []
+        for _ in self:
+            name = "%s" % (_.name_id.name)
+            res.append((_.id, name))
+        return res
 
 class VariousDataUIT(models.Model):
     _name = 'various.data.uit'
@@ -58,6 +83,6 @@ class HrEmployee(models.Model):
 
     sctr_id = fields.Many2one(
         comodel_name='various.data.sctr',
-        string='Seguro Complementario de Trabajo de Riesgo',
+        string='Poliza SCTR',
         groups="hr.group_hr_user"
     )

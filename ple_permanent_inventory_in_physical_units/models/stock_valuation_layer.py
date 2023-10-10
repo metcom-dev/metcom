@@ -51,3 +51,5 @@ class StockValuationLayer(models.Model):
         stock_picking_reason,
         string='Tipo de operación SUNAT',
     )
+    
+    account_move_id = fields.Many2one(check_company=False)

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_production_lot_form_view_inherit_warehouse_series_status" model="ir.ui.view">
+        <field name="name">stock.lot.form.view.inherit.warehouse_series_status</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="status"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_quant_tree_view_inherit_warehouse_series_status" model="ir.ui.view">
+        <field name="name">stock.quant.tree.view.inherit.warehouse_series_status</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="status" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_quant_search_view_inherit_warehouse_series_status" model="ir.ui.view">
+        <field name="name">stock.quant.search.view.inherit.warehouse_series_status</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.quant_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='productgroup']" position="after">
+                <filter string='Status' name="status" domain="[]" context="{'group_by' : 'status'}"/>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="status"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_detailed_operation_tree_inherit_warehouse_series_status" model="ir.ui.view">
+        <field name="name">view.stock.move.line.detailed.operation.tree.inherit.warehouse_series_status</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="status" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_line_form_view_inherit_warehouse_series_status" model="ir.ui.view">
+        <field name="name">stock.move.line.form.view.inherit.warehouse_series_status</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="status"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

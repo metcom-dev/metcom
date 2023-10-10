@@ -20,7 +20,7 @@ class HrEmployee(models.Model):
         groups="hr.group_hr_user"
     )
     pension_sctr = fields.Boolean(
-        string='SCTR Pensión',
+        string='SCTR',
         groups="hr.group_hr_user"
     )
     commission_type = fields.Selection(

@@ -10,8 +10,7 @@ import re
 
 class StockProductsValuation(models.Model):
     _name = 'ple.stock.products.valuation.final'
-    _description = 'Ple Stock Products Valuation Final'
-
+    _description = 'Valuación de productos en stock - Final'
     ple_stock_products_final = fields.Many2one(string='Valuation book final',
                                                comodel_name="ple.permanent.inventory.physical.units")
 
@@ -20,12 +19,14 @@ class StockProductsValuation(models.Model):
     quantity_product_hand = fields.Float(string="Cantidad a mano")
     udm_product = fields.Char(string="UDM")
     standard_price = fields.Float(string='Costo unitario')
-    total_value = fields.Float(string='Valor total', compute='_compute_total_value')
+    total_value = fields.Float(
+        string='Valor total', compute='_compute_total_value')
     code_exist = fields.Integer(string='Código de existencia')
 
     def _compute_total_value(self):
         for data in self:
-            data.total_value = float_round(data.quantity_product_hand * data.standard_price, 2)
+            data.total_value = float_round(
+                data.quantity_product_hand * data.standard_price, 2)
 
 
 class PlePermanentFinal(models.Model):
@@ -147,13 +148,36 @@ class PlePermanentFinal(models.Model):
                 coalesce(CASE WHEN product_template.unspsc_code_id > 0 THEN '1' ELSE '' END,'') as code_catag,
                 coalesce(product_unspsc_code.code,'') as unspsc_code,
                 TO_CHAR(coalesce(account_move.date,stock_valuation_layer.accounting_date),'DD/MM/YYYY') as date_start,
-                COALESCE(l10n_latam_document_type.code,'00') as number_document,
-                COALESCE(stock_picking.serie_transfer_document,'0') as serie_document,
-                COALESCE(stock_picking.number_transfer_document,'0') as reference_document,
-                COALESCE(stock_valuation_layer.sunat_operation_type,
-                stock_picking.type_operation_sunat,
-                stock_picking_type.ple_reason_id,
-                (case when stock_location.usage = 'inventory' then '28' ELSE '99' END)) as type_operation,
+                
+                CASE WHEN stock_picking.picking_number != '' THEN '09'
+                ELSE                 
+                COALESCE(stock_picking.transfer_document_type_id,'00')
+                END as number_document,
+                
+                CASE WHEN stock_picking.picking_number != '' THEN 
+                LEFT(stock_picking.picking_number, 4)
+                ELSE                 
+                COALESCE(REGEXP_REPLACE(stock_picking.serie_transfer_document, '[^a-zA-Z0-9]', '', 'g'), '0')
+                END as serie_document,
+                
+                CASE WHEN stock_picking.picking_number != '' 
+                THEN SPLIT_PART(stock_picking.picking_number, '-', 2)
+                ELSE 
+                                
+                COALESCE(REGEXP_REPLACE(stock_picking.number_transfer_document, '[^a-zA-Z0-9]', '', 'g'), '0')
+                END as reference_document,    
+                
+                CASE WHEN  stock_valuation_layer.sunat_operation_type is not null then
+                stock_valuation_layer.sunat_operation_type
+                WHEN stock_move.picking_id > 0 then              
+                coalesce (coalesce(stock_picking.type_operation_sunat,'99'),stock_picking_type.ple_reason_id)
+                WHEN stock_picking.origin LIKE '%retorno%' THEN
+                coalesce (stock_picking_type.code,stock_picking_type.ple_revert_id)
+                ELSE  
+                coalesce((CASE WHEN stock_move.location_id > 0
+                then (case when stock_location_dest.usage = 'inventory' then '28' ELSE '99' end)
+                ELSE '99' END ), '99')
+                END as type_operation,
     
                 --coalesce(LEFT(pol.name,80), LEFT(product_template.name,80)) as description_prod,
                 --coalesce(LEFT(pol.name,80), LEFT(product_template.name,80)) as description,
@@ -216,7 +240,8 @@ class PlePermanentFinal(models.Model):
             data_aml = self.env.cr.dictfetchall()
             return data_aml
         except Exception as error:
-            raise ValidationError(f'Error al ejecutar la queries, comunicar al administrador: \n {error}')
+            raise ValidationError(
+                f'Error al ejecutar la queries, comunicar al administrador: \n {error}')
 
     def calculate_products_final(self):
         balance_ending = self.generete_ending_balances()
@@ -280,7 +305,8 @@ class PlePermanentFinal(models.Model):
                 ids = obj_move_line.get('product_id')
 
                 if ids in opening_balances:
-                    datos = self.opening_balances(ids, quantity_hand.get(ids), year, month, day, correct_name=display_name)
+                    datos = self.opening_balances(ids, quantity_hand.get(
+                        ids), year, month, day, correct_name=display_name)
                     hand_accumulated = datos['quantity_hand_accumulated']
                     total_accumulated = datos['cost_total_accumulated']
                     opening_balances.remove(ids)
@@ -345,7 +371,8 @@ class PlePermanentFinal(models.Model):
         return products_id
 
     def opening_balances(self, product, quantity_hand, year, month, day, correct_name=False):
-        product_product = self.env['product.product'].search([('id', '=', product)])
+        product_product = self.env['product.product'].search(
+            [('id', '=', product)])
         if round(quantity_hand['quantity_product_hand'], 2) == 0:
             divisor = 1
         else:
@@ -357,7 +384,8 @@ class PlePermanentFinal(models.Model):
             code_catag = ''
 
         if not correct_name:
-            correct_name = product_product.display_name.split(']')[-1].strip()[:80]
+            correct_name = product_product.display_name.split(
+                ']')[-1].strip()[:80]
         datos = {
             'period': '%s%s00' % (year, month),
             'cou': 'SALDOINICIAL%s%s%s' % (year, month, product),

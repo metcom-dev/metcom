@@ -1,6 +1,6 @@
 {
     'name': 'Life insurance management',
-    'version': '16.0.0.0.0',
+    'version': '16.0.1.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'category': 'Payroll',
@@ -10,7 +10,8 @@
     """,
     'depends': [
         'localization_menu',
-        'hr'
+        'hr',
+        'eps_process'
     ],
     'data': [
         'security/ir.model.access.csv',

@@ -25,7 +25,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
     def action_calc_balance(self):
         self.validation_calc_balance = True
         start_date = self.date_start
-        finish_date = datetime(start_date.year, start_date.month, start_date.day)
+        finish_date = datetime(
+            start_date.year, start_date.month, start_date.day)
         datos = self.action_generate_product_list(finish_date)
         self.write({
             'list_val_units': [(5, 0, 0)]
@@ -46,7 +47,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                 })
 
     def action_generate_product_list(self, to_date):
-        product = self.env['product.product'].search([('type', '=', 'product')])
+        product = self.env['product.product'].search(
+            [('type', '=', 'product')])
         domain_quant_loc, domain_move_in_loc, domain_move_out_loc = product._get_domain_locations()
         domain_quant = [('product_id', 'in', product.ids)] + domain_quant_loc
         dates_in_the_past = False
@@ -54,8 +56,10 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
         if to_date and to_date < fields.Datetime.now():
             dates_in_the_past = True
 
-        domain_move_in = [('product_id', 'in', product.ids)] + domain_move_in_loc
-        domain_move_out = [('product_id', 'in', product.ids)] + domain_move_out_loc
+        domain_move_in = [('product_id', 'in', product.ids)
+                          ] + domain_move_in_loc
+        domain_move_out = [('product_id', 'in', product.ids)
+                           ] + domain_move_out_loc
 
         if dates_in_the_past:
             domain_move_in_done = list(domain_move_in)
@@ -81,8 +85,10 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                           Quant.read_group(domain_quant, ['product_id', 'quantity', 'reserved_quantity'],
                                            ['product_id'], orderby='id'))
         if dates_in_the_past:
-            domain_move_in_done = [('state', '=', 'done'), ('date', '>', to_date)] + domain_move_in_done
-            domain_move_out_done = [('state', '=', 'done'), ('date', '>', to_date)] + domain_move_out_done
+            domain_move_in_done = [
+                ('state', '=', 'done'), ('date', '>', to_date)] + domain_move_in_done
+            domain_move_out_done = [
+                ('state', '=', 'done'), ('date', '>', to_date)] + domain_move_out_done
             moves_in_res_past = dict((item['product_id'][0], item['product_qty']) for item in
                                      Move.read_group(domain_move_in_done, ['product_id', 'product_qty'], ['product_id'],
                                                      orderby='id'))
@@ -119,9 +125,11 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                 code = '2'
 
             res[product_id]['product_valuation'] = product.name
-            res[product_id]['quantity_product_hand'] = float_round(qty_available, precision_rounding=rounding)
+            res[product_id]['quantity_product_hand'] = float_round(
+                qty_available, precision_rounding=rounding)
             res[product_id]['udm_product'] = product.uom_id.l10n_pe_edi_measure_unit_code
-            res[product_id]['standard_price'] = float_round(product.standard_price, precision_rounding=rounding)
+            res[product_id]['standard_price'] = float_round(
+                product.standard_price, precision_rounding=rounding)
             res[product_id]['code_exist'] = code
 
         return res
@@ -164,13 +172,28 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                 LEFT(uu.l10n_pe_edi_measure_unit_code,3) as unit_measure_code,
                 uu.name as uom_name,
                 TO_CHAR(COALESCE(am.date,svl.accounting_date),'dd/mm/YYYY') as date_start,
-                COALESCE(lldt.code,'00') as document_type,
-                COALESCE(sp.serie_transfer_document,'0') as serie_document,
-                COALESCE(sp.number_transfer_document,'0') as number_document,
+
+                CASE WHEN sp.picking_number != '' THEN '09'
+                ELSE 
+                COALESCE(sp.transfer_document_type_id,'00')
+                END as document_type,
+
+                CASE WHEN sp.picking_number != '' THEN LEFT(sp.picking_number, 4)
+                ELSE 
+                COALESCE(REGEXP_REPLACE(sp.serie_transfer_document, '[^a-zA-Z0-9]', '', 'g'), '0')
+                END as serie_document,
+
+                CASE WHEN sp.picking_number != '' THEN SPLIT_PART(sp.picking_number, '-', -1)
+                ELSE 
+                COALESCE(REGEXP_REPLACE(sp.number_transfer_document, '[^a-zA-Z0-9]', '', 'g'), '0')
+                END as number_document,
+                
                 CASE WHEN svl.sunat_operation_type is not null then
                 svl.sunat_operation_type
-                WHEN sm.picking_id > 0 then
-                coalesce (spt.ple_reason_id,coalesce(sp.type_operation_sunat,'99'))
+                WHEN sm.picking_id > 0 then              
+                coalesce (coalesce(sp.type_operation_sunat,'99'),spt.ple_reason_id)
+                WHEN sp.origin LIKE '%retorno%' THEN
+                coalesce (spt.code,spt.ple_revert_id)
                 ELSE  
                 coalesce((CASE WHEN sm.location_id > 0
                 then (case when sl.usage = 'inventory' then '28' ELSE '99' end)
@@ -227,7 +250,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
             data_aml = self.env.cr.dictfetchall()
             return data_aml
         except Exception as error:
-            raise ValidationError(f'Error al ejecutar la queries, comunicar al administrador: \n {error}')
+            raise ValidationError(
+                f'Error al ejecutar la queries, comunicar al administrador: \n {error}')
 
     def action_generate_report(self):
         self.validation_generate_report = True
@@ -249,7 +273,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
         env = self.env['product.product']
         for obj_move_line in data_aml:
             header = True
-            display_name = env.browse(obj_move_line.get('product_id')).display_name.split(']')[-1].strip()[:80]
+            display_name = env.browse(obj_move_line.get(
+                'product_id')).display_name.split(']')[-1].strip()[:80]
             if obj_move_line.get('product_id') != product_id:
                 ids = obj_move_line.get('product_id')
                 list_data_non.append(ids)
@@ -276,7 +301,7 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                 'document_type': obj_move_line.get('document_type', ''),
                 'series': ''.join(filter(str.isalnum, obj_move_line.get('serie_document', '0')))[:20],
                 'document_number': (''.join(filter(str.isalnum, obj_move_line.get('number_document', '0')))).zfill(8)[
-                                   :20],
+                    :20],
                 'operation_type': obj_move_line.get('operation_type', ''),
                 'stock_description': display_name,
                 'description': display_name,
@@ -291,7 +316,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
             list_data.append(values)
 
         for datos_non in opening_balances_unit:
-            datos = self.opening_balance_units(datos_non, quantity_hand.get(datos_non), year, month, day)
+            datos = self.opening_balance_units(
+                datos_non, quantity_hand.get(datos_non), year, month, day)
             list_data.append(datos)
 
         report = PermanentInventoryPhysicalUnitsReport(self, list_data)
@@ -318,7 +344,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
         return products_id
 
     def opening_balance_units(self, product, quantity_hand, year, month, day, correct_name=False):
-        product_product = self.env['product.product'].search([('id', '=', product)])
+        product_product = self.env['product.product'].search(
+            [('id', '=', product)])
 
         if product_product.unspsc_code_id.id > 0:
             code_catag = '1'
@@ -326,7 +353,8 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
             code_catag = ''
 
         if not correct_name:
-            correct_name = product_product.display_name.split(']')[-1].strip()[:80]
+            correct_name = product_product.display_name.split(
+                ']')[-1].strip()[:80]
         datos = {
             'period': '%s%s00' % (year, month),
             'cuo': 'SALDOINICIAL%s%s%s' % (year, month, product),

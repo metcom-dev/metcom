@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_stock_picking_action_no_sincronizado" model="ir.actions.server">
+        <field name="name">No Informar</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.no_report_stock_picking()
+        </field>
+    </record>
+    <record id="model_stock_pikcing_action_sync_tinka_inventory" model="ir.actions.server">
+        <field name="name">Sync La Tinka</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_sync_tinka_stock_picking()
+        </field>
+    </record>
+    <record id="stock_picking_form_view_inherit_intralot" model="ir.ui.view">
+        <field name="name">stock_picking_form_view_inherit_intralot</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sync_status_picking" widget="state_selection" readonly="True"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="stock_picking_tree_view_inherit_intralot" model="ir.ui.view">
+        <field name="name">stock_picking_tree_view_inherit_intralot</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="sync_status_picking" optional="show" widget="badge" decoration-success="sync_status_picking == 'done'"
+                       decoration-danger="sync_status_picking == 'blocked'" decoration-muted="sync_status_picking == 'normal'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,6 +1,6 @@
 {
     'name': 'Employee Service',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': "Este modulo instala el modelo de Información de servicio en el modulo de empleados.",

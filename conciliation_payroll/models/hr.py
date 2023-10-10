@@ -77,7 +77,6 @@ class HrMassivePayment(models.Model):
             raise ValidationError('Ya existe un asiento contable relacionado.')
 
         line_ids = []
-        line_ids_payslip = []
         net = self.env.ref('hr_payroll.NET', False)
         date = fields.Date.today()
         ref = u'Asiento de conciliación planilla'
@@ -88,12 +87,9 @@ class HrMassivePayment(models.Model):
             'journal_id': journal_id.id,
             'date': date,
         }
-        debit_sum = 0.0
+        
         credit_sum = 0.0
 
-        debit_account_id_general = False
-        credit_account_id_general = False
-        journal_general = False
         for slip in self.payslip_ids.filtered(lambda x: x.move_id):
             currency = slip.company_id.currency_id or slip.journal_id.company_id.currency_id
             net_lines = slip.line_ids.filtered(lambda x: x.category_id == net)
@@ -102,96 +98,41 @@ class HrMassivePayment(models.Model):
             if currency.is_zero(amount):
                 continue
 
-            debit_account_id = net_lines[0].salary_rule_id.account_debit
             credit_account_id = net_lines[0].salary_rule_id.account_credit
-            debit_account_id_general = debit_account_id
-            credit_account_id_general = credit_account_id
-            journal_general = slip.journal_id
-            if not debit_account_id and not credit_account_id:
+            if not credit_account_id:
                 continue
-            if credit_account_id:
-                debit_line = (0, 0, {
-                    'name': slip.name + ' NETO',
-                    'partner_id': slip.employee_id.address_home_id.id,
-                    'account_id': credit_account_id.id,
-                    'journal_id': slip.journal_id.id,
-                    'date': date,
-                    'debit': amount > 0.0 and amount or 0.0,
-                    'credit': amount < 0.0 and -amount or 0.0,
-                    'analytic_account_id': slip.contract_id.analytic_account_id.id,
-                })
-                line_ids.append(debit_line)
-                debit_sum += debit_line[2]['debit'] - debit_line[2]['credit']
-            if debit_account_id:
-                credit_line = (0, 0, {
-                    'name': slip.name + ' NETO',
-                    'partner_id': slip.employee_id.address_home_id.id,
-                    'account_id': debit_account_id.id,
-                    'journal_id': slip.journal_id.id,
-                    'date': date,
-                    'debit': amount < 0.0 and -amount or 0.0,
-                    'credit': amount > 0.0 and amount or 0.0,
-                    'analytic_account_id': slip.contract_id.analytic_account_id.id,
-                })
-                line_ids.append(credit_line)
-                credit_sum += credit_line[2]['credit'] - credit_line[2]['debit']
+
+            credit_line = (0, 0, {
+                'name': slip.name + ' Salario neto',
+                'partner_id': slip.employee_id.address_home_id.id,
+                'account_id': credit_account_id.id,
+                'journal_id': slip.journal_id.id,
+                'date': date,
+                'debit': amount > 0.0 and amount or 0.0,
+                'credit': amount < 0.0 and -amount or 0.0,
+            })
+            line_ids.append(credit_line)
+            credit_sum += credit_line[2]['debit'] - credit_line[2]['credit']
             slip.state = 'paid'
 
-        debit_line = (0, 0, {
-            'name': 'Pago Planilla',
-            'partner_id': False,
-            'account_id': credit_account_id_general.id,
-            'journal_id': journal_general.id,
-            'date': date,
-            'debit': debit_sum > 0.0 and debit_sum or 0.0,
-            'credit': credit_sum < 0.0 and -credit_sum or 0.0,
-        })
-        line_ids_payslip.append(debit_line)
+        if credit_sum > 0.0:
+            debit_account_id = journal_id.default_debit_account_id.id
+            if not debit_account_id:
+                raise ValidationError('El diario "%s" no tiene configurada una cuenta de débito por defecto.' % journal_id.name)
 
-        credit_line = (0, 0, {
-            'name': 'Pago Planilla',
-            'partner_id': False,
-            'account_id': credit_account_id_general.id,
-            'journal_id': journal_general.id,
-            'date': date,
-            'debit': debit_sum < 0.0 and -debit_sum or 0.0,
-            'credit': credit_sum > 0.0 and credit_sum or 0.0,
-        })
-        line_ids_payslip.append(credit_line)
-
-        if currency_id.compare_amounts(credit_sum, debit_sum) == -1:
-            acc_id = journal_id.default_credit_account_id.id
-            if not acc_id:
-                raise ValidationError('The Expense Journal "%s" has not properly configured the Credit Account!' %
-                                      journal_id.name)
-            adjust_credit = (0, 0, {
-                'name': 'Adjustment Entry',
+            # Invertir el orden de débito y crédito en la línea de crédito total
+            debit_line = (0, 0, {
+                'name': 'Nomina por pagar',
                 'partner_id': False,
-                'account_id': acc_id,
+                'account_id': debit_account_id,
                 'journal_id': journal_id.id,
                 'date': date,
                 'debit': 0.0,
-                'credit': currency_id.round(debit_sum - credit_sum),
+                'credit': credit_sum,
             })
-            line_ids.append(adjust_credit)
-            line_ids_payslip.append(adjust_credit)
-        elif currency_id.compare_amounts(debit_sum, credit_sum) == -1:
-            acc_id = journal_id.default_debit_account_id.id
-            if not acc_id:
-                raise ValidationError('The Expense Journal "%s" has not properly configured the Debit Account!' %
-                                      journal_id.name)
-            adjust_debit = (0, 0, {
-                'name': 'Adjustment Entry',
-                'partner_id': False,
-                'account_id': acc_id,
-                'journal_id': journal_id.id,
-                'date': date,
-                'debit': currency_id.round(credit_sum - debit_sum),
-                'credit': 0.0,
-            })
-            line_ids.append(adjust_debit)
-            line_ids_payslip.append(adjust_debit)
-        move_dict['line_ids'] = line_ids_payslip
+            line_ids.append(debit_line)
+
+        move_dict['line_ids'] = line_ids
         move = self.env['account.move'].create(move_dict)
         self.write({'move_id': move.id, 'state': 'paid'})
         move.action_post()

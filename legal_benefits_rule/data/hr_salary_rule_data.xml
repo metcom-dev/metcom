@@ -1,0 +1,903 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--"hr.salary.rule"-->
+
+        <record id="hr_salary_rule_bhn_002" model="hr.salary.rule">
+            <field name="name">Remuneración por horas nocturnas de últimos seis (6) meses</field>
+            <field name="category_id" ref="holiday_rule.hr_salary_rule_category_bhn_001"/>
+            <field name="code">BHN_002</field>
+            <field name="sequence">4</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'BHN_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('BHN_002') and inputs.dict.get('BHN_002').amount > 0:
+        result = inputs.BHN_002.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+
+        # function _get_months_before return a list of months before the payslip period
+        periods = payslip_id._get_months_before(6)
+
+        employee_id = payslip_id.employee_id
+        payslip_lines = payslip.env['hr.payslip.line'].search([
+            ('employee_id', '=', employee_id.id),
+            ('date_start', 'in', periods),
+            ('code', '=', 'RHN_001'),
+            ('total', '>', 0)
+        ])
+        result = sum(line.total for line in payslip_lines) if len(payslip_lines) >= 3 else 0
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_ped_002" model="hr.salary.rule">
+            <field name="name">Promedio Extra Destajo B.L</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">PED_002</field>
+            <field name="sequence">11</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="note">Regla para beneficios legales como Gratificaciones, Cts.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PED_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PED_002') and inputs.dict.get('PED_002').amount > 0:
+        result = inputs.PED_002.amount
+    else:
+        global_data = globals()
+        bed_002_val = global_data['BED_002'] if 'BED_002' in global_data and global_data['BED_002'] > 0 else 0
+        result = bed_002_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_rb_003" model="hr.salary.rule">
+            <field name="name">Última remuneración</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">RB_003</field>
+            <field name="sequence">1</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="note">Regla para beneficios legales como Gratificaciones, Cts. Incluye asig. familiar en caso aplique.</field>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'RB_003' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    service_start_date = employee.service_start_date
+    if service_start_date:
+        date_start, _, _, _ = payslip.env['hr.payslip'].generate_date_start_month_year(service_start_date, service_start_date)
+        if date_start != payslip.date_start:
+            result = contract.wage
+            if any(employee.relative_ids):
+                flag2=False
+                for member in employee.relative_ids:
+                    if member.name == 'Hijo(a)' and max_age>= member.age:
+                        flag2=True
+                if flag2:
+                    rmv_id = payslip.env['various.data.rmv'].search([('is_active', '=', True)], limit=1)
+                    if rmv_id:
+                        result += rmv_id.af_amount
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_grat_002" model="hr.salary.rule">
+            <field name="name">⅙ Gratificación anterior</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">GRAT_002</field>
+            <field name="sequence">5</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="note">Regla para beneficios legales como Gratificaciones, Cts.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('GRAT_002') and inputs.dict.get('GRAT_002').amount > 0:
+        result = inputs.GRAT_002.amount
+    else:
+        employee_id = payslip.employee_id
+        month = int(payslip.month)
+        year = int(payslip.year)
+        payslip_line_model = payslip.env['hr.payslip.line']
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+
+        # function _get_months_before return a list of months before the payslip period
+        periods = payslip_id._get_months_before(6)
+
+        payslip_line_ids = payslip_line_model.search([('employee_id', '=', employee_id), ('date_start', 'in', periods), ('amount', '>', 0), ('code', '=', 'GRAT_001')])
+        result = sum(line.amount for line in payslip_line_ids) / 6</field>
+        </record>
+
+        <record id="hr_salary_rule_cts_002" model="hr.salary.rule">
+            <field name="name">CTS</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">CTS_002</field>
+            <field name="sequence">90</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'CTS_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('CTS_002') and inputs.dict.get('CTS_002').amount > 0:
+        result = inputs.CTS_002.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        if payslip_id.contract_id and payslip_id.contract_id.labor_regime_id:
+            days_lines = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['MES_001', 'DIAS_002']))
+            global_data = globals()
+            tre_001 = global_data['TRE_001'] if 'TRE_001' in global_data and global_data['TRE_001'] > 0 else 0
+            ddi_001 = global_data['DDI_001'] if 'DDI_001' in global_data and global_data['DDI_001'] > 0 else 0
+            if payslip_id.contract_id.labor_regime_id.is_mype:
+                result = tre_001 / 720 * days_lines
+            else:
+                result = tre_001 / 360 * days_lines
+            result -= ddi_001
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_cts_004" model="hr.salary.rule">
+            <field name="name">CTS a pagar</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="code">CTS_004</field>
+            <field name="sequence">200</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="note">Suma la regla salarial que tenga categoría padre  “Ingresó” y sus categorías hijas - Categoría padre  “Deducción” y sus categorías hijas </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'CTS_004' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    cat_dict = categories.dict
+    cat_ing_001 = cat_dict['ING_001'] if cat_dict.get('ING_001') else 0
+    cat_ing_ded = cat_dict['DED'] if cat_dict.get('DED') else 0
+    result = cat_ing_001 - cat_ing_ded
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_ddi_001" model="hr.salary.rule">
+            <field name="name">Valor por días inasistencias</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">DDI_001</field>
+            <field name="sequence">51</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'DDI_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+    global_data = globals()
+    tre_001 = global_data['TRE_001'] if 'TRE_001' in global_data and global_data['TRE_001'] > 0 else 0
+    if bool(payslip_id.struct_id.rule_ids.filtered(lambda x: x.code in ['GRAT_001', 'GRAT_005'])):
+        days = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['TDI_002', 'TDL_002', 'TDM_001'])) if worked_days.dict else 0.00
+        result = (tre_001 / 180) * days
+    else:
+        if bool(payslip_id.struct_id.rule_ids.filtered(lambda x: x.code in ['CTS_002', 'CTS_003'])):
+            days = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['TDI_001', 'TDL_001', 'TDM_001'])) if worked_days.dict else 0.00
+            result = (tre_001 / 360) * days</field>
+        </record>
+
+        <record id="hr_salary_rule_phe_002" model="hr.salary.rule">
+            <field name="name">Promedio de Horas Extra B.L.</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="sequence">12</field>
+            <field name="code">PHE_002</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PHE_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PHE_002') and inputs.dict.get('PHE_002').amount > 0:
+        result = inputs.PHE_002.amount
+    else:
+        global_data = globals()
+        bhe_001_val = global_data['BHE_001'] if 'BHE_001' in global_data and global_data['BHE_001'] > 0 else 0
+        result = bhe_001_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_phn_002" model="hr.salary.rule">
+            <field name="name">Promedio complemento nocturno B.L</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="sequence">13</field>
+            <field name="code">PHN_002</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PHN_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PHN_002') and inputs.dict.get('PHN_002').amount > 0:
+        result = inputs.PHN_002.amount
+    else:
+        global_data = globals()
+        bhn_002_val = global_data['BHN_002'] if 'BHN_002' in global_data and global_data['BHN_002'] > 0 else 0
+        result = bhn_002_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_pin_002" model="hr.salary.rule">
+            <field name="name">Promedio Incentivos</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="sequence">14</field>
+            <field name="code">PIN_002</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PIN_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PIN_002') and inputs.dict.get('PIN_002').amount > 0:
+        result = inputs.PIN_002.amount
+    else:
+        global_data = globals()
+        bin_001_val = global_data['BIN_001'] if 'BIN_001' in global_data and global_data['BIN_001'] > 0 else 0
+        result = bin_001_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_pco_002" model="hr.salary.rule">
+            <field name="name">Promedio Comisiones</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">PCO_002</field>
+            <field name="sequence">15</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PCO_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PCO_002') and inputs.dict.get('PCO_002').amount > 0:
+        result = inputs.PCO_002.amount
+    else:
+        global_data = globals()
+        bco_001_val = global_data['BCO_001'] if 'BCO_001' in global_data and global_data['BCO_001'] > 0 else 0
+        result = bco_001_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_pbo_002" model="hr.salary.rule">
+            <field name="name">Promedio Bonificaciones B.L.</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">PBO_002</field>
+            <field name="sequence">16</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'PBO_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('PBO_002') and inputs.dict.get('PBO_002').amount > 0:
+        result = inputs.PBO_002.amount
+    else:
+        global_data = globals()
+        bcb_001_val = global_data['BCB_001'] if 'BCB_001' in global_data and global_data['BCB_001'] > 0 else 0
+        result = bcb_001_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_por_002" model="hr.salary.rule">
+            <field name="name">Promedio Otras Remuneraciones B.L.</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">POR_002</field>
+            <field name="sequence">17</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'POR_002' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('POR_002') and inputs.dict.get('POR_002').amount > 0:
+        result = inputs.POR_002.amount
+    else:
+        global_data = globals()
+        bor_002_val = global_data['BOR_002'] if 'BOR_002' in global_data and global_data['BOR_002'] > 0 else 0
+        result = bor_002_val / 6
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_tre_001" model="hr.salary.rule">
+            <field name="name">Total Remuneración B.L.</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bcb_001"/>
+            <field name="code">TRE_001</field>
+            <field name="sequence">50</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'TRE_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    cat_dict = categories.dict
+    cat_bcb_001 = cat_dict['BCB_001'] if cat_dict.get('BCB_001') else 0
+    result = cat_bcb_001
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_bhe_001" model="hr.salary.rule">
+            <field name="name">Horas Extra de últimos seis (6) meses</field>
+            <field name="category_id" ref="legal_benefits_rule.hr_salary_rule_category_bhe_001"/>
+            <field name="code">BHE_001</field>
+            <field name="sequence">4</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_cts"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'BHE_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('BHE_001') and inputs.dict.get('BHE_001').amount > 0:
+        result = inputs.BHE_001.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        # function _get_months_before return a list of months before the payslip period
+        periods = payslip_id._get_months_before(6)
+
+        employee_id = payslip_id.employee_id
+        payslip_lines = payslip.env['hr.payslip.line'].search([
+            ('employee_id', '=', employee_id.id),
+            ('date_start', 'in', periods),
+            ('code', 'in', ['HE_025', 'HE_035', 'HE_100']),
+            ('total', '>', 0)
+        ])
+        result = sum(line.total for line in payslip_lines) if len(payslip_lines) >= 3 else 0
+            </field>
+        </record>
+
+        <!--gratificacion-->
+
+        <record id="hr_salary_rule_grat_001" model="hr.salary.rule">
+            <field name="name">Gratificación</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">GRAT_001</field>
+            <field name="sequence">90</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_grat"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="note">Calcula las gratificaciones correspondientes sin el bono extraordinario.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('GRAT_001') and inputs.dict.get('GRAT_001').amount > 0:
+        result = inputs.GRAT_001.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        contract_id = payslip_id.contract_id
+        if contract_id and contract_id.labor_regime_id:
+            days_lines = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['MES_004'])) if worked_days.dict else 0.00
+            global_data = globals()
+            tre_001 = global_data['TRE_001'] if 'TRE_001' in global_data and global_data['TRE_001'] > 0 else 0
+            ddi_001 = global_data['DDI_001'] if 'DDI_001' in global_data and global_data['DDI_001'] > 0 else 0
+            if contract_id.labor_regime_id.is_mype:
+                result = (tre_001 / 2) / 6 / 30 * days_lines
+            else:
+                result = tre_001 / 6 / 30 * days_lines
+            result -= ddi_001
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_grat_004" model="hr.salary.rule">
+            <field name="name">Gratificación a pagar</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="code">GRAT_004</field>
+            <field name="sequence">200</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_grat"/>
+            <field name="note">Suma la regla salarial que tenga categoría padre  “Ingreso” y sus categorías hijas - Categoría padre  “Deducción” y sus categorías hijas </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_004' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    cat_dict = categories.dict
+    cat_ing_001 = cat_dict['ING_001'] if cat_dict.get('ING_001') else 0
+    cat_ing_ded = cat_dict['DED'] if cat_dict.get('DED') else 0
+    result = cat_ing_001 - cat_ing_ded
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_grat_003" model="hr.salary.rule">
+            <field name="name">Bonificación extraordinaria</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">GRAT_003</field>
+            <field name="sequence">99</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_grat"/>
+            <field name="note">Validar el payslip anterior y detectar si tiene importe en el código “SSP_001”  si es así, tomará la regla con el código (“GRAT_001”) o la regla (GRAT_005) * 6.75% , de lo contrario  (“GRAT_001”) o (GRAT_005)  *9%</field>
+            <field name="appears_on_payslip">1</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_003' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('GRAT_003') and inputs.dict.get('GRAT_003').amount > 0:
+        result = inputs.GRAT_003.amount
+    else:
+        date_start = payslip.date_start
+        month = int(date_start[0:2])
+        year = int(date_start[3:])
+        payslip_line_model = payslip.env['hr.payslip.line']
+        start_m, start_y = payslip_line_model._get_month(year, month, 1)
+        new_date_start = '{}/{}'.format("{:02d}".format(start_m), start_y)
+        record = payslip_line_model.search([
+            ('employee_id', '=', employee.id),
+            ('date_start', '=', new_date_start),
+            ('code', '=', 'SSP_001'),
+            ('total', '>', 0)
+        ], limit=1)
+        value = True if record else False
+        if value:
+            percent = 0.0675
+        else:
+            percent = 0.09
+        data = globals()
+        if 'GRAT_001' in data and data['GRAT_001'] > 0:
+            rule = data['GRAT_001']
+        elif 'GRAT_005' in data and data['GRAT_005'] > 0:
+            rule = data['GRAT_005']
+        else:
+            rule = 0
+        result = rule * percent</field>
+        </record>
+
+        <!-- liquidacion -->
+
+        <record id="hr_salary_rule_grat_005" model="hr.salary.rule">
+            <field name="name">Gratificaciones Truncas</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">GRAT_005</field>
+            <field name="sequence">90</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_liq"/>
+            <field name="note">Calcula el monto correspondiente a las gratificaciones truncas</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_005' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('GRAT_005') and inputs.dict.get('GRAT_005').amount > 0:
+        result = inputs.GRAT_005.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        if payslip_id.contract_id and payslip_id.contract_id.labor_regime_id:
+            days_lines = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['MES_003'])) if worked_days.dict else 0.00
+            global_data = globals()
+            tre_001 = global_data['TRE_001'] if 'TRE_001' in global_data and global_data['TRE_001'] > 0 else 0
+            ddi_001 = global_data['DDI_001'] if 'DDI_001' in global_data and global_data['DDI_001'] > 0 else 0
+            if payslip_id.contract_id.labor_regime_id.is_mype:
+                result = (tre_001 / 2) / 6 / 30 * days_lines
+            else:
+                result = tre_001 / 6 / 30 * days_lines
+            result -= ddi_001
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_cts_003" model="hr.salary.rule">
+            <field name="name">CTS Truncas</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">CTS_003</field>
+            <field name="sequence">90</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_liq"/>
+            <field name="note">Calcula el monto correspondiente a las CTS truncas</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'CTS_003' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('CTS_003') and inputs.dict.get('CTS_003').amount > 0:
+        result = inputs.CTS_003.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        if payslip_id.contract_id and payslip_id.contract_id.labor_regime_id:
+            days_lines = sum(line.number_of_days for line in payslip_id.worked_days_line_ids.filtered(lambda x: x.code in ['MES_002', 'DIAS_003'])) if worked_days.dict else 0.00
+            global_data = globals()
+            tre_001 = global_data['TRE_001'] if 'TRE_001' in global_data and global_data['TRE_001'] > 0 else 0
+            ddi_001 = global_data['DDI_001'] if 'DDI_001' in global_data and global_data['DDI_001'] > 0 else 0
+            if payslip_id.contract_id.labor_regime_id.is_mype:
+                result = tre_001 / 360 / 2 * days_lines
+            else:
+                result = tre_001 / 360 * days_lines
+            result -= ddi_001
+            </field>
+        </record>
+
+        <!-- extra_hours -->
+        <record id="hr_salary_rule_grat_006" model="hr.salary.rule">
+            <field name="name">Ley 29351 - 30334</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">GRAT_006</field>
+            <field name="sequence">99</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'GRAT_006' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    date_start = payslip.date_start
+    month = int(date_start[0:2])
+    year = int(date_start[3:])
+    payslip_line_model = payslip.env['hr.payslip.line']
+    start_m, start_y = payslip_line_model._get_month(year, month, 1)
+    new_date_start = '{}/{}'.format("{:02d}".format(start_m), start_y)
+    record = payslip_line_model.search([
+        ('employee_id', '=', employee.id),
+        ('date_start', '=', new_date_start),
+        ('code', '=', 'SSP_001'),
+        ('total', '>', 0)
+    ], limit=1)
+    value = True if record else False
+    if value:
+        percent = 0.0675
+    else:
+        percent = 0.09
+    data = globals()
+    if 'GRAT_001' in data and data['GRAT_001'] > 0:
+        rule = data['GRAT_001']
+    elif 'GRAT_005' in data and data['GRAT_005'] > 0:
+        rule = data['GRAT_005']
+    else:
+        rule = 0
+    result = rule * percent</field>
+        </record>
+
+        <record id="hr_salary_rule_he_025" model="hr.salary.rule">
+            <field name="name">Horas extras 25%</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_ina_001"/>
+            <field name="code">HE_025</field>
+            <field name="sequence">8</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'HE_025' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('HEI_025') and inputs.dict.get('HEI_025').amount > 0:
+        result = inputs.HEI_025.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        hours_per_day = payslip_id.contract_id.resource_calendar_id.hours_per_day or 0.0
+        value = 1.25
+        global_data = globals()
+        she_001 = global_data['SHE_001'] if 'SHE_001' in global_data and global_data['SHE_001'] > 0 else 0
+        bsn_001 = global_data['BSN_001'] if 'BSN_001' in global_data and global_data['BSN_001'] > 0 else 0
+        inp_he_025 = inputs.HE_025.amount if inputs.dict.get('HE_025') and inputs.dict.get('HE_025').amount > 0 else 0
+        result = ((she_001 * value) / hours_per_day) * inp_he_025
+        result1 = (bsn_001 / 30 + she_001) / hours_per_day * value * inp_he_025
+        result += result1
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_he_035" model="hr.salary.rule">
+            <field name="name">Horas extras 35%</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_ina_001"/>
+            <field name="code">HE_035</field>
+            <field name="sequence">9</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'HE_035' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('HEI_035') and inputs.dict.get('HEI_035').amount > 0:
+        result = inputs.HEI_035.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        hours_per_day = payslip_id.contract_id.resource_calendar_id.hours_per_day or 0.0
+        value = 1.35
+        global_data = globals()
+        she_001 = global_data['SHE_001'] if 'SHE_001' in global_data and global_data['SHE_001'] > 0 else 0
+        bsn_001 = global_data['BSN_001'] if 'BSN_001' in global_data and global_data['BSN_001'] > 0 else 0
+        inp_he_035 = inputs.HE_035.amount if inputs.dict.get('HE_035') and inputs.dict.get('HE_035').amount > 0 else 0
+        result = ((she_001 * value) / hours_per_day) * inp_he_035
+        result1 = (bsn_001 / 30 + she_001) / hours_per_day * value * inp_he_035
+        result += result1
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_he_100" model="hr.salary.rule">
+            <field name="name">Horas extras 100%</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_ina_001"/>
+            <field name="code">HE_100</field>
+            <field name="sequence">10</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'HE_100' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('HEI_100') and inputs.dict.get('HEI_100').amount > 0:
+        result = inputs.HEI_100.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        hours_per_day = payslip_id.contract_id.resource_calendar_id.hours_per_day or 0.0
+        value = 2
+        global_data = globals()
+        she_001 = global_data['SHE_001'] if 'SHE_001' in global_data and global_data['SHE_001'] > 0 else 0
+        bsn_001 = global_data['BSN_001'] if 'BSN_001' in global_data and global_data['BSN_001'] > 0 else 0
+        inp_he_100 = inputs.HE_100.amount if inputs.dict.get('HE_100') and inputs.dict.get('HE_100').amount > 0 else 0
+        result = ((she_001 * value) / hours_per_day) * inp_he_100
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_bsn_001" model="hr.salary.rule">
+            <field name="name">Base salario nocturno</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_bas_001"/>
+            <field name="code">BSN_001</field>
+            <field name="sequence">6</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="note">Regla salarial para nomina semanal fija y mensual.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'BSN_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('BSN_001') and inputs.dict.get('BSN_001').amount > 0:
+        result = inputs.BSN_001.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        employee_id = payslip_id.employee_id
+        rmv_id = payslip.env['various.data.rmv'].search([('is_active', '=', True)], limit=1)
+        amount = 0 if not rmv_id else rmv_id.rmv_amount
+        total = (amount * 1.35)
+        wage = contract.wage
+        result = total if total > wage else total</field>
+        </record>
+
+        <record id="hr_salary_rule_rhn_001" model="hr.salary.rule">
+            <field name="name">Complemento horas nocturnas</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_ina_001"/>
+            <field name="code">RHN_001</field>
+            <field name="sequence">7</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="note">La entrada de esta regla es en base a horas.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'RHN_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    inp_rhn_001 = inputs.HNT_001.amount if inputs.dict.get('HNT_001') and inputs.dict.get('HNT_001').amount > 0 else 0
+    global_data = globals()
+    bsn_001 = global_data['BSN_001'] if 'BSN_001' in global_data and global_data['BSN_001'] > 0 else 0
+    result = bsn_001 / 240 * inp_rhn_001
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_she_001" model="hr.salary.rule">
+            <field name="name">Base horas extras</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_dto_001"/>
+            <field name="code">SHE_001</field>
+            <field name="sequence">7</field>
+            <field name="struct_id" ref="legal_benefits_rule.hr_payroll_structure_extra_hours"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="note">Esta regla suma todas las reglas que complementan las reglas salariales de Horas extras 25%, Horas extras 35%, Horas extras 100%.</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result=0
+flag=False
+employee_id = payslip.env['hr.employee'].browse(payslip.employee_id)
+if employee_id.partner_concept_ids:
+    for line in employee_id.partner_concept_ids:
+        if line.salary_rule.code == 'SHE_001' and line.salary_rule.struct_id==payslip.struct_id:
+            if line.end_date>=line.start_date and  line.start_date>=payslip.date_from and payslip.date_to >= line.end_date:
+                result+=line.amount
+                flag=True
+if not flag:
+    if inputs.dict.get('SHE_001') and inputs.dict.get('SHE_001').amount > 0:
+        result = inputs.SHE_001.amount
+    else:
+        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
+        if payslip_id.employee_id.children > 0:
+            rmv_id = payslip.env['various.data.rmv'].search([('is_active', '=', True)], limit=1)
+            if rmv_id:
+                result = rmv_id.af_amount / 30
+        global_data = globals()
+        sd_001 = global_data['SD_001'] if 'SD_001' in global_data and global_data['SD_001'] > 0 else 0
+        result += sd_001
+            </field>
+        </record>
+
+    </data>
+</odoo>
