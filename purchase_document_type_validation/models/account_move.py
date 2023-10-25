@@ -107,10 +107,11 @@ class AccountMove(models.Model):
                 else:
                     if rec.move_type != 'entry' and reference and '-' in reference and len(reference.split('-')) != 2:
                         msg += 'Formato de referencia de proveedor incorrecto. Debe ser de la siguiente forma para que pueda continuar con el proceso: FXXX-XXXXXXXX'
-                rec.error_dialog = msg
+                #rec.error_dialog = msg
+                rec.error_dialog = ''
 
-    '''@api.constrains('error_dialog', 'move_type')
+    @api.constrains('error_dialog', 'move_type')
     def _constrains_error_dialog(self):
         for rec in self:
             if rec.move_type not in ['out_invoice', 'out_refund'] and rec.error_dialog:
-                raise ValidationError('Debe resolver las siguientes requerimientos antes de guardar: \n %s' % rec.error_dialog)'''
+                raise ValidationError('Debe resolver las siguientes requerimientos antes de guardar: \n %s' % rec.error_dialog)
