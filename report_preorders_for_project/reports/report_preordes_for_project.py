@@ -72,13 +72,28 @@ class ReportPreorderProject(models.AbstractModel):
                 sheet.write(row, 2, item['date_order'], formats['date_format'])
                 # sheet.write(row, 3, item.get('name_project').get(user_lang, ''), formats['normal_left'])
                 sheet.write(row, 3, item['codigo_material'], formats['normal_center'])
-                sheet.write(row, 4, item.get('nombre_material').get(user_lang, ''), formats['normal_left'])
-                sheet.write(row, 5, item.get('unidadmedida').get(user_lang, ''), formats['normal_center'])
+
+                nombre_material = item.get('nombre_material')
+                unidadmedida = item.get('unidadmedida')
+                if nombre_material:
+                    sheet.write(row, 4, nombre_material.get(user_lang, ''), formats['normal_left'])
+                else:
+                    sheet.write(row, 4, '', formats['normal_left'])
+
+                if unidadmedida:
+                    sheet.write(row, 5, unidadmedida.get(user_lang, ''), formats['normal_center'])
+                else:
+                    sheet.write(row, 5, '', formats['normal_center'])
 
                 sheet.write(row, 6, item['cantidad_pedida'], formats['normal_center'])
                 sheet.write(row, 7, item['cantidad_atendida'], formats['normal_center'])
                 sheet.write(row, 8, item['materiale_stock'], formats['normal_center'])
-                materiales_comprados = int(item['cantidad_pedida']) - int(item['materiale_stock']) 
+                
+                cantidad_pedida = item.get('cantidad_pedida') or 0
+                materiale_stock = item.get('materiale_stock') or 0
+
+                materiales_comprados = int(cantidad_pedida) - int(materiale_stock)
+
                 sheet.write(row, 9, materiales_comprados if materiales_comprados > 0 else 0, formats['normal_center'])
 
                 sheet.write(row, 10, item['name_purchase_order'], formats['normal_center'])
