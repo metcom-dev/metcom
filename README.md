@@ -1,3 +1,3 @@
 # metcom
 
-Repositorio de Metcom
+Repositorio GitHub de Metcom
