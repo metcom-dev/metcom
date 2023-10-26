@@ -65,6 +65,9 @@ class Project(models.Model):
             vals['name'] = sequence + vals['name']
             if 'warehouse_id' not in vals or not vals['warehouse_id']:
                 vals['warehouse_id'] = self.env.user.property_warehouse_ids[0].id if self.env.user.property_warehouse_ids else None
+            if "sale_line_id" in vals and vals["sale_line_id"]:
+                self.env.context = dict(self.env.context)
+                self.env.context.update({"no_create_folder": False})
         res = super(Project, self).create(vals_list)
         for project_id in res:
             if project_id.documents_folder_id:
