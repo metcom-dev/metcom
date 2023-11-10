@@ -76,18 +76,18 @@ class ReportPreorderProject(models.AbstractModel):
                 sheet.write(row, 1, item['name'], formats['normal_center'])
                 sheet.write(row, 2, item['date_order'], formats['date_format'])
                 log.info(item)
-                sheet.write(row, 3, item.get('name_project').get(user_lang, ''), formats['normal_left'])
+                sheet.write(row, 3, item.get('name_project').get(user_lang, '') if item.get('name_project') else '', formats['normal_left'])
                 sheet.write(row, 4, item['codigo_material'], formats['normal_center'])
 
                 nombre_material = item.get('nombre_material')
                 unidadmedida = item.get('unidadmedida')
                 if nombre_material:
-                    sheet.write(row, 5, nombre_material.get(user_lang, ''), formats['normal_left'])
+                    sheet.write(row, 5, nombre_material.get(user_lang, '') if item.get('name_project') else '', formats['normal_left'])
                 else:
                     sheet.write(row, 5, '', formats['normal_left'])
 
                 if unidadmedida:
-                    sheet.write(row, 6, unidadmedida.get(user_lang, ''), formats['normal_center'])
+                    sheet.write(row, 6, unidadmedida.get(user_lang, '') if item.get('name_project') else '', formats['normal_center'])
                 else:
                     sheet.write(row, 6, '', formats['normal_center'])
 
