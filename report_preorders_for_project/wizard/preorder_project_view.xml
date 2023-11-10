@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="project_id" required="True" />
+                    <field name="from_date" required="True" />
+                    <field name="to_date" required="True" />
                 </group>
                 <footer>
                     <button name="generate_report" type="object" context="{'xls_export': 1}" string="Generar Reporte" class="oe_highlight" icon="fa-print" />
