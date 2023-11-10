@@ -75,7 +75,6 @@ class ReportPreorderProject(models.AbstractModel):
             for item in data:
                 sheet.write(row, 1, item['name'], formats['normal_center'])
                 sheet.write(row, 2, item['date_order'], formats['date_format'])
-                log.info(item)
                 sheet.write(row, 3, item.get('name_project').get(user_lang, '') if item.get('name_project') else '', formats['normal_left'])
                 sheet.write(row, 4, item['codigo_material'], formats['normal_center'])
 
