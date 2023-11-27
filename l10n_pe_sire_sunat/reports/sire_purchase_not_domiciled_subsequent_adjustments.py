@@ -216,7 +216,7 @@ class SirePurchaseNotDomiciledSubsequentAdjustmentsTxt:
                 inv_correlative=dict_result['inv_correlative'],
                 inv_retention_igv="{0:.2f}".format(dict_result['inv_retention_igv']),
                 currency_name=dict_result['currency_name'],
-                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']),
+                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']) if dict_result['exchange_rate'] else '',
                 country_code=dict_result['country_code'],
                 partner_name=dict_result['partner_name'],
                 domicile=domicile,

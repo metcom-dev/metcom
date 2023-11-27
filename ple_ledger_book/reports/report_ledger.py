@@ -138,13 +138,19 @@ class LedgerReportTxt(object):
                    '{ml_date_issue}|{ml_name}|{reference}|'\
                    '{debit}|{credit}|{data_structured}|{state}|\r\n'
         for value in self.data:
+            text = value['analytic_distribution'].split()
+            initials=""
+            for word in text:
+                text_clean = ''.join(character for character in word if character.isalpha())        
+                if text_clean:
+                    initials += text_clean[0].upper()
             raw += template.format(
                 period_name=value['period_name'],
                 move_name=value['move_name'],
                 correlative_line=value['correlative_line'],
                 account_code=value['account_code'],
                 unit_code=value['unit_code'],
-                analytic_distribution=value['analytic_distribution'],
+                analytic_distribution=initials,
                 center_cost_code='',
 
                 currency_name=value['currency_name'],

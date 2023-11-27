@@ -1,6 +1,6 @@
 {
     'name': 'Format SIRE SUNAT (Book Sale and Purchase)',
-    'version': '16.0.2.1.1',
+    'version': '16.0.2.1.7',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'This module will generate the SIRE SUNAT format for the purchase and sales books.',

@@ -1,6 +1,6 @@
 {
     'name': 'Formato 3.20 Libro Inventario y Balance - Estado de Resultados',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'This module creates the format 3.1 "Statement of income" of the electronic inventory and balance book.',

@@ -53,7 +53,12 @@ class SirePurchaseBase(models.AbstractModel):
             LEFT(COALESCE(company.name, ''), 1500) AS company_name,
             LEFT(COALESCE('{self.year}{self.month}', ''), 6) AS period,
             LEFT(COALESCE(TO_CHAR(account_move.invoice_date, 'DD/MM/YYYY'), ''), 10) AS invoice_date,
-            CASE WHEN document_type.code IN ('14', '46', '50', '51', '52', '53', '54') THEN LEFT(COALESCE(TO_CHAR(account_move.invoice_date_due, 'DD/MM/YYYY'), ''), 10) ELSE '' END AS invoice_date_due,
+            CASE 
+                WHEN document_type.code IN ('14', '46', '50', '51', '52', '53', '54') THEN 
+                    LEFT(COALESCE(TO_CHAR(account_move.invoice_date_due, 'DD/MM/YYYY'), ''), 10) 
+                ELSE 
+                    '' 
+            END AS invoice_date_due,
             LEFT(COALESCE(document_type.code, ''), 2) AS document_type_code,
             LEFT(COALESCE(REPLACE(REPLACE(REPLACE(account_move.name, '/', ''), ' ', ''), '-', ''), ''), 40) AS invoice_name,
             COALESCE(account_move.ref, '') AS ref,
@@ -73,11 +78,26 @@ class SirePurchaseBase(models.AbstractModel):
                     LIMIT 1
                 ), ''
             ), 10) AS invoice_line_correlative,
-            LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 1), ''), 20) AS ref_serie,
+            CASE 
+                WHEN document_type.code IN ('46') and account_move.ref IS NOT NULL THEN 
+                    LPAD(LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 1), ''), 20), 5, '0') 
+                ELSE 
+                    LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 1), ''), 20)
+            END AS ref_serie,
             LEFT(COALESCE(account_move.year_aduana, ''), 4) AS year_aduana,
-            LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 2), ''), 20) AS ref_correlative,
+            CASE 
+                WHEN document_type.code IN ('01', '02', '03', '07', '08') and account_move.ref IS NOT NULL THEN 
+                    LPAD(LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 2), ''), 20), 8, '0') 
+                ELSE 
+                    LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.ref, ' ', ''), '-', 2), ''), 20) 
+            END AS ref_correlative,
             LEFT(COALESCE(TO_CHAR(account_move.voucher_payment_date, 'DD/MM/YYYY'), ''), 10) AS voucher_payment_date,
-            CASE WHEN account_move.igv_withholding_indicator = true THEN '1' ELSE '' END AS igv_withholding_indicator,
+            CASE 
+                WHEN account_move.igv_withholding_indicator = true THEN 
+                    '1' 
+                ELSE 
+                    '' 
+            END AS igv_withholding_indicator,
             LEFT(COALESCE(account_move.voucher_number, ''), 24) AS voucher_number,
             LEFT(COALESCE(account_move.inv_serie, ''), 20) AS inv_serie,
             LEFT(COALESCE(account_move.inv_year_dua_dsi, ''), 4) AS inv_year_dua_dsi,
@@ -98,16 +118,36 @@ class SirePurchaseBase(models.AbstractModel):
             LEFT(COALESCE(TO_CHAR(exoneration_nodomicilied.code, '99999999'), ''), 1) AS exoneration_nodomicilied_code,
             LEFT(COALESCE(type_rent.code, ''), 2) AS type_rent_code,
             LEFT(COALESCE(service_taken.code, ''), 1) AS taken_code,
-            CASE WHEN account_move.application_article IS NOT NULL THEN '1' ELSE '' END AS application_article,    
+            CASE 
+                WHEN account_move.application_article IS NOT NULL THEN 
+                    '1' 
+                ELSE 
+                    '' 
+            END AS application_article,
             LEFT(COALESCE(currency.name, ''), 3) AS currency_name,
-            ROUND(account_move.exchange_rate, 3) AS exchange_rate,    
+            CASE 
+                WHEN currency.name = 'PEN' THEN 
+                    NULL 
+                ELSE 
+                    ROUND(account_move.exchange_rate, 3) 
+            END AS exchange_rate,
             LEFT(COALESCE(TO_CHAR(account_move.origin_invoice_date, 'DD/MM/YYYY'), ''), 10) AS origin_invoice_date,
             LEFT(COALESCE(origin_document_type.code, ''), 2) AS origin_document_type_code,
             LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.origin_number, ' ', ''), '-', 1), ''), 20) AS origin_number_serie,
-            LEFT(COALESCE(code_aduana.code, ''), 3) AS code_aduana,
+            CASE 
+                WHEN account_move.move_type = 'in_refund' THEN 
+                    LEFT(COALESCE(code_aduana.code, ''), 3) 
+                ELSE 
+                    '' 
+            END AS code_aduana,
             LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.origin_number, ' ', ''), '-', 2), ''), 20) AS origin_number_correlative,
             LEFT(COALESCE(classification_services.code, ''), 1) AS classification_services_code,
-            CASE WHEN account_move.detraction_id IS NOT NULL THEN 'TieneDetraccion' ELSE '' END AS detraction,
+            CASE 
+                WHEN account_move.detraction_id IS NOT NULL THEN 
+                    'TieneDetraccion' 
+                ELSE 
+                    '' 
+            END AS detraction,
             LEFT(COALESCE(inv_type_document.code, ''), 2) AS inv_type_document_code,
             COALESCE(country.name) AS country_name,
             COALESCE(partner.street, '') AS partner_street
@@ -237,7 +277,7 @@ class SirePurchaseBase(models.AbstractModel):
                 'neto_rent': self._get_values_error(line_result.get('neto_rent', '')),
                 'retention_rate': self._get_values_error(line_result.get('retention_rate', '')),
                 'tax_withheld': self._get_values_error(line_result.get('tax_withheld', '')),
-                'country_name': new_country_name
+                'country_name': new_country_name,
             })
         return query_results
 

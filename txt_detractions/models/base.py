@@ -101,22 +101,15 @@ class AccountBatchPayment(models.Model):
     @api.depends('currency_id', 'payment_ids.amount')
     def _compute_from_payment_ids(self):
         for batch in self:
-            amount_currency = 0.0
             amount_residual = 0.0
-            amount_residual_currency = 0.0
             for payment in batch.payment_ids:
                 liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
                 for line in liquidity_lines:
-                    amount_currency += line.amount_currency
                     amount_residual += line.amount_residual
-                    line_residual_currency = line.amount_residual_currency
-                    if self.currency_id != line.currency_id:
-                        line_residual_currency = line.currency_id.compute(line.amount_residual_currency,self.currency_id)
-                    amount_residual_currency += line_residual_currency
 
             batch.amount_residual = amount_residual
-            batch.amount = amount_currency
-            batch.amount_residual_currency = amount_residual_currency
+            batch.amount = amount_residual
+            batch.amount_residual_currency = amount_residual
 
     def generate_detraction(self):
         amount_total = 0

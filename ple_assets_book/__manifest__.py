@@ -1,6 +1,6 @@
 {
     'name': 'Reporte PLE assets book',
-    'version': '16.0.0.0.2',
+    'version': '16.0.0.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """""",

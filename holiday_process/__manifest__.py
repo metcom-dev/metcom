@@ -1,6 +1,6 @@
 {
     'name': 'Holiday Process',
-    'version': '16.0.1.1.1',
+    'version': '16.0.1.1.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """

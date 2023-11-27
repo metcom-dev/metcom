@@ -1,0 +1,391 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+}
+
+.ttrans{
+    color: transparent;
+}
+
+.ttrans span {
+    color: black;
+}
+
+.flleft {
+    float: left;
+}
+
+.inbl {
+    display: inline !important;
+}
+
+.page {
+    font-family:"Calibri", sans-serif;
+    font-size: 9pt !important;
+    line-height: 0.9;
+}
+
+.row_dates {
+    width: 100%;
+    margin-top: 5mm;
+    display: flex;
+    flex-direction: row;
+}
+
+.row_dates > div {
+    display: inline-block !important;
+}
+
+.row_dates .date_donee {
+    margin-left: 0;
+}
+
+.row_dates .date_donee span{
+    padding-left: 3.5mm;
+}
+
+.row_dates .date_start {
+    margin-left: 15mm;
+}
+
+.row_dates .date_start span{
+    padding-left: 1.5mm;
+}
+
+.row_dates .customer_order {
+    margin-left: 12.9mm;
+}
+
+.row_dates .customer_order span{
+    padding-left: 3.5mm;
+}
+
+.row_points {
+    width: 100%;
+    margin-top: 6.4mm !important;
+}
+
+.row_points p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.row_points .start_point p:last-child,
+.row_points .end_point p:last-child {
+    margin-top: 15px !important;
+    margin-bottom: 11px !important;
+}
+
+.p_inline {
+    margin-left: 20mm;
+}
+
+.start_point {
+    height: 100%;
+    width: 45% !important;
+    display: inline-block;
+}
+
+.end_point {
+    height: 100%;
+    width: 45% !important;
+    display: inline-block;
+    margin-left: 16.5mm;
+}
+
+.end_point p:nth-child(2),
+.end_point p:nth-child(3),
+.end_point p:nth-child(4),
+.end_point p:nth-child(5) {
+    padding-left: 5px;
+}
+
+.end_point p:last-child {
+    display: inline;
+    margin-left: 27.5mm;
+}
+
+.row_person {
+    width: 100%;
+    margin-top: 4.1mm !important;
+}
+
+.row_person p {
+    margin-top: 11px !important;
+    margin-bottom: 11px !important;
+}
+
+.customer {
+    height: 100%;
+    width: 45% !important;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.driver {
+    height: 100%;
+    width: 45% !important;
+    display: inline-block;
+    margin-left: 16.5mm;
+}
+
+.row_mot_ord {
+    width: 100%;
+    margin-top: 6.5mm;
+    display: flex;
+    flex-direction: row;
+    height: 5mm;
+    align-items: center !important;
+    justify-content: center;
+}
+
+.row_mot_ord .child:first-child {
+    padding-top: 1mm !important;
+}
+
+.row_mot_ord .child {
+    flex: 1;
+}
+
+.row_mot_ord .child span{
+    padding-left: 4mm;
+}
+
+.row_mot_ord .child:last-child {
+    margin-left: 50%;
+    padding-left: 7.5mm;
+    padding-bottom: 1mm;
+    margin-top: -2mm !important;
+    padding-top: -1mm !important;
+}
+
+.row_moa {
+    display: flex;
+    margin-top: 2mm !important;
+    height: 5mm;
+}
+
+.row_moa span {
+    padding-left: 5mm;
+}
+
+.main_table {
+    margin-top: 12mm !important;
+    height: 129mm;
+    border-spacing: 0 !important;
+    border-collapse: collapse;
+}
+
+.main_table tbody tr {
+    line-height: 1 !important;
+    height: 5mm !important;
+}
+
+.main_table td {
+    text-align: center;
+}
+
+.main_table th {
+    height: 5mm;
+    text-align: center !important;
+}
+
+.item-td {
+    height: 5mm !important;
+    width: 10mm;
+    padding-left: 2mm !important;
+    text-align: left !important;
+}
+
+.item-td span {
+    padding-left: 2mm;
+}
+
+.cod-td {
+    height: 5mm !important;
+    width: 27mm;
+}
+
+.desc-td {
+    height: 5mm !important;
+    width: 115mm;
+    text-align: left !important;
+    padding-left: 2mm !important;
+}
+
+.desc-td span {
+    padding-left: 5mm;
+}
+
+.lot-td {
+    height: 5mm !important;
+    width: 20mm;
+    text-align: right !important;
+    /* padding-left: 3mm !important; */
+}
+
+.lot-td span {
+    /* padding-left: 10.5mm; */
+    margin-right: -4mm;
+}
+
+.umed-td {
+    height: 5mm !important;
+    width: 15mm;
+}
+
+.umed-td span {
+    padding-left: 5mm;
+    margin-right: -3.5mm;
+}
+
+.cant-td {
+    height: 5mm !important;
+    width: 15mm;
+    padding-left: 4.5mm;
+    text-align: right !important;
+}
+
+.cant-td span {
+    padding-left: 1mm;
+    margin-right: -3mm;
+}
+
+.total-td {
+    height: 5mm;
+    padding-left: 5mm;
+    text-align: right !important;
+}
+
+.total-td span {
+    padding-top: 1mm;
+    margin-right: -2mm !important;
+    margin-bottom: -1mm !important;
+}
+
+.row_trans_comp_agen {
+    width: 100%;
+    margin-top: 6.5mm !important;
+    margin-left: -3mm !important;
+    max-height: 80px;
+}
+
+.row_trans_comp_agen p {
+    margin-top: 11px !important;
+    margin-bottom: 11px !important;
+}
+
+.row_trans_comp_agen .trans {
+    vertical-align: top;
+    width: 35%;
+    display: inline-block !important;
+}
+
+.row_trans_comp_agen .trans p:nth-child(2) span,
+.row_trans_comp_agen .trans p:nth-child(4) span{
+    padding-left: 15px !important;
+}
+
+.p_inline_trans {
+    margin-left: 13mm;
+}
+
+.row_trans_comp_agen .comp {
+    vertical-align: top;
+    width: 20%;
+    display: inline-block !important;
+    margin-left: 5mm;
+}
+
+.row_trans_comp_agen .comp p:nth-child(2),
+.row_trans_comp_agen .comp p:nth-child(3) {
+    padding-left: 1mm;
+}
+
+.row_trans_comp_agen .comp p:nth-child(2) span {
+    padding-left: 24px !important;
+}
+
+.p_inline_doc {
+    margin-left: 25mm;
+}
+
+.row_trans_comp_agen .agen {
+    vertical-align: top;
+    width: 38%;
+    display: inline-block !important;
+    margin-left: 5mm;
+}
+
+.row_trans_comp_agen .agen p:nth-child(2) span,
+.row_trans_comp_agen .agen p:nth-child(3) span {
+    padding-left: 30px !important;
+    white-space: nowrap;
+}
+
+.row_trans_comp_agen .agen p:nth-child(3) {
+    position: relative;
+    white-space: nowrap;
+}
+
+.row_trans_comp_agen .agen p:nth-child(3) span:nth-child(2){
+    position: absolute;
+    padding-left: 130px;
+    white-space: nowrap;
+}
+
+.row_trans_comp_agen .agen p:nth-child(4) {
+    white-space: nowrap;
+}
+
+.row_trans_comp_agen .agen p:nth-child(4) span{
+    padding-left: 22px !important;
+}
+
+.row_last {
+    width: 100%;
+    margin-top: 9.5mm !important;
+}
+
+.measures {
+    vertical-align: top;
+    width: 29%;
+    display: inline-block !important;
+}
+
+.incoterm {
+    vertical-align: top;
+    width: 10%;
+    display: inline-block !important;
+    margin-left: 3mm;
+}
+
+.seller {
+    vertical-align: top;
+    width: 15%;
+    display: inline-block !important;
+    margin-left: 3mm;
+    padding-left: 4px;
+    text-align: center;
+}
+
+.notes {
+    vertical-align: top;
+    width: 40%;
+    display: inline-block !important;
+    margin-left: 3mm;
+}
+
+.notes p {
+    padding-left: 37px;
+    overflow-wrap: break-word;
+}
+
+.border_boxes {
+    border: 1px solid black;
+}

@@ -1,6 +1,6 @@
 {
     'name': ' account exchange currency',
-    'version': '16.0.1.0.0',
+    'version': '16.0.2.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': """
@@ -11,8 +11,8 @@
      The exchange rate format is the reverse of Odoo. Ex .: "3.652',
     """,
     'category': 'Accounting',
-    'depends': ['account_discount_global'],
-    'data': ['views/move_views.xml'],
+    'depends': ['account'],
+    'data': ['views/account_move_views.xml'],
     'installable': True,
     'auto_install': False,
     'license': 'Other proprietary',

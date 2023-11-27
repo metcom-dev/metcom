@@ -1,6 +1,6 @@
 {
     'name': 'Work Entry Modified',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'category': 'Payroll',

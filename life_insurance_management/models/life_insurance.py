@@ -7,7 +7,7 @@ class LifeInsurance(models.Model):
     _description = 'Vida ley'
 
     name = fields.Char(
-        string='Entidad',
+        string='Nombre de póliza',
         required=True
     )        
     contacts_id = fields.Many2one(

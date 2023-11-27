@@ -1,6 +1,6 @@
 {
     "name": "Place invoice data in reconciliations",
-    "version": "16.0.0.0.2",
+    "version": "16.0.0.1.3",
     "author": "Ganemo",
     "website": "https://www.ganemo.co",
     "live_test_url": "https://www.ganemo.co",

@@ -25,6 +25,7 @@
             <xpath expr="//field[@name='disability']" position="after">
                         <field name="life_insurance"/>
                         <field name="life_insurance_id" attrs="{'invisible':[('life_insurance','=', False)]}"/>
+                        <field name="button_activate" attrs="{'invisible':[('life_insurance','=', False)]}"/>
             </xpath>
         </field>
     </record>

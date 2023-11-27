@@ -1,6 +1,6 @@
 {
     'name': 'Account field to force exchange rate',
-    'version': '16.0.1.0.4',
+    'version': '16.0.2.0.5',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'This module will create a field to force the exchange rate',

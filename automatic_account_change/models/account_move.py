@@ -19,6 +19,10 @@ class AccountMove(models.Model):
         super(AccountMove, self)._onchange_quick_edit_line_ids()
         self._get_change_account()
 
+    @api.onchange('currency_id') 
+    def _onchange_currency_change_account(self):
+        self._get_change_account()
+
     def _get_change_account(self):
         if self.journal_id and self.currency_id:
             account_output = False

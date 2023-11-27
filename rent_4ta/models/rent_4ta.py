@@ -78,12 +78,16 @@ class Rent4taFiles(models.Model):
         ])
         
         for move_id in account_move_ids:
-            if move_id.invoice_payments_widget:
-                invoice_payments_widget = json.loads(move_id.invoice_payments_widget)
-                if invoice_payments_widget:
+            if move_id.invoice_payments_widget and (move_id.invoice_payments_widget != {} or move_id.invoice_payments_widget != []):
+                invoice_payments_widget = move_id.invoice_payments_widget
+                if type(invoice_payments_widget) != dict:
+                    invoice_payments_widget = json.loads(move_id.invoice_payments_widget)
+                if not isinstance(invoice_payments_widget['content'][0]['date'], date):
                     date_payment = datetime.strptime(invoice_payments_widget['content'][0]['date'], '%Y-%m-%d').date()
-                    if self.date_from <= date_payment and date_payment <= self.date_to:
-                        account_move_ids_list.append(move_id)
+                else:
+                    date_payment = invoice_payments_widget['content'][0]['date']
+                if self.date_from <= date_payment and date_payment <= self.date_to:
+                    account_move_ids_list.append(move_id)
                     
         return account_move_ids_list
         
@@ -120,9 +124,19 @@ class Rent4taFiles(models.Model):
                 document_type_code = "0%s" % (document_type_code)
             if move_id.tax_totals_json:
                 if json.loads(move_id.tax_totals_json)['groups_by_subtotal']:
-                    for line in json.loads(move_id.tax_totals_json)['groups_by_subtotal']['Importe libre de impuestos']:
+                    for line in json.loads(move_id.tax_totals_json)['groups_by_subtotal']['Untaxed Amount']:
                         if line['tax_group_name'] in ['4TA', 'RTA'] and abs(line['tax_group_amount']) > 0:
                             quarter = '1'
+            date_payment = ''
+            if move_id.invoice_payments_widget:
+                invoice_payments_widget = move_id.invoice_payments_widget
+                if type(invoice_payments_widget) != dict:
+                    invoice_payments_widget = json.loads(move_id.invoice_payments_widget)
+                if not isinstance(invoice_payments_widget['content'][0]['date'], date):
+                    date_payment = datetime.strptime(invoice_payments_widget['content'][0]['date'], '%Y-%m-%d')
+                else:
+                    date_payment = invoice_payments_widget['content'][0]['date']
+                date_payment =  date.strftime(date_payment, '%d/%m/%Y')
             lines = {
                 'document_type_code': document_type_code[:2] if document_type_code else '',
                 'document_number': move_id.partner_id.vat[:11] if move_id.partner_id.vat else '',
@@ -130,7 +144,7 @@ class Rent4taFiles(models.Model):
                 'ref_suffix': ''.join(move_id.ref[char] for char in range(move_id.ref.find('-') + 1, len(move_id.ref))) if move_id.ref and move_id.ref.find('-') != -1 else '',
                 'amount_total': '{:.2f}'.format(json.loads(move_id.tax_totals_json)['amount_untaxed']) if move_id.tax_totals_json else '',
                 'invoice_date': date.strftime(move_id.invoice_date, '%d/%m/%Y') if move_id.invoice_date else '',
-                'payment_date': date.strftime(datetime.strptime(json.loads(move_id.invoice_payments_widget)['content'][0]['date'], '%Y-%m-%d'), '%d/%m/%Y') if move_id.invoice_payments_widget else '',
+                'payment_date': date_payment,
                 'quarter': quarter
             }
             data_4ta.append(lines)

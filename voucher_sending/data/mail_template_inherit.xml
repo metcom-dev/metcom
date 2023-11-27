@@ -8,24 +8,5 @@
                 </span>
             </t>
         </xpath>
-        <xpath expr="//t[@t-out='message.body']" position="after">
-            <t t-if="record._name == 'hr.payslip'">
-                <t t-if="record.status == 'signed'">
-                    <br/>
-                    <b>La boleta de pago ya fue firmada</b>
-                </t>
-                <div style="margin: 32px 0px 32px 0px; text-align: center;">
-                    <a t-att-href="record.get_portal_url()"
-                        style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        <t t-if="record.status == 'to_sign'">
-                            Revisar, Aceptar y Firmar
-                        </t>
-                        <t t-else="">
-                            Ver Boleta de Pago
-                        </t>        
-                    </a>
-                </div>                            
-            </t>
-        </xpath>
     </template>
 </data></odoo>

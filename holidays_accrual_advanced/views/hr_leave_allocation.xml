@@ -6,16 +6,23 @@
         <field name="model">hr.leave.allocation</field>
         <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
         <field name="arch" type="xml">
-            <xpath expr="//label[@for='number_of_days_display']" position="attributes">
-                <attribute name="attrs">{'invisible': [('allocation_type', '=', 'accrual')]}</attribute>
+            <xpath expr="//label[@for='number_of_days_display']" position="replace"/>
+            <xpath expr="//div[@name='duration_display']" position="replace"/>
+            <xpath expr="//div[@name='validity']" position="replace"/>
+
+            <xpath expr="//group/group/field[@name='accrual_plan_id']" position="after">                              
+                <field name="date_from" widget="date" string="Periodo de Validez" attrs="{'invisible': ['|', ('allocation_type', '=', 'accrual'), ('state', 'not in', ('draft', 'confirm'))]}"/>
+
+                <field name="date_to" widget="date" string="Ejecutar hasta" attrs="{'invisible': ['|', ('allocation_type', '=', 'accrual'), ('state', 'not in', ('draft', 'confirm'))]}"/> 
+                
+                <field name="number_of_days_display" attrs="{'invisible': ['|', ('allocation_type', '=', 'accrual'), ('state', 'not in', ('draft', 'confirm'))]}"/>
             </xpath>
-            <!--xpath expr="//label[@for='number_of_days']/following-sibling::*[1]" position="attributes">
-                <attribute name="attrs">{'invisible': [('allocation_type', '=', 'accrual')]}</attribute>
-            </xpath-->
+           
             <xpath expr="//group/group[@name='alloc_right_col']" position="after">
                 <group attrs="{'invisible': [('allocation_type', '!=', 'accrual')]}">
                     <field name="date_from"/>
                     <field name="date_to"/>
+                    <field name="number_of_days_display"/>
 
                     <label for="limit_accrued_days"/>
                     <div class="o_row">
@@ -70,10 +77,8 @@
                 />
             </header>
             <field name="notes" position="before">
-                <group string="Accruements"
-                       attrs="{'invisible': ['|', ('allocation_type', '!=', 'accrual'), ('state', 'not in', ['validate'])]}">
-                    <field name="accruement_ids" nolabel="1"/>
-                </group>
+                <field name="accruement_ids" string="Accruements"
+                       attrs="{'invisible': ['|', ('allocation_type', '!=', 'accrual'), ('state', 'not in', ['validate'])]}"/>
             </field>
         </field>
     </record>

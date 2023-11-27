@@ -1,6 +1,6 @@
 {
     'name': 'Life insurance management',
-    'version': '16.0.1.0.2',
+    'version': '16.0.1.1.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'category': 'Payroll',

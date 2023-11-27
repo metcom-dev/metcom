@@ -8,7 +8,12 @@
         <field name="arch" type="xml">
             <xpath expr="//group/group/field[@name='disability']" position="after">
                 <field name="pension_sctr" groups="hr_contract.group_hr_contract_manager"/>
-                <field name="sctr_id"/>
+                <field name="sctr_id"
+                       groups="hr_contract.group_hr_contract_manager"
+                       attrs="{'invisible': [('pension_sctr', '=', False)]}"/>
+                <field name="sctr_name" string="Nombre de la Póliza"
+                       groups="hr_contract.group_hr_contract_manager"
+                       attrs="{'invisible': [('pension_sctr', '=', False)]}" readonly="1" />
             </xpath>
         </field>
     </record>

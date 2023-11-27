@@ -1,27 +1,55 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    # @api.onchange('invoice_payment_term_id', 'currency_id')
-    # def _onchange_account_id(self):
-    #     self.ensure_one()
-    #     currency = self.currency_id
-    #     account_id = None
-    #     # for payment_term in self.invoice_payment_term_id.line_ids:
-    #     #     if payment_term.l10n_pe_is_detraction_retention:
-    #     #         for term_extension in payment_term.term_extension:
-    #     #             if term_extension.currency == currency:
-    #     #                 account_id = term_extension.ledger_account
-    #
-    #     for line in self.line_ids:
-    #         if line.display_type == "payment_term":
-    #             if account_id:
-    #                 line.account_id = account_id
+    @api.onchange('invoice_payment_term_id', 'currency_id')
+    def _onchange_account_id(self):
+        self.ensure_one()
+        currency = self.currency_id
+        filtered_lines = [line for line in self.line_ids if line.display_type == "payment_term" and line.l10n_pe_is_detraction_retention]
 
-    # Ejecuta funcionalidad del módulo automatic_account_change, para que pueda funcionar junto a este
-    # self._get_change_account()
+        for payment_term, line in zip(self.invoice_payment_term_id.line_ids, filtered_lines):
+            account_id = None
+            for term_extension in payment_term.term_extension:
+                if term_extension.currency == currency:
+                    if self.move_type in ['out_invoice', 'out_refund']:
+                        account_id = term_extension.ledger_account
+                    elif self.move_type in ['in_invoice', 'in_refund']:
+                        account_id = term_extension.ledger_account_payable
+            if account_id:
+                line.account_id = account_id
+                
+    def _get_change_account(self):
+        if self.journal_id and self.currency_id:
+            account_output = False
+            if self.pay_sell_force_account_id:
+                if self.move_type in ['out_invoice', 'out_refund']:
+                    account_output = self.pay_sell_force_account_id.sale_account_id
+                elif self.move_type in ['in_invoice', 'out_refund']:
+                    account_output = self.pay_sell_force_account_id.purchase_account_id
+            else:
+                account_change = self.env['account.change.by.type'].search([
+                    ('journal_id', '=', self.journal_id.id),
+                    ('currency_id', '=', self.currency_id.id)
+                ], limit=1)
+                if account_change:
+                    if self.move_type in ['out_invoice', 'out_refund']:
+                        account_output = account_change.sale_account_id
+                    elif self.move_type in ['in_invoice', 'in_refund']:
+                        account_output = account_change.purchase_account_id
+
+            if account_output:
+                for line in self.line_ids:
+                    if line.display_type == 'payment_term' and not line.l10n_pe_is_detraction_retention:
+                        line.update({'account_id': account_output.id})
+
+    def write(self, vals):
+        res = super(AccountMove, self).write(vals)
+        for move in self:
+            move._onchange_account_id()
+        return res
 
     def _get_payment_terms_account(self):
         """
@@ -38,8 +66,7 @@ class AccountMove(models.Model):
             # Search new account.
             domain = [
                 ('company_id', '=', self.company_id.id),
-                ('internal_type', '=',
-                 'receivable' if self.move_type in ('out_invoice', 'out_refund', 'out_receipt') else 'payable'),
+                ('account_type', '=', 'asset_receivable' if self.move_type in ('out_invoice', 'out_refund', 'out_receipt') else 'liability_payable'),
                 ('deprecated', '=', False),
             ]
             return self.env['account.account'].search(domain, limit=1)

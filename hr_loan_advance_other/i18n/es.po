@@ -71,6 +71,16 @@ msgid "Discount Amount"
 msgstr "Monto del descuento"
 
 #. module: hr_loan_advance_other
+#: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_other_discounts__amount_paid
+msgid "Amount Paid"
+msgstr "Monto Pagado"
+
+#. module: hr_loan_advance_other
+#: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_other_discounts__amount_owed
+msgid "Amount Owed"
+msgstr "Monto Adeudado"
+
+#. module: hr_loan_advance_other
 #: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_loan__job_position
 #: model:ir.model.fields,field_description:hr_loan_advance_other.field_hr_other_discounts__job_position
 msgid "Job Position"

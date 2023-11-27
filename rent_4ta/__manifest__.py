@@ -1,6 +1,6 @@
 {
     'name': 'Renta de 4ta',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.1.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'Allow issuing txt files of receipts for fees to declare in the Plame.',

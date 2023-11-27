@@ -1,6 +1,6 @@
 {
     'name': 'employee eps management',
-    'version': '16.0.0.0.1',
+    'version': '16.0.1.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': "This module allows you to manage the hiring process and eps control",

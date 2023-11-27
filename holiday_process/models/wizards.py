@@ -247,8 +247,6 @@ class HolidayPetitionWizard(models.TransientModel):
         return self.action_reopen_wizard(context=context)
 
     def action_reopen_wizard(self, context=None):
-        print("-----Test------")
-        print(context)
         if self._context.get('settlement'):
             form = self.env.ref('holiday_process.holiday_settlement_wizard_view_form')
             name = 'Compensación de vacaciones'

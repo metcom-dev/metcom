@@ -2,7 +2,7 @@ from odoo import api, fields, models
 from ..reports.report_detractions import ReportInvBalTxt
 from datetime import datetime
 import base64
-
+import json
 
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
@@ -73,16 +73,15 @@ class AccountBatchPayment(models.Model):
             for payment in self.payment_ids:
                 amount_total = amount_total + payment.amount
                 lines = lines + 1
-
-                if payment.partner_id.l10n_latam_identification_type_id.name == 'DNI':
+                if payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'DNI':
                     code_doc = 'L'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'RUC':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'RUC':
                     code_doc = 'R'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Carnet Militar':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Carnet Militar':
                     code_doc = 'M'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Carnet de extranjería':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Cédula Extranjera':
                     code_doc = 'E'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Pasaporte':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Pasaporte':
                     code_doc = 'P'
                 else:
                     code_doc = ' '
@@ -111,10 +110,10 @@ class AccountBatchPayment(models.Model):
                     'document': payment.reconciled_bill_ids.l10n_latam_document_type_id.name[
                                 :1] if payment.reconciled_bill_ids.l10n_latam_document_type_id.internal_type in ['invoice',
                                                                                                                  'credit_note'] else '',
-                    'ref': str(payment.ref)[-8:].ljust(11, ' '),
+                    'ref': str(payment.ref)[-8:].ljust(12, ' '),
                     'N': 'N',
                     'payment_name': str(payment.name).ljust(40, ' '),
-                    'zeros': zeros
+                    'zeros': zeros.rjust(113, ' ') + ' ' * 18
                 }
                 line_data.append(values)
             list_data = {
@@ -133,15 +132,15 @@ class AccountBatchPayment(models.Model):
             for payment in self.payment_ids:
                 amount_total = amount_total + payment.amount
                 lines = lines + 1
-                if payment.partner_id.l10n_latam_identification_type_id.name == 'DNI':
+                if payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'DNI':
                     code_doc = '1'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'RUC':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'RUC':
                     code_doc = '6'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'FIC':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'FIC':
                     code_doc = '7'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Carnet de extranjería':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Cédula Extranjera':
                     code_doc = '3'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Pasaporte':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Pasaporte':
                     code_doc = '4'
                 else:
                     code_doc = ' '
@@ -181,13 +180,13 @@ class AccountBatchPayment(models.Model):
                     'spaces': '   ',
                     'ref': str(payment.partner_id.name[:75]).ljust(75, ' '),
                     'reference': str(self.name[:40]).ljust(40, ' '),
-                    'currency': '0001' if payment.currency_id.name == 'PEN' or not payment.currency_id else '1001',
+                    'currency': str(self.name[:40]) + ' ' + '0001' if payment.currency_id.name == 'PEN' or not payment.currency_id else '1001',
                     'amount': (payment_amount_str + '0').rjust(17, '0') if len(payment_amount_str.split('.')[1]) < 2 else str(round(payment.amount, 2)).rjust(17, '0'),
                     'N': 'S',
                 }
                 line_data.append(values)
-
-                if payment.move_id.l10n_latam_document_type_id.name == 'Factura del proveedor':
+                
+                if payment.move_id.l10n_latam_document_type_id.name in 'Factura del proveedor':
                     doc = 'F'
                 elif payment.move_id.l10n_latam_document_type_id.name == 'Nota crédito proveedor':
                     doc = 'N'
@@ -243,13 +242,13 @@ class AccountBatchPayment(models.Model):
                 else:
                     code_doc = ' '
 
-                if payment.partner_id.l10n_latam_identification_type_id.name == 'DNI':
+                if payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'DNI':
                     doc_tyoe = '01'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'RUC':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'RUC':
                     doc_tyoe = '02'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Carnet de extranjería':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Cédula Extranjera':
                     doc_tyoe = '03'
-                elif payment.partner_id.l10n_latam_identification_type_id.name == 'Pasaporte':
+                elif payment.partner_id.l10n_latam_identification_type_id.name.strip() == 'Pasaporte':
                     doc_tyoe = '05'
                 else:
                     doc_tyoe = ' '

@@ -267,6 +267,39 @@ class HrLoan(models.Model):
                 raise UserError(
                     'You cannot delete a loan which is not in draft or cancelled state')
         return super(HrLoan, self).unlink()
+    
+    def action_payment_anticipated(self):
+        for data in self:
+            if not data.loan_lines:
+                raise ValidationError(_("Please Compute installment"))
+        self.ensure_one()
+        form = self.env.ref('hr_loan_advance_other.payment_anticipated_loan_view_form')
+        payment_anticipated_loan_id = self.env['payment.anticipated.loan'].create({
+            'employee_id': self.employee_id.id
+        })
+        loan_lines_ids = []
+        for loan in self.loan_lines.filtered(lambda loan: not loan.paid):
+            payment_anticipated_loan_line_id = self.env['payment.anticipated.loan.line'].create({
+                'payment_anticipated_loan_id': payment_anticipated_loan_id.id,
+                'date': loan.date,
+                'amount': loan.amount,
+                'paid': loan.paid,
+                'employee_id': loan.employee_id.id,
+                'receivable': loan.receivable,
+                'struct_id': loan.struct_id.id,
+                'loan_lines_id': loan.id
+            })
+            loan_lines_ids.append(payment_anticipated_loan_line_id.id)
+        return {
+            'name': 'Pago anticipado',
+            'res_model': 'payment.anticipated.loan',
+            'view_mode': 'form',
+            'views': [(form.id, 'form')],
+            'context': {'default_loan_lines_ids': loan_lines_ids},
+            'view_id': form.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new'
+        }
 
     def compute_installment(self):
         """This automatically create the installment the employee need to pay to

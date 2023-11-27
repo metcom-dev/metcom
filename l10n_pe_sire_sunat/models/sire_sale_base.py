@@ -72,13 +72,23 @@ class SireSaleBase(models.AbstractModel):
                 ), ''
             ), 10) AS invoice_line_correlative,
             LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.name, ' ', ''), '-', 1), ''), 20) AS invoice_serie,
-            LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.name, ' ', ''), '-', 2), ''), 20) AS invoice_correlative,
+            CASE 
+                WHEN document_type.code IN ('01', '02', '03', '07', '08') and account_move.name IS NOT NULL THEN 
+                    LPAD(LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.name, ' ', ''), '-', 2), ''), 20), 8, '0') 
+                ELSE 
+                    LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.name, ' ', ''), '-', 2), ''), 20) 
+            END AS invoice_correlative,
             LEFT(COALESCE(identification_type.l10n_pe_vat_code, ''), 1) AS partner_identification_code,
             LEFT(COALESCE(partner.vat, ''), 15) AS partner_vat,
             validate_string(partner.name, 1500) AS partner_name,
             get_tax(account_move.id, account_move.move_type, COALESCE(document_type.code, '')) AS tax_data,
             LEFT(COALESCE(currency.name, ''), 3) AS currency_name,
-            ROUND(account_move.exchange_rate, 3) AS exchange_rate,
+            CASE 
+                WHEN currency.name = 'PEN' THEN 
+                    NULL 
+                ELSE 
+                    ROUND(account_move.exchange_rate, 3) 
+            END AS exchange_rate,
             LEFT(COALESCE(TO_CHAR(account_move.origin_invoice_date, 'DD/MM/YYYY'), ''), 10) AS origin_invoice_date,
             LEFT(COALESCE(origin_document_type.code, ''), 2) AS origin_document_type_code,
             LEFT(COALESCE(SPLIT_PART(REPLACE(account_move.origin_number, ' ', ''), '-', 1), ''), 20) AS origin_number_serie,
