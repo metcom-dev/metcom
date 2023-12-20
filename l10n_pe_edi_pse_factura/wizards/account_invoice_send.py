@@ -1,13 +1,4 @@
-###############################################################################
-#
-#    Copyright (C) 2019-TODAY OPeru.
-#    Author      :  Grupo Odoo S.A.C. (<http://www.operu.pe>)
-#
-#    This program is copyright property of the author mentioned above.
-#    You can`t redistribute it and/or modify it.
-#
-###############################################################################
-
+# -*- coding: utf-8 -*-
 import base64
 
 import requests
@@ -29,12 +20,29 @@ class AccountInvoiceSend(models.TransientModel):
                 )
                 einvoice_attachments = []
                 if invoice_id.l10n_pe_edi_pdf_file:
+                    r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
+                    data_content = r.content
+                    invoice_id.l10n_pe_edi_pdf_file.write({
+                        "datas": base64.encodebytes(data_content),
+                        "type": "binary",
+                    })
                     einvoice_attachments.append(invoice_id.l10n_pe_edi_pdf_file.id)
                 if invoice_id.l10n_pe_edi_cdr_file:
+                    r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
+                    data_content = r.content
+                    invoice_id.l10n_pe_edi_cdr_file.write({
+                        "datas": base64.encodebytes(data_content),
+                        "type": "binary",
+                    })
                     einvoice_attachments.append(invoice_id.l10n_pe_edi_cdr_file.id)
                 if invoice_id.l10n_pe_edi_xml_file:
+                    r = requests.get(invoice_id.l10n_pe_edi_xml_file.url)
+                    data_content = r.content
+                    invoice_id.l10n_pe_edi_xml_file.write({
+                        "datas": base64.encodebytes(data_content),
+                        "type": "binary",
+                    })
                     einvoice_attachments.append(invoice_id.l10n_pe_edi_xml_file.id)
-
                 if einvoice_attachments:
                     '''r = requests.get(
                         invoice_id.l10n_pe_edi_request_id.link_xml, timeout=10
