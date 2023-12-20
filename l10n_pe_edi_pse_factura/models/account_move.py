@@ -9,6 +9,27 @@ class AccountMove(models.Model):
 
     l10n_pe_edi_pse_uid = fields.Char(string='PSE Unique identifier', copy=False)
     l10n_pe_edi_pse_cancel_uid = fields.Char(string='PSE Identifier for Cancellation', copy=False)
+    l10n_pe_edi_pse_attachment_ids = fields.Many2many('ir.attachment', string='EDI Attachments')
+    l10n_pe_edi_pse_status = fields.Selection([
+        ('ask_for_status', 'Ask For Status'),
+        ('accepted', 'Accepted'),
+        ('objected', 'Accepted With Objections'),
+        ('rejected', 'Rejected'),
+    ], string='SUNAT DTE status', copy=False, tracking=True, help="""Status of sending the DTE to the SUNAT:
+    - Ask For Status: The DTE is asking for its status to the SUNAT.
+    - Accepted: The DTE has been accepted by SUNAT.
+    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.
+    - Rejected: The DTE has been rejected by SUNAT.""")
+    l10n_pe_edi_pse_void_status = fields.Selection([
+        ('ask_for_status', 'Ask For Status'),
+        ('accepted', 'Accepted'),
+        ('objected', 'Accepted With Objections'),
+        ('rejected', 'Rejected'),
+    ], string='SUNAT DTE Void status', copy=False, tracking=True, help="""Status of sending the DTE to the SUNAT:
+    - Ask For Status: The DTE is asking for its status to the SUNAT.
+    - Accepted: The DTE has been accepted by SUNAT.
+    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.
+    - Rejected: The DTE has been rejected by SUNAT.""")
     l10n_pe_edi_accepted_by_sunat = fields.Boolean(string='EDI Accepted by Sunat', copy=False)
     l10n_pe_edi_void_accepted_by_sunat = fields.Boolean(string='Void EDI Accepted by Sunat', copy=False)
     l10n_pe_edi_rectification_ref_type = fields.Many2one('l10n_latam.document.type', string='Rectification - Invoice Type')
@@ -17,6 +38,23 @@ class AccountMove(models.Model):
     l10n_pe_edi_payment_fee_ids = fields.One2many('account.move.l10n_pe_payment_fee','move_id', string='Credit Payment Fees')
     l10n_pe_edi_transportref_ids = fields.One2many(
         'account.move.l10n_pe_transportref', 'move_id', string='Attached Despatchs', copy=True)
+    
+    l10n_pe_edi_hash = fields.Char(string='DTE Hash', copy=False)
+    l10n_pe_edi_xml_file = fields.Many2one('ir.attachment', string='DTE file', copy=False)
+    l10n_pe_edi_xml_file_link = fields.Char(string='DTE file', compute='_compute_l10n_pe_edi_links')
+    l10n_pe_edi_pdf_file = fields.Many2one('ir.attachment', string='DTE PDF file', copy=False)
+    l10n_pe_edi_pdf_file_link = fields.Char(string='DTE PDF file', compute='_compute_l10n_pe_edi_links')
+    l10n_pe_edi_cdr_file = fields.Many2one('ir.attachment', string='CDR file', copy=False)
+    l10n_pe_edi_cdr_file_link = fields.Char(string='CDR file', compute='_compute_l10n_pe_edi_links')
+    l10n_pe_edi_cdr_void_file = fields.Many2one('ir.attachment', string='CDR Void file', copy=False)
+    l10n_pe_edi_cdr_void_file_link = fields.Char(string='CDR Void file', compute='_compute_l10n_pe_edi_links')
+
+    def _compute_l10n_pe_edi_links(self):
+        for move in self:
+            move.l10n_pe_edi_xml_file_link = move.l10n_pe_edi_xml_file.url if move.l10n_pe_edi_xml_file else None
+            move.l10n_pe_edi_pdf_file_link = move.l10n_pe_edi_pdf_file.url if move.l10n_pe_edi_pdf_file else None
+            move.l10n_pe_edi_cdr_file_link = move.l10n_pe_edi_cdr_file.url if move.l10n_pe_edi_cdr_file else None
+            move.l10n_pe_edi_cdr_void_file_link = move.l10n_pe_edi_cdr_void_file.url if move.l10n_pe_edi_cdr_void_file else None
 
     def _post(self, soft=True):
         res = super(AccountMove, self)._post(soft=soft)
