@@ -33,6 +33,7 @@ class MailTemplate(models.Model):
     def _get_edi_attachments(self, document):
         if not document.attachment_id or document.edi_format_id.code != 'pe_pse':
             return super()._get_edi_attachments(document)
+        return {}
         einvoice_attachments = []
         if document.move_id.l10n_pe_edi_pse_uid and document.move_id.company_id.l10n_pe_edi_provider=='conflux':
             invoice = document.move_id
