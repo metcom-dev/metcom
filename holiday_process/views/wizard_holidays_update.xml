@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="holiday_update_wizard_view_form" model="ir.ui.view">
+        <field name="name">holiday_update_wizard</field>
+        <field name="model">holiday.update.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Generar" name="action_generate_holidays" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_holiday_update_wizard" model="ir.actions.act_window">
+        <field name="name">Actualizar días de vacaciones</field>
+        <field name="res_model">holiday.update.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        id="hr_holidays_menu_update_holidays"
+        name="Actualizar días de vacaciones"
+        parent="hr_holidays.menu_hr_holidays_configuration"
+        action="action_holiday_update_wizard"
+        sequence="50"
+    />
+
+</odoo>

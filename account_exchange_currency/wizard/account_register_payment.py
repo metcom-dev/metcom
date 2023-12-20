@@ -1,6 +1,4 @@
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
-
+from odoo import models, api
 
 
 class AccountPaymentRegister(models.TransientModel):

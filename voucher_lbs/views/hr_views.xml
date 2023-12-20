@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_salary_rule_form_view_inherit_voucher_lbs" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.view.inherit.voucher_lbs</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Liquidación" name="liquidation">
+                    <field name="section_lbs_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_type_form_view_inherit_voucher_lbs" model="ir.ui.view">
+        <field name="name">hr.work.entry.type.form.view.inherit.voucher_lbs</field>
+        <field name="model">hr.work.entry.type</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main_group']" position="after">
+                <group string="Liquidación">
+                    <field name="section_lbs_ids" colspan="2" nolabel="1" mode="tree"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

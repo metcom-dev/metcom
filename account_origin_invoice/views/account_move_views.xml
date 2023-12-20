@@ -10,7 +10,7 @@
             <xpath expr="//field[@name='debit_origin_id']" position="replace"/>
             <xpath expr="//page[@name='other_info']" position="after">
                 <page name="document_refund_invoice" string="Documento Rectificado"
-                      attrs="{'invisible': [('l10n_pe_sunat_code', 'not in', ['07', '08'])]}">
+                 attrs="{'invisible': [('internal_type', 'not in',['debit_note','credit_note'])]}">
                     <group>
                         <group>
                             <field name="reversed_entry_id" attrs="{'invisible': [('reversed_entry_id', '=', False)]}"/>

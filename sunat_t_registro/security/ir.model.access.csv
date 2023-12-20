@@ -1,0 +1,33 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sunat_t_registro,sunat.t.registro,model_sunat_t_registro,,1,1,1,1
+access_international_industrial_classification_group_user,"international.industrial.classification group_user",model_international_industrial_classification,base.group_user,1,1,1,1
+access_international_industrial_classification_group_all,"international.industrial.classification group_all",model_international_industrial_classification,,1,1,1,1
+access_road_type_object_group_user,"road.type.object group_user",model_road_type_object,base.group_user,1,1,1,1
+access_road_type_object_group_all,"road.type.object group_all",model_road_type_object,,1,1,1,1
+access_zone_type_object_group_user,"zone.type.object group_user",model_zone_type_object,base.group_user,1,1,1,1
+access_zone_type_object_group_all,"zone.type.object group_all",model_zone_type_object,,1,1,1,1
+access_ubigeo_reniec_object_group_user,"ubigeo.reniec.object group_user",model_ubigeo_reniec_object,base.group_user,1,1,1,1
+access_ubigeo_reniec_object_group_all,"ubigeo.reniec.object group_all",model_ubigeo_reniec_object,,1,1,1,1
+access_occupational_worker_category_group_user,"occupational.worker.category group_user",model_occupational_worker_category,base.group_user,1,1,1,1
+access_occupational_worker_category_group_all,"occupational.worker.category group_all",model_occupational_worker_category,,1,1,1,1
+access_worker_type_pensioner_provider_group_user,"worker.type.pensioner.provider group_user",model_worker_type_pensioner_provider,base.group_user,1,1,1,1
+access_worker_type_pensioner_provider_group_all,"worker.type.pensioner.provider group_all",model_worker_type_pensioner_provider,,1,1,1,1
+access_type_formative_modality_work_group_user,"type.formative.modality.work group_user",model_type_formative_modality_work,base.group_user,1,1,1,1
+access_type_formative_modality_work_group_all,"type.formative.modality.work group_all",model_type_formative_modality_work,,1,1,1,1
+access_occupation_work_personnel_training_modality_group_user,"occupation.work.personnel.training.modality group_user",model_occupation_work_personnel_training_modality,base.group_user,1,1,1,1
+access_occupation_work_personnel_training_modality_group_all,"occupation.work.personnel.training.modality group_all",model_occupation_work_personnel_training_modality,,1,1,1,1
+access_third_staff_group_user,"third.staff group_user",model_third_staff,base.group_user,1,1,1,1
+access_third_staff_group_all,"third.staff group_all",model_third_staff,,1,1,1,1
+access_hr_employee_third_staff_group_user,"hr.employee.third.staff group_user",model_hr_employee_third_staff,base.group_user,1,1,1,1
+access_hr_employee_third_staff_group_all,"hr.employee.third.staff group_all",model_hr_employee_third_staff,,1,1,1,1
+access_edu_career_object_group_user,"edu.career.object group_user",model_edu_career_object,base.group_user,1,1,1,1
+access_edu_career_object_group_all,"edu.career.object group_all",model_edu_career_object,,1,1,1,1
+access_edu_name_object_group_user,"edu.name.object group_user",model_edu_name_object,base.group_user,1,1,1,1
+access_edu_name_object_group_all,"edu.name.object group_all",model_edu_name_object,,1,1,1,1
+access_edu_year_graduation_object_group_user,"edu.year.graduation.object group_user",model_edu_year_graduation_object,base.group_user,1,1,1,1
+access_edu_year_graduation_object_group_all,"edu.year.graduation.object group_all",model_edu_year_graduation_object,,1,1,1,1
+access_other_annexed_establishments_group_user,"other.annexed.establishments group_user",model_other_annexed_establishments,base.group_user,1,1,1,1
+access_other_annexed_establishments_group_all,"other.annexed.establishments group_all",model_other_annexed_establishments,,1,1,1,1
+
+access_hr_employee_right_holders_group_user,"hr.employee.right.holders group_user",model_hr_employee_right_holders,base.group_user,1,1,1,1
+access_hr_employee_right_holders_group_all,"hr.employee.right.holders group_all",model_hr_employee_right_holders,,1,1,1,1

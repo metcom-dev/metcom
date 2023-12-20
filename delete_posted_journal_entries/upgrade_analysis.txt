@@ -1,0 +1,3 @@
+---Models in module 'delete_posted_journal_entries'---
+---Fields in module 'delete_posted_journal_entries'---
+---XML records in module 'delete_posted_journal_entries'---

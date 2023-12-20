@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="external_layout_holiday_sale">
+        <div class="article doc_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+             t-att-data-oe-id="doc and doc.id"
+             t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+    <template id="print_holiday_sale">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="holiday_sale.external_layout_holiday_sale">
+                    <div class="page">
+                        <div style="font-family: Arial; font-size: 20px;">
+                            <strong>
+                                <center>CONVENIO DE REDUCCION DE VACACIONES</center>
+                            </strong>
+                        </div>
+                        <br/>
+                        <div style="font-family: Arial; text-align: justify; font-size: 16px;">
+                            <p>
+                                Conste por el presente documento el convenio de reducción de vacaciones 
+                                que al amparo de lo dispuesto por el artículo 19 del Decreto Legislativo 
+                                N° 713, Ley de Descansos Remunerados, celebran de una parte
+                                <t t-esc="doc.employee_id.company_id.name"/>,
+                                identificada con RUC N°
+                                <t t-esc="doc.employee_id.company_id.vat"/>,
+                                debidamente representada por el Sr.
+                                <t t-esc="doc.employee_id.company_id.legal_representative.name"/>
+                                identificado con
+                                <t t-esc="doc.employee_id.company_id.legal_representative.l10n_latam_identification_type_id.name"/>
+                                Nº
+                                <t t-esc="doc.employee_id.company_id.legal_representative.vat"/>
+                                en calidad de representante legal, a quien en adelante se 
+                                denominará <b>EL EMPLEADOR</b>, y por otra parte el Sr.
+                                <t t-esc="doc.employee_id.firstname"/>
+                                <t t-esc="doc.employee_id.lastname"/>
+                                <t t-esc="doc.employee_id.secondname"/>,
+                                identificado con
+                                <t t-esc="doc.employee_id.type_identification_id.name"/>
+                                N°
+                                <t t-esc="doc.employee_id.identification_id"/>,
+                                a quien en adelante se denominará <b>EL TRABAJADOR</b>, en los términos
+                                siguientes:
+                            </p>
+                        </div>
+                        <div style="font-family: Arial; font-size: 16px;">
+                            <strong>PRIMERA: ANTECEDENTES</strong>
+                        </div>
+                        <div style="font-family: Arial; text-align: justify; font-size: 16px;">
+                            <p>
+                                <b>1.1 EL EMPLEADOR</b> es una empresa que se dedica a
+                                <t t-esc="doc.employee_id.company_id.object_company"/>.
+                                <br/>
+                                <b>1.2 EL TRABAJADOR</b> ingresó a prestar servicios para <b>EL EMPLEADOR</b> el día
+                                <t t-if="doc.employee_id.service_hire_date">
+                                    <t t-esc="doc.employee_id.service_hire_date.strftime('%d/%m/%Y')"/>,
+                                </t>
+                                desempeñándose en el puesto de trabajo denominado
+                                <t t-esc="doc.employee_id.job_id.name"/>.
+                                A la fecha, <b>EL TRABAJADOR</b> ha cumplido los requisitos legales para obtener los
+                                <t t-esc="doc.employee_id.holidays_per_year"/>
+                                días de descanso anual vacacional correspondientes al periodo
+                                <t t-if="doc.hr_leave_id">
+                                    <t t-if="doc.hr_leave_id.from_date">
+                                        <t t-esc="doc.hr_leave_id.from_date.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                    -
+                                    <t t-if="doc.hr_leave_id.to_date">
+                                        <t t-esc="doc.hr_leave_id.to_date.strftime('%d/%m/%Y')"/>.
+                                    </t>
+                                </t>
+                            </p>
+                        </div>
+                        <div style="font-family: Arial; font-size: 16px;">
+                            <strong>SEGUNDA: OBJECTO</strong>
+                        </div>
+                        <div style="font-family: Arial; text-align: justify; font-size: 16px;">
+                            <p>
+                                <b>EL EMPLEADOR</b> y <b>EL TRABAJADOR</b>, al amparo de los dispuesto 
+                                por el artículo 19 del Decreto Legislativo N° 713, Ley de Descansos Remunerados, 
+                                en forma libre y voluntaria, acuerden que <b>EL TRABAJADOR</b> reduzca el 
+                                descanso vacacional señalado en la cláusula primera del presente convenio a
+                                <t t-if="doc.hr_leave_id.pending_holiday">
+                                    <t t-esc="int(doc.hr_leave_id.pending_holiday)"/>
+                                </t>
+                                días, los cuales se computarán de la siguiente manera:
+                                <br/>
+                                <br/>
+                                Durante el periodo
+                                <t t-if="doc.from_date or doc.from_to">
+                                    <t t-if="doc.from_date">
+                                        <t t-esc="doc.from_date.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                    -
+                                    <t t-if="doc.from_to">
+                                        <t t-esc="doc.from_to.strftime('%d/%m/%Y')"/>.
+                                    </t>
+                                </t>
+                                <b>EL TRABAJADOR</b> prestará servicios para <b>EL EMPLEADOR</b> desempeñando 
+                                las labores correspondientes a su puesto de trabajo. Por su parte <b>EL EMPLEADOR</b> 
+                                se compromete a cancelar a <b>EL TRABAJADOR</b> los siguientes conceptos:
+                                <ul>
+                                    <li style="list-style: square;">
+                                        Pago de remuneración ordinaria por
+                                        <t t-if="doc.number_of_days">
+                                            <t t-esc="int(doc.number_of_days)"/>
+                                        </t>
+                                        día(s) de trabajo, 
+                                        correspondientes al periodo comprometido ente el
+                                        <t t-if="doc.date_from_wizard or doc.date_to_wizard">
+                                            <t t-if="doc.date_from_wizard">
+                                                <t t-esc="doc.date_from_wizard.strftime('%d/%m/%Y')"/>
+                                            </t>
+                                            -
+                                            <t t-if="doc.date_to_wizard">
+                                                <t t-esc="doc.date_to_wizard.strftime('%d/%m/%Y')"/>.
+                                            </t>
+                                        </t>
+                                    </li>
+                                    <li style="list-style: square;">
+                                        Pago de remuneración vacacional por
+                                        <t t-if="doc.number_of_days">
+                                            <t t-esc="int(doc.number_of_days)"/>
+                                        </t>                                            
+                                        día(s) de vacaciones,
+                                        correspondientes al periodo comprendido entre el
+                                        <t t-if="doc.date_from_wizard or doc.date_to_wizard">
+                                            <t t-if="doc.date_from_wizard">
+                                                <t t-esc="doc.date_from_wizard.strftime('%d/%m/%Y')"/>
+                                            </t>
+                                            -
+                                            <t t-if="doc.date_to_wizard">
+                                                <t t-esc="doc.date_to_wizard.strftime('%d/%m/%Y')"/>.
+                                            </t>
+                                        </t>
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                        <div style="font-family: Arial; text-align: justify; font-size: 16px;">
+                            <p>
+                                Las partes dejan constancia que suscriben el presente convenio en forma libre
+                                y voluntaria, sin la existencia de dolo, error, amenaza, presión, coacción o
+                                cualquier otro vicio de la voluntad en contra de <b>EL TRABAJADOR</b>.
+                                <br/>
+                                <br/>
+                                Suscrito por duplicado, en la ciudad de Lima a la fecha de la creación de la
+                                compensación de vacaciones (Ausencia).
+                            </p>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div style="width:100%">
+                            <div style="width: 50%;height: 100px;float: right;">
+                                <t t-if="doc.employee_id.employer_sign">
+                                    <div style="text-align: center;word-spacing: 1px;">
+                                        <span t-esc="doc.employee_id.employer_sign" style="width:88.44px; height:88.44px;" 
+                                        t-options="{'widget': 'image'}"/>
+                                        <br/>
+                                        ______________________________
+                                        <br/>
+                                        <span style="font-size: 16px;">EMPLEADOR</span>
+                                    </div>
+                                </t>
+                                <t t-if="not doc.employee_id.employer_sign">
+                                    <div style="text-align: center;word-spacing: 1px;">
+                                        <br/>
+                                        ______________________________
+                                        <br/>
+                                        <span style="font-size: 16px;">EMPLEADOR</span>
+                                    </div>
+                                </t>
+                            </div>
+                            <div style="width: 50%;height: 100px;float: left;">                            
+                                <t t-if="not doc.employee_id.employer_sign">
+                                    <div style="text-align: center;word-spacing: 1px;">
+                                        <br/>
+                                        ______________________________
+                                        <br/>
+                                        <span style="font-size: 16px;">TRABAJADOR</span>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

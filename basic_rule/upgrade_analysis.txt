@@ -1,0 +1,3 @@
+---Models in module 'basic_rule'---
+---Fields in module 'basic_rule'---
+---XML records in module 'basic_rule'---

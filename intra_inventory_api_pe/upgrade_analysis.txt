@@ -1,0 +1,3 @@
+---Models in module 'intra_inventory_api_pe'---
+---Fields in module 'intra_inventory_api_pe'---
+---XML records in module 'intra_inventory_api_pe'---

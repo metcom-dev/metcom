@@ -10,6 +10,7 @@ class HrEmployee(models.Model):
     service_hire_date = fields.Date(
         string='Hire Date',
         groups='hr.group_hr_user',
+        compute='_compute_service_hire_date',  
         help=(
             'Hire date is normally the date an employee completes new hire'
             ' paperwork'
@@ -60,7 +61,11 @@ class HrEmployee(models.Model):
     @api.depends('service_start_date', 'service_termination_date')
     def _compute_service_duration(self):
         for record in self:
-            service_until = (record.service_termination_date or fields.Date.today())
+            if hasattr(record, 'service_termination_date') and record.service_termination_date:
+                service_until = fields.Date.today() if (record.service_termination_date >= fields.Date.today()) else record.service_termination_date
+            else:
+                service_until = fields.Date.today()
+
             if record.service_start_date and service_until > record.service_start_date:
                 service_since = record.service_start_date
                 service_duration = fabs((service_until - service_since) / timedelta(days=1))
@@ -81,5 +86,9 @@ class HrEmployee(models.Model):
         if not self.service_start_date:
             self.service_start_date = self.service_hire_date
 
+    @api.depends('service_start_date')
+    def _compute_service_hire_date(self):
+        self.service_hire_date = self.service_start_date
+        
     def _get_date_start_work(self):
         return self.service_start_date or super()._get_date_start_work()

@@ -1,5 +1,6 @@
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
+import re
 
 type_validation = [
     ('numbers', 'Numérico'),
@@ -87,12 +88,21 @@ class AccountMove(models.Model):
         related='l10n_latam_document_type_id.code',
         string='Código Sunat'
     )
-
+    internal_type = fields.Selection(
+        related='l10n_latam_document_type_id.internal_type',
+        string='Internal Type',
+        readonly=True
+    )
+    
     @api.depends('l10n_latam_document_type_id', 'move_type', 'ref')
     def _compute_error_dialog(self):
         for rec in self:
             if rec.move_type not in ['out_invoice', 'out_refund'] and rec.name:
                 msg = ''
+                if isinstance(rec.ref, str):
+                    ref_code = re.search(r'\((.*?)\)', rec.ref)
+                    if ref_code:
+                        rec.ref = ref_code.group(1)
                 reference = rec.ref
                 if reference and '-' in reference and len(reference.split('-')) == 2 and rec.l10n_latam_document_type_id:
                     serie, correlative = reference.split('-')
@@ -107,7 +117,8 @@ class AccountMove(models.Model):
                 else:
                     if rec.move_type != 'entry' and reference and '-' in reference and len(reference.split('-')) != 2:
                         msg += 'Formato de referencia de proveedor incorrecto. Debe ser de la siguiente forma para que pueda continuar con el proceso: FXXX-XXXXXXXX'
-                rec.error_dialog = msg
+                #rec.error_dialog = msg
+                rec.error_dialog = ''
 
     @api.constrains('error_dialog', 'move_type')
     def _constrains_error_dialog(self):

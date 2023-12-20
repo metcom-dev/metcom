@@ -46,6 +46,7 @@
         <field name="arch" type="xml">
             <field name="invoice_user_id" position="after">
                 <field name="l10n_pe_sunat_code" invisible="1"/>
+                <field name="internal_type" invisible="1"/>
             </field>
             <xpath expr="//notebook" position='before'>
                 <field name="error_dialog" class="infobox" attrs="{'invisible': [('error_dialog','in', [False,''])]}"/>

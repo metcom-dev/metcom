@@ -17,8 +17,38 @@
 			<t t-call="web.html_container">
 				<t t-foreach="docs" t-as="doc">
 					<t t-call="web.external_layout">
-						<div class="page">
-							<!-- <div class="oe_structure"/> -->
+						<div class="page" style="font-size: 0.6rem;">
+							<style>
+								.table-div {
+									display: table;
+									width: 100%;
+									border-collapse: collapse;
+								}
+								.table-header, .table-row {
+									display: table-row;
+								}
+								.table-cell {
+									display: table-cell;
+									padding: 4px 2px;
+									border: 0.9px solid black;
+								}
+								.table-header .table-cell {
+									text-align: center; 
+									font-weight: bold; 
+									border-top: 1px solid black;
+									border-bottom: 0.9px solid black;
+									text-transform: uppercase;
+    								color: darkblue;
+									padding-top: 4px;
+									padding-bottom: 4px;
+								}
+								.table-cell.text-right {
+									text-align: right;
+								}
+								.last-element {
+									border-bottom: 0.9px solid black;
+								}
+							</style>
 							<div class="row">
 								<div class="col-12" style="text-align:center;">
 									<h3>Pre-Orden de Compra (<span t-field="doc.name"/>)</h3>
@@ -39,34 +69,96 @@
 							<br/>
 							<div class="row">
 								<div class="col-12">
-									<table class="table table-condensed">
+									<!-- <table class="table table-sm o_main_table table-borderless">
 										<thead>
-											<tr>
-												<th>Producto</th>
-												<th class="text-right">Cantidad requerida</th>
-												<th>UdM</th>
-												<th class="text-right">Cantidad en stock</th>
-												<th>UdM</th>
-												<th>Fecha de stock</th>
-												<th class="text-right">Cantidad a comprar</th>
-												<th>UdM</th>
+											<tr class="bg-200">
+												<th style="width:50%;">Producto</th>
+												<th class="text-right" style="width:8%;">Cantidad requerida</th> 
+												<th style="width:5%;">UdM</th>
+												<th class="text-right" style="width:9%;">Cantidad en stock</th> 
+												<th style="width:5%;">UdM</th>
+												<th style="width:9%;">Fecha de stock</th>
+												<th class="text-right" style="width:9%;">Cantidad a comprar</th> 
+												<th style="width:5%;">UdM</th>
 											</tr>
 										</thead>
 										<tbody>
+											<t t-set="last_line" t-value="doc.line_ids[-1] if doc.line_ids else False"/>
 											<t t-foreach="doc.line_ids" t-as="line">
-											<tr t-if="line.state!='cancel'">
-												<td><span t-field="line.product_id"/></td>
-												<td class="text-right"><span t-field="line.product_qty"/></td>
-												<td><span t-field="line.product_uom"/></td>
-												<td class="text-right"><span t-field="line.stock_qty"/></td>
-												<td><span t-field="line.product_stock_uom"/></td>
-												<td><span t-field="line.stock_date"/></td>
-												<td class="text-right"><span t-field="line.purchase_product_qty"/></td>
-												<td><span t-field="line.purchase_product_uom"/></td>
-											</tr>
+												<tr t-attf-class="#{line == last_line and 'last-element' or ''}" t-if="line.state!='cancel'" style="background-color: white; color: black;">
+													<td>
+														<span t-field="line.product_id"/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.product_qty"/>
+													</td>
+													<td>
+														<span t-field="line.product_uom"/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.stock_qty"/>
+													</td>
+													<td>
+														<span t-field="line.product_stock_uom"/>
+													</td>
+													<td>
+														<span t-field="line.stock_date" t-options='{"widget": "date"}'/>
+													</td>
+													<td class="text-right">
+														<span t-field="line.purchase_product_qty"/>
+													</td>
+													<td>
+														<span t-field="line.purchase_product_uom"/>
+													</td>
+												</tr>
 											</t>
 										</tbody>
-									</table>
+									</table> -->
+
+									<div class="table-div">
+										<div class="table-header bg-200">
+											<div class="table-cell" style="width:50%;">Producto</div>
+											<div class="table-cell" style="width:8%;">Cantidad requerida</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+											<div class="table-cell" style="width:9%;">Cantidad en stock</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+											<div class="table-cell" style="width:9%;">Fecha de stock</div>
+											<div class="table-cell" style="width:9%;">Cantidad a comprar</div>
+											<div class="table-cell" style="width:9%;">Precio Unitario</div>
+											<div class="table-cell" style="width:5%;">UdM</div>
+										</div>
+										<t t-foreach="doc.line_ids" t-as="line">
+											<div t-attf-class="table-row #{line == doc.line_ids[-1] and 'last-element' or ''}" t-if="line.state!='cancel'">
+												<div class="table-cell">
+													<span t-field="line.product_id"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.product_qty"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.product_uom"/>
+												</div>
+											 	<div class="table-cell text-center">
+													<span t-field="line.stock_qty"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.product_stock_uom"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.stock_date" t-options='{"widget": "date"}'/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.purchase_product_qty"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.product_id.standard_price"/>
+												</div>
+												<div class="table-cell text-center">
+													<span t-field="line.purchase_product_uom"/>
+												</div>
+											</div>
+										</t>
+									</div>
 								</div>
 							</div>
 							<br/>
@@ -74,6 +166,17 @@
 								<div class="col-8" t-if="doc.note">
 									<strong>Notas:</strong><br/>
 									<span t-field="doc.note"/>
+								</div>
+							</div>
+							<div class="footer o_boxed_footer">
+								<div class="text-center" style="font-size: 0.7rem;">
+									<div class="important_container"  style="text-align: justify;">
+										<b>Informacion Importante:</b>
+										<span t-esc="doc.company_id.name" /> es AGENTE RETENEDOR desde el 01/07/2015 según RS R.S.139-2015, por lo que estamos obligados <br/>
+										a retener el 3% de pagos superiores a S/.700. Indicar Nº de Orden de Compra y/o Servicio en la Guía de Remisión y en la factura y adjuntar el documento impreso en la factura.<br/>
+										El horario de Recepcion de Facturas sera hasta las 13:00 horas
+									</div>
+									<div t-field="doc.company_id.report_footer"/>
 								</div>
 							</div>
 						</div>

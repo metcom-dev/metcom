@@ -1,6 +1,6 @@
 {
     "name": "Registro de pagos y cobros desde apuntes contables",
-    "version": "16.0.0.2.1",
+    "version": "16.0.3.0.3",
     "author": "Ganemo",
     "website": "https://www.ganemo.co",
     "live_test_url": "https://www.ganemo.co",

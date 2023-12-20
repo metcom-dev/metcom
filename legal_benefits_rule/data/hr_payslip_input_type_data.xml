@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--"hr.payslip.input.type"-->
+
+        <record id="hr_payslip_input_type_grat_005" model="hr.payslip.input.type">
+            <field name="code">GRAT_005</field>
+            <field name="name">Importe total gratificaciones truncas</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_liq'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_cts_003" model="hr.payslip.input.type">
+            <field name="code">CTS_003</field>
+            <field name="name">Importe CTS truncas</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_liq'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_grat_002" model="hr.payslip.input.type">
+            <field name="code">GRAT_002</field>
+            <field name="name">Importe ⅙ Gratificación anterior</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_grat_001" model="hr.payslip.input.type">
+            <field name="code">GRAT_001</field>
+            <field name="name">Importe de gratificación</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_grat'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_grat_003" model="hr.payslip.input.type">
+            <field name="name">Importe de Bonificación extraordinaria</field>
+            <field name="code">GRAT_003</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_grat'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_he_025" model="hr.payslip.input.type">
+            <field name="name">N° de Horas extras 25%</field>
+            <field name="code">HE_025</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hea_025" model="hr.payslip.input.type">
+            <field name="name">N° de Horas extras A.  25%</field>
+            <field name="code">HEA_025</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hei_025" model="hr.payslip.input.type">
+            <field name="name">Importe Horas extras 25%</field>
+            <field name="code">HEI_025</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_he_035" model="hr.payslip.input.type">
+            <field name="name">N° de Horas extras 35%</field>
+            <field name="code">HE_035</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hea_035" model="hr.payslip.input.type">
+            <field name="name">N° de Horas extras A. 35%</field>
+            <field name="code">HEA_035</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hei_035" model="hr.payslip.input.type">
+            <field name="name">Importe Horas extras 35%</field>
+            <field name="code">HEI_035</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_he_100" model="hr.payslip.input.type">
+            <field name="name">Horas extras 100%</field>
+            <field name="code">HE_100</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hei_100" model="hr.payslip.input.type">
+            <field name="name">Importe horas al 100%</field>
+            <field name="code">HEI_100</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_bsn_001" model="hr.payslip.input.type">
+            <field name="name">Base salario nocturno</field>
+            <field name="code">BSN_001</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_hnt_001" model="hr.payslip.input.type">
+            <field name="name">Complemento horas nocturnas</field>
+            <field name="code">HNT_001</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_bhe_001" model="hr.payslip.input.type">
+            <field name="name">Base de cálculo promedio Horas extras</field>
+            <field name="code">BHE_001</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_she_001" model="hr.payslip.input.type">
+            <field name="name">Importe Base horas extras</field>
+            <field name="code">SHE_001</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_extra_hours'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_bhn_002" model="hr.payslip.input.type">
+            <field name="name">Remuneración por horas nocturnas de últimos seis (6) meses</field>
+            <field name="code">BHN_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_phe_002" model="hr.payslip.input.type">
+            <field name="name">Promedio de Horas Extra B.L.</field>
+            <field name="code">PHE_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_phn_002" model="hr.payslip.input.type">
+            <field name="name">Promedio complemento nocturno B.L</field>
+            <field name="code">PHN_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_pin_002" model="hr.payslip.input.type">
+            <field name="name">Promedio Incentivos</field>
+            <field name="code">PIN_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_pco_002" model="hr.payslip.input.type">
+            <field name="name">Promedio Comisiones</field>
+            <field name="code">PCO_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_pbo_002" model="hr.payslip.input.type">
+            <field name="name">Promedio Bonificaciones B.L.</field>
+            <field name="code">PBO_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_por_002" model="hr.payslip.input.type">
+            <field name="name">Promedio Otras Remuneraciones B.L.</field>
+            <field name="code">POR_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_ped_002" model="hr.payslip.input.type">
+            <field name="name">Promedio Extra Destajo B.L</field>
+            <field name="code">PED_002</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('legal_benefits_rule.hr_payroll_structure_cts'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- hr.payroll.structure -->
+        <record id="hr_payroll_structure_utilidades" model="hr.payroll.structure">
+            <field name="name">Utilidades</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="type_id" ref="basic_rule.hr_payroll_structure_type_general"/>
+            <field name="rule_ids" eval="[]"/>
+        </record>
+
+        <!--"hr.salary.rule.category"-->
+
+        <record id="hr_salary_rule_utl_001" model="hr.salary.rule.category">
+            <field name="name">Base de cálculo utilidades</field>
+            <field name="code">UTL_001</field>
+        </record>
+
+        <!--"hr.payslip.input.type"-->
+
+        <record id="hr_payslip_input_type_utl_003" model="hr.payslip.input.type">
+            <field name="name">Factor días laborados Utilidades</field>
+            <field name="code">UTL_003</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('rules_utilities.hr_payroll_structure_utilidades'))]"/>
+        </record>
+
+        <record id="hr_payslip_input_type_utl_004" model="hr.payslip.input.type">
+            <field name="name">Factor remuneración Utilidades</field>
+            <field name="code">UTL_004</field>
+            <field name="country_id" ref="base.pe"/>
+            <field name="struct_ids" eval="[(4, ref('rules_utilities.hr_payroll_structure_utilidades'))]"/>
+        </record>
+
+        <!--"hr.work.entry.type"-->
+
+        <record id="hr_work_entry_type_dias_010" model="hr.work.entry.type">
+            <field name="code">DIAS_010</field>
+            <field name="name">Total días laborados</field>
+        </record>
+
+    </data>
+</odoo>

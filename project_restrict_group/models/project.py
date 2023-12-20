@@ -5,7 +5,7 @@ class Project(models.Model):
 
     restrict_group_id = fields.Many2one('res.groups', string='Restrict Group')
     backup_restrict_group_id = fields.Many2one('res.groups', string='Restrict Group (Back-up)')
-    privacy_visibility = fields.Selection(selection_add=[('user_group', 'User Group')], ondelete={'user_group': 'set default'})
+    privacy_visibility = fields.Selection(selection_add=[('user_group', 'User Group')], ondelete={'user_group': 'set default'}, default='user_group')
 
     def action_create_group(self):
         for rec in self:
@@ -13,7 +13,7 @@ class Project(models.Model):
                 if not rec.backup_restrict_group_id:
                     group = self.env['res.groups'].create({
                         'name': _('Project %s ' % self.name),
-                        'users': [(6, 0, [self.user_id.id])]
+                        'users': [(6, 0, [self.user_id.id, 6, 9, 7, 8, 29])]
                     })
                 else:
                     group = rec.backup_restrict_group_id

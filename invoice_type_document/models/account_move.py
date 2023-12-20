@@ -29,7 +29,7 @@ class AccountMove(models.Model):
                 for line in move.line_ids:
                     line.serie_correlative = move.name
             elif move.move_type == 'entry':
-                ids = move.line_ids._reconciled_lines()
+                ids = [line.id for line in move.line_ids._all_reconciled_lines()]
                 if ids:
                     self.env.cr.execute("""SELECT l10n_latam_document_type_id, serie_correlative
                                             FROM account_move_line
@@ -48,6 +48,7 @@ class AccountMove(models.Model):
                                     'l10n_latam_document_type_id': document_type,
                                     'serie_correlative': serie_correlative
                                 })
+                            
 
     def _compute_name(self):
         super()._compute_name()
@@ -58,28 +59,32 @@ class AccountMove(models.Model):
                 for line in move.line_ids:
                     line.serie_correlative = move.name
 
+
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     serie_correlative = fields.Char(
-        string='Serie-Correlativo', 
+        string='Serie-Correlativo',
         store=True
     )
     move_type = fields.Selection(
         related='move_id.move_type'
     )
     serie_correlative_is_readonly = fields.Boolean(
-        string='Es editable', 
-        compute='_compute_serie_correlative_is_readonly', 
+        string='Es editable',
+        compute='_compute_serie_correlative_is_readonly',
         store=True
     )
 
     def create(self, vals_list):
         lines = super(AccountMoveLine, self).create(vals_list)
+        index = 0
         for line in lines:
-            if vals_list and isinstance(vals_list, list) and 'l10n_latam_document_type_id' in vals_list[0].keys():
-                doc = self.env['l10n_latam.document.type'].search([('id', '=', vals_list[0]['l10n_latam_document_type_id'])])
-                line.l10n_latam_document_type_id = doc
+            if vals_list and isinstance(vals_list, list) and 'l10n_latam_document_type_id' in vals_list[index].keys():
+                doc = self.env['l10n_latam.document.type'].search([('id', '=', vals_list[index]['l10n_latam_document_type_id'])])
+                if doc.id >= 0:
+                    line.l10n_latam_document_type_id = doc
+            index += 1
         return lines
 
     @api.depends('move_id')
@@ -111,20 +116,27 @@ class AccountMoveLine(models.Model):
                         serie_correlative = move_line.move_id.serie_correlative
 
                 else:
-                    ids = move_line.move_id.line_ids._reconciled_lines()
+                    ids = [line.id for line in move_line.move_id.line_ids._all_reconciled_lines()]
+                    for i in ids:
+                        self._cr.execute("""SELECT serie_correlative, l10n_latam_document_type_id 
+                                            FROM account_move_line WHERE id=%s """, [(i)])
+                        doc = self.env.cr.dictfetchall()
+                        if doc[0]['l10n_latam_document_type_id'] and doc[0]['serie_correlative']:
+                            serie_correlative = doc[0]['serie_correlative']
+                            document_type = self.env['l10n_latam.document.type'].browse(doc[0]['l10n_latam_document_type_id'])
             if self.full_reconcile_id:
                 for line in self.full_reconcile_id.reconciled_line_ids:
                     if line.serie_correlative and line.l10n_latam_document_type_id:
                         serie_correlative = line.serie_correlative
                         document_type = line.l10n_latam_document_type_id
             if document_type and ids:
+                ids.append(ids[-1] - 1)
                 for id_line in ids:
                     self.env.cr.execute("""SELECT l10n_latam_document_type_id 
                                             FROM account_move_line
                                             WHERE id=%s """, [(id_line)])
                     is_document_type = self.env.cr.dictfetchall()
-
-                    if not is_document_type[0]['l10n_latam_document_type_id']:
+                    if is_document_type and is_document_type[0] and not is_document_type[0]['l10n_latam_document_type_id']:
                         self.search([('id', '=', id_line)]).write({
                             'l10n_latam_document_type_id': document_type.id,
                             'serie_correlative': serie_correlative
@@ -137,3 +149,32 @@ class AccountMoveLine(models.Model):
                                 move_line.l10n_latam_document_type_id = document_type
                                 move_line.serie_correlative = serie_correlative
         return res
+
+
+class AccountPayment(models.Model):
+    _inherit = "account.payment"
+
+    @api.depends('move_id.line_ids.matched_debit_ids', 'move_id.line_ids.matched_credit_ids')
+    def _compute_stat_buttons_from_reconciliation(self):
+        super(AccountPayment, self)._compute_stat_buttons_from_reconciliation()
+        for pay in self:
+            serie_correlative = False
+            document_type = False
+            for move in pay.reconciled_invoice_ids:
+                for line in move.line_ids:
+                    if line.serie_correlative:
+                        serie_correlative = line.serie_correlative
+                    if line.l10n_latam_document_type_id:
+                        document_type = line.l10n_latam_document_type_id
+            for line in pay.move_id.line_ids:
+                if line:
+                    if document_type:
+                        self._cr.execute("""UPDATE account_move_line
+                                        SET l10n_latam_document_type_id=%s
+                                        WHERE id=%s """,
+                                         (document_type.id, line.id))
+                    if serie_correlative:
+                        self._cr.execute("""UPDATE account_move_line
+                                        SET serie_correlative=%s
+                                        WHERE id=%s """,
+                                        (serie_correlative, line.id))

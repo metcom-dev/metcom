@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="hr_salary_rule_utl_002" model="hr.salary.rule">
+            <field name="name">Total remuneración computable</field>
+            <field name="category_id" ref="rules_utilities.hr_salary_rule_utl_001"/>
+            <field name="code">UTL_002</field>
+            <field name="sequence">1</field>
+            <field name="struct_id" ref="rules_utilities.hr_payroll_structure_utilidades"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = 0
+utilities_id = payslip.env['data.utilities'].search([('is_active', '=', True)])
+if utilities_id:
+    start_y = int(utilities_id[0].date_from.strftime('%Y'))
+    start_m = int(utilities_id[0].date_from.strftime('%m'))
+    end_y = int(utilities_id[0].date_to.strftime('%Y'))
+    end_m = int(utilities_id[0].date_to.strftime('%m'))
+    periods = payslip.env['hr.payslip']._get_periods(start_m, start_y, end_m, end_y)
+    worked_lines = payslip.env['hr.payslip.line'].search([
+        ('date_start', 'in', periods),
+        ('employee_id', '=', payslip.employee_id),
+        ('amount', '>', 0),
+        ('utilities', '=', True)
+    ])
+    result = sum(line.amount for line in worked_lines)</field>
+        </record>
+
+        <record id="hr_salary_rule_utl_003" model="hr.salary.rule">
+            <field name="name">Participación de utilidades Días</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">UTL_003</field>
+            <field name="sequence">2</field>
+            <field name="struct_id" ref="rules_utilities.hr_payroll_structure_utilidades"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = 0
+if inputs.dict.get('UTL_003') and inputs.dict.get('UTL_003').amount > 0 and worked_days.dict:
+    result = inputs.UTL_003.amount * sum(line.number_of_days for line in payslip.worked_days_line_ids.filtered(lambda x: x.code == 'DIAS_010'))</field>
+        </record>
+
+        <record id="hr_salary_rule_utl_004" model="hr.salary.rule">
+            <field name="name">Participación de utilidades remuneración</field>
+            <field name="category_id" ref="basic_rule.hr_salary_rule_category_inn_001"/>
+            <field name="code">UTL_004</field>
+            <field name="sequence">3</field>
+            <field name="struct_id" ref="rules_utilities.hr_payroll_structure_utilidades"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = 0
+if inputs.dict.get('UTL_004') and inputs.dict.get('UTL_004').amount > 0:
+    result = inputs.UTL_004.amount * UTL_002</field>
+        </record>
+
+        <record id="hr_salary_rule_utl_005" model="hr.salary.rule">
+            <field name="name">Total utilidades a pagar</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="code">UTL_005</field>
+            <field name="sequence">4</field>
+            <field name="struct_id" ref="rules_utilities.hr_payroll_structure_utilidades"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+global_data = globals()
+utl_003 = global_data['UTL_003'] if 'UTL_003' in global_data and global_data['UTL_003'] > 0 else 0
+utl_004 = global_data['UTL_004'] if 'UTL_004' in global_data and global_data['UTL_004'] > 0 else 0
+result = utl_003 + utl_004</field>
+        </record>
+
+    </data>
+</odoo>

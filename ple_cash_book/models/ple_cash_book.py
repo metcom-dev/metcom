@@ -191,7 +191,7 @@ class PleCashBank(models.Model):
             self.get_excel_data(data_cash, data_bank)
         except Exception as error:
             raise ValidationError(f'Error al ejecutar la query, comunicarse con el administrador: \n {error}')
-
+        
     def get_excel_data(self, data_cash, data_bank):
         list_data_cash = []
         list_data_bank = []
@@ -211,7 +211,8 @@ class PleCashBank(models.Model):
                 data_structured_cash = '{}&{}&{}&{}'.format(value_structured, data_structured[5], namex,
                                                    obj_line_cash['correlative'])
             else:
-                data_structured_cash =''
+                data_structured_cash = ''
+
             cash_values = {
                 'period': obj_line_cash.get('period', ''),
                 'cuo': obj_line_cash.get('cuo', ''),
@@ -236,6 +237,15 @@ class PleCashBank(models.Model):
             list_data_cash.append(cash_values)
 
         for obj_line_bank in data_bank:
+            transaction_type = obj_line_bank.get('transaction_type')
+            if transaction_type:
+                transaction_number = transaction_type
+            else:
+                name = obj_line_bank.get('transaction_number', '')
+                name = re.sub(r"[^a-zA-Z0-9]", "", name)
+                name = name.replace(' ', '').replace('\n', '').replace('\r', '')
+                transaction_number = name
+
             bank_values = {
                 'period': obj_line_bank.get('period', ''),
                 'cuo': obj_line_bank.get('cuo', ''),
@@ -248,7 +258,7 @@ class PleCashBank(models.Model):
                 'partner_type_document': obj_line_bank.get('partner_type_document', '-'),
                 'partner_document_number': obj_line_bank.get('partner_document_number', '-'),
                 'partner_name': obj_line_bank.get('partner_name', ''),
-                'transaction_number': obj_line_bank.get('transaction_number', ''),
+                'transaction_number': transaction_number,
                 'debit': obj_line_bank.get('debit', '0.00'),
                 'credit': obj_line_bank.get('credit', '0.00'),
                 'state': 1

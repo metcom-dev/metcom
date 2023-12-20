@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_config_settings_view_form_inherit_intralot" model="ir.ui.view">
+        <field name="name">stock_config_settings_view_form_inherit_intralot</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='use_own_routes']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="form_intralot"
+                     title="Permite consultar ">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label mt16">Intralot</span>
+                        <div class="text-muted">
+                            Permite consultar el estado de la cuenta de Intralot
+                        </div>
+                        <div class="content-group">
+                            <div class="row mt32">
+                                <label for="url_provider_prod_intralot" class="col-md-5 o_light_label"/>
+                                <field name="url_provider_prod_intralot"/>
+                                <label for="url_provider_test_intralot" class="col-md-5 o_light_label"/>
+                                <field name="url_provider_test_intralot"/>
+                                <label for="dni_intralot" class="col-md-5 o_light_label"/>
+                                <field name="dni_intralot"/>
+                                <label for="password_intralot" class="col-md-5 o_light_label"/>
+                                <field name="password_intralot" password="True"/>
+                                <label for="name_intralot" class="col-md-5 o_light_label"/>
+                                <field name="name_intralot"/>
+                                <label for="primary_last_name_intralot" class="col-md-5 o_light_label"/>
+                                <field name="primary_last_name_intralot"/>
+                                <label for="second_last_name_intralot" class="col-md-5 o_light_label"/>
+                                <field name="second_last_name_intralot"/>
+                                <label for="position_intralot" class="col-md-5 o_light_label"/>
+                                <field name="position_intralot"/>
+                                <label for="email_intralot" class="col-md-5 o_light_label"/>
+                                <field name="email_intralot"/>
+                                <label for="message_intralot" class="col-md-5 o_light_label"/>
+                                <field name="message_intralot"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='form_intralot']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="submit_intralot"
+                     title="Permite consultar ">
+                    <div class="o_setting_left_pane">
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <div>
+                            <button name="action_api_intralot" type="object" string="Probar conexion"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

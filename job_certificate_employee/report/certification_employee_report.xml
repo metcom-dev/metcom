@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_print_certification" model="report.paperformat">
+        <field name="name">Certificación de trabajo</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">25</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="report_job_certification_employee" model="ir.actions.report">
+        <field name="name">Certificación empleado</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">job_certificate_employee.report_job_certificate_employee</field>
+        <field name="report_file">job_certificate_employee.report_job_certificate_employee</field>
+        <field name="paperformat_id" ref="job_certificate_employee.paperformat_print_certification"/>
+        <field name="binding_model_id" ref="model_hr_employee"/>
+        <field name="print_report_name">'Certificado de trabajo - %s' % (object.name)</field>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

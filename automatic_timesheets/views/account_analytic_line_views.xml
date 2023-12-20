@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_analytic_line_form_view_inherit_automatic_timesheets" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.view.inherit.automatic_timesheets</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/field[@name='unit_amount']" position="replace">
+                <span class="o_form_label" style="font-weight: bold">Hora:  (de - a)</span>
+                <span>
+                    <field name="fl_from" style="width: 40%;" placeholder="Desde" widget="float_time"/>
+                    -
+                    <field name="fl_to" style="width: 40%;" placeholder="Hasta" widget="float_time"/>
+                </span>
+                <field name="unit_amount" string="Tiempo dedicado"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

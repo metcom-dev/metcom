@@ -569,21 +569,25 @@ class PurchaseReportTxt(object):
 
     def get_filename(self, type='01'):
         year, month = self.obj.date_start.strftime('%Y/%m').split('/')
-        return 'LE{vat}{period_year}{period_month}0008{type}00001{has_info}{currency}1.txt'.format(
+        state_send = self.obj.state_send
+        return 'LE{vat}{period_year}{period_month}0008{type}0000{state_send}{has_info}{currency}1.txt'.format(
             vat=self.obj.company_id.vat,
             period_year=year,
             period_month=month,
             type=type,
             currency='1' if self.obj.company_id.currency_id.name == 'PEN' else '2',
-            has_info=int(bool(self.data8_1))
+            has_info=int(bool(self.data8_1)),
+            state_send=state_send
         )
 
     def get_filename2(self):
         year, month = self.obj.date_start.strftime('%Y/%m').split('/')
-        return 'LE{vat}{period_year}{period_month}00080200001{has_info}{currency}1.txt'.format(
+        state_send = self.obj.state_send
+        return 'LE{vat}{period_year}{period_month}0008020000{state_send}{has_info}{currency}1.txt'.format(
             vat=self.obj.company_id.vat,
             period_year=year,
             period_month=month,
             currency='1' if self.obj.company_id.currency_id.name == 'PEN' else '2',
-            has_info=int(bool(self.data8_2))
+            has_info=int(bool(self.data8_2)),
+            state_send=state_send
         )

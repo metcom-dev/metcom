@@ -1,6 +1,6 @@
 {
     'name': 'payment term lines extension',
-    'version': '16.0.0.0.3',
+    'version': '16.0.1.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'live_test_url': 'https://www.ganemo.co/demo',
@@ -11,7 +11,8 @@
         'automatic_account_change',
     ],
     'data': [
-        'views/payment_line_view.xml',
+        'security/ir.model.access.csv',
+        'views/payment_line_view.xml'
     ],
     'category': 'All',
     'installable': True,

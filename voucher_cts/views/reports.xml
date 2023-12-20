@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CTS Payslip report-->
+    <template id="external_layout_payslip_cts">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+    <template id="body_payslip_cts">
+        <div class="page">
+            <style type="text/css">
+                .new_table td{
+                vertical-align: top ;
+                width:150px !important;
+                }
+                .resize_image > img {
+                width:88.44px;
+                height:88.44px
+                }
+            </style>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <div style="width: 100% !important;">
+                <div style="float:left;width: 80%;" name="company_address">
+                    <div t-field="company.partner_id.name"/>
+                    <div t-field="company.partner_id.vat"/>
+                    <div t-field="company.partner_id.street"/>
+                    <div t-field="o.contract_id.labor_regime_id"/>
+                </div>
+                <div style="float:right;width: 20%">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 60px;" alt="Logo"/>
+                </div>
+            </div>
+            <t t-set="bank_data" t-value="get_bank_data_by_employee(o)"/>
+            <t t-set="line_period" t-value="periods[o.id]"/>
+
+            <div style="width:100%">
+                <table class="new_table" style="width:100%;">
+                    <thead>
+                        <tr style="height: 40px !important;"/>
+                        <tr>
+                            <th colspan="3" class="text-center">
+                                <strong>LIQUIDACIÓN DE LA COMPENSACIÓN POR TIEMPO DE SERVICIOS</strong>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" class="text-center">
+                                <strong>DEPÓSITO
+                                    <span t-field="o.date_start"/>
+                                </strong>
+                            </th>
+                        </tr>
+                        <tr style="height: 30px !important;"/>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>APELLIDOS Y NOMBRES:
+                                    <span t-field="o.employee_id"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TIPO DE DOCUMENTO:
+                                    <span t-field="o.employee_id.type_identification_id"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>DOC. IDENTIDAD:
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>DEPARTAMENTO:
+                                    <span t-field="o.employee_id.department_id"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>CARGO:
+                                    <span t-field="o.employee_id.job_id"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>FECHA DE INGRESO:
+                                    <span t-field="o.employee_id.service_start_date"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>SITUACIÓN ESPECIAL:
+                                    <span t-field="o.contract_id.special_situation_id"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+                        <tr>
+                            <td>
+                                <span>NOMBRE DEL BANCO:
+                                    <span t-esc="bank_data['bank_name']"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>NRO. CUENTA:
+                                    <span t-esc="bank_data['acc_number']"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+                        <tr>
+                            <td>
+                                <span>PERIODO</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>DESDE:
+                                    <span t-esc="line_period['date_from']"/>
+                                </span>
+                                <span style="padding-left:10px">HASTA:
+                                    <span t-esc="line_period['date_to']"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+                        <tr>
+                            <td>
+                                <span>REMUNERACIÓN COMPRENDIDA :</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+
+                        <table name="remuneracion" style="width:50%">
+                            <t t-set="payslip_lines" t-value="get_lines(o.line_ids)"/>
+                            <t t-if="payslip_lines">
+                                <t t-foreach='payslip_lines' t-as='line'>
+                                    <tr style="width:100% !important;">
+                                        <td style="width:15% !important;"/>
+                                        <td style="width:65% !important;">
+                                            <span class="text-uppercase" t-field="line.name"/>
+                                        </td>
+                                        <td style="width:20% !important;">
+                                            <span t-field="line.amount"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr style="height: 10px !important;"/>
+                        </table>
+
+                        <tr style="height: 10px !important;"/>
+                        <tr>
+                            <td>
+                                <span>CÁLCULO DE CTS :</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+
+                        <table style="width:50%">
+                            <tr style="height: 10px !important;"/>
+                            <tr style="width:100% !important;">
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>INASISTENCIAS:</span>
+                                </td>
+                                <td style="width:20% !important;">
+                                    <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'TDI_001'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>DÍAS DE LICENCIA:</span>
+                                </td>
+                                <td style="width:20% !important;">
+                                    <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'TDL_001'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>DESCANSO MÉDICO:</span>
+                                </td>
+                                <td style="width:20% !important;">
+                                    <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'TDM_001'))"/>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px !important;"/>
+                            <tr>
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>MESES:</span>
+                                </td>
+                                <td style="width:20% !important;">
+                                    <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'MES_001')) / 30"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>DÍAS:</span>
+                                </td>
+                                <td style="width:20% !important;">
+                                    <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'DIAS_002'))"/>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px !important;"/>
+                            <tr>
+                                <td style="width:15% !important;"/>
+                                <td style="width:65% !important;">
+                                    <span>NETO A DEPOSITAR:</span>
+                                </td>
+                                <td>
+                                    <span t-esc="sum(line.amount for line in o.line_ids.filtered(lambda x: x.code == 'CTS_004'))"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </tbody>
+                </table>
+
+                <div style="width:100%">
+                    <div style="width: 50%;height: 100px;float: left;">
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <div style="width: 50% !important;height: 107px!important"/>_____________________________
+                            <br/>
+                            <span t-field="o.employee_id"/>
+                            <br/>
+                            <span>DOCUMENTO NRO:
+                                <span t-field="o.employee_id.identification_id"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="width: 50%;height: 100px;float: right;">
+                        <t t-if="employer_sign">
+                            <div style="text-align: center;word-spacing: 1px;">
+                                <br/>
+                                <span t-esc="employer_sign['sign']" class="resize_image"
+                                      t-options="{'widget': 'image'}"/>
+                                <br/>______________________________
+                                <br/>
+                                <span t-esc="employer_sign['name']"/>
+                                <br/>
+                                <span t-esc="employer_sign['job_title']"/>
+                            </div>
+                        </t>
+                        <t t-if="not employer_sign">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div style="text-align: center;word-spacing: 1px;">
+                                <div style="width: 50% !important;height: 35px!important"/>_____________________________
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top: 200px;">
+                <span>EL PRESENTE DOCUMENTO QUE SE ENTREGA POR MEDIO DE NUESTRO INTERMEDIARIO EL DEPOSITARIO, CON EL
+                    CUAL SE ACREDITA DE ACUERDO A LA LEY, LA TITULARIDAD DEL DEPÓSITO DE LA CTS ANTES DETALLADAS.
+                </span>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_payslip_voucher_cts">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="voucher_cts.external_layout_payslip_cts">
+                    <div style="font-size:12px!important; width: 100%;">
+                        <div>
+                            <t t-call="voucher_cts.body_payslip_cts"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_voucher_cts" model="report.paperformat">
+        <field name="name">Voucher CTS Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+        id="action_report_payslip_voucher_cts"
+        model="hr.payslip"
+        string="Formato CTS"
+        report_type="qweb-pdf"
+        name="voucher_cts.report_payslip_voucher_cts"
+        file="voucher_cts.report_payslip_voucher_cts"
+        print_report_name="'Payslip - %s' % (object.employee_id.name)"
+    />
+
+    <record id="voucher_cts.action_report_payslip_voucher_cts" model="ir.actions.report">
+        <field name="paperformat_id" ref="voucher_cts.paperformat_voucher_cts"/>
+    </record>
+
+    <!-- CTS Payslip additional report-->
+
+    <template id="body_additional_report_hr_payslip_cts">
+        <div class="page">
+            <style type="text/css">
+                .new_table td{
+                vertical-align: top ;
+                width:150px !important;
+                }
+                .resize_image > img {
+                width:88.44px;
+                height:88.44px
+                }
+            </style>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+            <div style="width:100%">
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 60px;" alt="Logo"/>
+            </div>
+            <t t-set="payslip_line" t-value="payslip_data[o.id]"/>
+            <br/>
+            <br/>
+            <div name="body_cts" style="width:100%">
+                <table class="new_table" style="width:100%;">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: right; width:100%">
+                                <span style="font-size:15px!important; font-weight: bold" t-esc="formatted_date"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 70px !important;"/>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold">Señores:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-esc="payslip_line['bank_name']"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span style="text-decoration:underline;font-weight: bold">Presente:</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px !important;"/>
+                        <tr>
+                            <td>
+                                <span>De nuestra consideración:</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+                        <tr>
+                            <td>
+                                <span>
+                                    <span t-field="company.partner_id.name"/>
+                                    con RUC N°<span t-field="company.partner_id.vat"/>, con domicilio en<span t-field="company.partner_id.street"/>.
+                                </span>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px !important;"/>
+                        <tr>
+                            <td style="text-align: justify;">
+                                <span>Por el presente certificamos que el(la) Señor(a)  <span t-field="o.employee_id"/>,
+                                    identificado(a) con <span t-field="o.employee_id.type_identification_id"/> N° <span t-field="o.employee_id.identification_id"/>, ha dejado de laborar en nuestra
+                                    empresa el día <span t-field="o.employee_id.service_termination_date"/>, en tal sentido y con arreglo a lo dispuesto
+                                    en el Artículo 45° del D.S. N° 001-97-TR Ley CTS, solicitamos se le haga entrega del
+                                    total de su Compensación por Tiempo de Servicios, y sus intereses acumulados a la
+                                    fecha, depositado en la cuenta bancaria Nro. <span t-esc="payslip_line['acc_number']"/> de vuestra entidad.
+                                </span>
+                            </td>
+                        </tr>
+                        <tr style="height: 40px !important;"/>
+                        <tr>
+                            <td>
+                                <span>Sin otro particular, quedamos de ustedes.</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px !important;"/>
+                        <tr>
+                            <td>
+                                <span>Atentamente,</span>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;"/>
+                    </tbody>
+                </table>
+            </div>
+
+            <div name="employee_sign" style="width:100%; font-family: Arial!important; font-size: 10pt">
+                <t t-if="employer_sign">
+                    <div style="text-align: center;word-spacing: 1px;">
+                        <br/>
+                        <span t-esc="employer_sign['sign']" class="resize_image" t-options="{'widget': 'image'}"/>
+                        <br/>______________________________
+                        <br/>
+                        <span t-esc="employer_sign['name']"/>
+                        <br/>
+                        <span t-esc="employer_sign['type_identification_id']"/>
+                        N°
+                        <span t-esc="employer_sign['identification_id']"/>
+                        <br/>
+                        <span t-esc="employer_sign['job_title']"/>
+                    </div>
+                </t>
+                <t t-if="not employer_sign">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div style="text-align: center;word-spacing: 1px;">
+                        <div style="width: 50% !important;height: 10px!important"/>_____________________________
+                    </div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_template_additional_report_hr_payslip_cts"
+              inherit_id="setting_voucher.template_additional_report_hr_payslip">
+        <xpath expr="//div[@name='data_report']" position="inside">
+            <t t-if="o.struct_id and o.struct_id.additional_certificate and o.struct_id.additional_certificate == 'cts'">
+                <div style="font-size:12px!important; width: 100%;">
+                    <t t-call="voucher_cts.body_additional_report_hr_payslip_cts"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

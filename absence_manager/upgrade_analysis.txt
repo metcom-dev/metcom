@@ -1,0 +1,5 @@
+---Models in module 'absence_manager'---
+---Fields in module 'absence_manager'---
+---XML records in module 'absence_manager'---
+DEL ir.ui.view: absence_manager.hr_leave_view_form_manager_inherit_absence_manager
+---change xpath department_id in v15 to name in v16---

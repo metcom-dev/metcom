@@ -1,0 +1,568 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--"hr.work.entry.type"-->
+        <record id="hr_work_entry.work_entry_type_attendance" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">1</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">True</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="absence_day.hr_work_entry_type_ddo" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">2</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">False</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="absence_day.hr_work_entry_type_global" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">2</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">False</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="absence_day.hr_work_entry_type_workn" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">1</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">True</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_01" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">3</field>
+            <field name="unpaid">True</field>
+            <field name="is_leave">True</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_02" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_03" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_04" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_05" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">4</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">1</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_06" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">1</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_07" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">5</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_08" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_09" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">6</field>
+            <field name="unpaid">0</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">True</field>
+            <field name="is_calc_own_rule">1</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_10" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_11" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">2</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_12" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">1</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">0</field>
+            <field name="is_benefits_license_absence">1</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_20" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">7</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">1</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_21" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">1</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_22" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">6</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">True</field>
+            <field name="is_calc_own_rule">1</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_24" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_25" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">True</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_26" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">9</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_27" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_28" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">6</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_29" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_30" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_31" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_32" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_33" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_34" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="automatic_leave_type.hr_work_entry_type_35" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">0</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">False</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="holiday_process.hr_work_entry_type_23" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="color">10</field>
+            <field name="unpaid">False</field>
+            <field name="is_leave">1</field>
+            <field name="round_days">FULL</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="utilities">0</field>
+            <field name="is_calc_own_rule">1</field>
+            <field name="is_benefits_license_absence">False</field>
+            <field name="is_social_benefits_license">False</field>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_dias_002" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_mes_001" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_mes_002" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_dias_003" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_mes_003" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_4'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_mes_004" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_4'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_tdm_001" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_tdi_001" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_tdl_001" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_3'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_tdl_002" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_4'),
+            ])]"/>
+        </record>
+
+        <record id="legal_benefits_rule.hr_work_entry_type_tdi_002" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_4'),
+            ])]"/>
+        </record>
+
+        <record id="rules_utilities.hr_work_entry_type_dias_010" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_5'),
+            ])]"/>
+        </record>
+
+        <record id="holiday_process.hr_work_entry_type_vac_lbs" model="hr.work.entry.type">
+            <field name="active">1</field>
+            <field name="round_days">FULL</field>
+            <field name="sequence">25</field>
+            <field name="is_leave">0</field>
+            <field name="round_days_type">HALF-UP</field>
+            <field name="section_lbs_ids" eval="[(6,0,[
+                ref('voucher_lbs.section_lbs_2'),
+            ])]"/>
+        </record>
+
+    </data>
+
+</odoo>

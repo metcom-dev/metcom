@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--"hr.salary.rule.category"-->
+
+        <record id="hr_salary_rule_category_bhe_001" model="hr.salary.rule.category">
+            <field name="name">Base de cálculo promedio Horas extras</field>
+            <field name="code">BHE_001</field>
+        </record>
+
+    </data>
+</odoo>

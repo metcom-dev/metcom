@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_payslip_lbs">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+    <template id="body_payslip_lbs">
+        <div class="page">
+            <style type="text/css">
+                .resize_image > img {
+                    width:88.44px;
+                    height:88.44px
+                }
+
+                table {
+                    border-collapse: collapse !important;
+                }
+
+                table, th, tr, td, thead, tbody {
+                    border: none !important;
+                }
+            </style>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+            <div style="width: 100% !important;">
+                <div style="float:left;width: 80%;" name="company_address">
+                    <div t-field="company.partner_id.name"/>
+                    <div t-field="company.partner_id.vat"/>
+                    <div t-field="company.partner_id.street"/>
+                    <div t-field="o.contract_id.labor_regime_id"/>
+                </div>
+                <div style="float:right;width: 20%">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 60px;" alt="Logo"/>
+                </div>
+            </div>
+
+            <t t-set="payslip_lbs_data" t-value="lbs_lines[o.id]"/>
+
+            <div style="width:100%">
+                <table style="width:100%;">
+                    <thead>
+                        <tr style="height: 60px !important;"/>
+                        <tr>
+                            <th colspan="3" class="text-center">
+                                <u>
+                                    <strong>LIQUIDACIÓN DE BENEFICIOS SOCIALES</strong>
+                                    <br/>
+                                </u>
+                            </th>
+                        </tr>
+                        <tr style="height: 15px !important;"/>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Nombres y Apellidos</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.employee_id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Doc. Identidad</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span>
+                                    <span t-field="o.employee_id.type_identification_id"/>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Dirección</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="company.partner_id.street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Departamento</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.employee_id.department_id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Cargo</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.employee_id.job_id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>F. Inicio</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.employee_id.service_start_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>F. Cese</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.employee_id.service_termination_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Tiempo de servicio</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span>
+                                    <span t-field="o.employee_id.service_duration_years"/>
+                                    año(s)
+                                    <span t-field="o.employee_id.service_duration_months"/>
+                                    mes(es)
+                                    <span t-field="o.employee_id.service_duration_days"/>
+                                    día(s)
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30% !important;">
+                                <span>
+                                    <strong>Motivo de cese</strong>
+                                </span>
+                            </td>
+                            <td style="width: 70% !important;">
+                                <span t-field="o.contract_id.reason_low_id"/>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 30px !important;"/>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="width:100%">
+                <t t-set="lbs_lines" t-value="payslip_lbs_data['lbs_lines']"/>
+                <t t-set="section_lbs_ids" t-value="payslip_lbs_data['section_lbs_ids']"/>
+
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width:30%;text-align: center">
+                                <span>Periodo Computable</span>
+                            </th>
+                            <th style="width:10%;text-align: center">
+                                <span>
+                                    <strong>Meses</strong>
+                                </span>
+                            </th>
+                            <th style="width:10%;text-align: center">
+                                <span>Días</span>
+                            </th>
+                            <th style="text-align: center">
+                                <span>Concepto</span>
+                            </th>
+                            <th style="text-align: center">
+                                <span>Importe</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr style="height: 30px !important;"/>
+
+                        <t t-foreach="range(1,8)" t-as="val">
+                            <t t-if="lbs_lines.get(str(val))">
+                                <t t-set="data_position_1"
+                                   t-value="list(filter(lambda x: x['position'] == 1, lbs_lines[str(val)]))"/>
+                                <t t-set="data_position_2"
+                                   t-value="list(filter(lambda x: x['position'] == 2, lbs_lines[str(val)]))"/>
+                                <t t-set="position_1" t-value="len(data_position_1)"/>
+                                <t t-set="position_2" t-value="len(data_position_2)"/>
+
+                                <t t-set="position"
+                                   t-value="position_1 if position_1 &gt;= position_2 else position_2"/>
+
+                                <t t-set="section_id" t-value="section_lbs_ids.filtered(lambda x: x.code == str(val))"/>
+                                <table style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span>
+                                                    <strong>
+                                                        <span t-esc="section_id.description"/>
+                                                    </strong>
+                                                    <br/>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border: 1.5px solid black!important;">
+                                            <td style="width:50%;">
+                                                <table style="width:100%;">
+                                                    <t t-foreach="range(position)" t-as="pos">
+                                                        <t t-if="pos &lt; position_1">
+                                                            <tr>
+                                                                <td style="width: 30% !important;">
+                                                                    <span t-esc="data_position_1[pos]['name']"/>
+                                                                </td>
+                                                                <td style="width: 10% !important; text-align: center">
+                                                                    <span t-esc="data_position_1[pos]['value']"/>
+                                                                </td>
+                                                                <td style="width: 10% !important; text-align: center">
+                                                                    <span t-esc="data_position_1[pos]['value_2']"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span t-raw="data_position_1[pos]['period']"/>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                        <t t-if="pos &gt;= position_1">
+                                                            <tr>
+                                                                <td>
+                                                                    <span></span>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </t>
+                                                </table>
+                                            </td>
+                                            <td style="width:50%;">
+                                                <table style="width:100%;">
+                                                    <t t-foreach="range(position)" t-as="pos">
+                                                        <t t-if="pos &lt; position_2">
+                                                            <tr>
+                                                                <td style="width: 70% !important;">
+                                                                    <span t-esc="data_position_2[pos]['name']"/>
+                                                                </td>
+                                                                <td style="width: 30% !important;">
+                                                                    <span t-esc="data_position_2[pos]['value']"
+                                                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </t>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <t t-set="line_lbs_total_values" t-value="lbs_total_values[o.id]"/>
+            <div style="width:70%">
+                <table style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>RESUMEN</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td style="width:60%;">
+                                <span>
+                                    <strong>TOTAL INGRESOS - TOTAL DEDUCCIONES</strong>
+                                </span>
+                            </td>
+                            <td style="width:40%;">
+                                <span t-esc="line_lbs_total_values['net_amount']"
+                                      t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                -
+                                <span t-esc="line_lbs_total_values['ded_amount']"
+                                      t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                =
+                                <strong>
+                                    <span t-esc="line_lbs_total_values['net_003_amount']"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr style="height: 30px !important;"/>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="width:70%">
+                <table style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>APORTE EMPLEADOR</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="line_lbs_total_values['dae_001_lines']" t-as="dae_001">
+                            <tr>
+                                <td style="width:60%;">
+                                    <span t-esc="dae_001.name"/>
+                                </td>
+                                <td style="width:40%;">
+                                    <span t-esc="dae_001.total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr style="height: 30px !important;"/>
+                    </tbody>
+                </table>
+            </div>
+            <div style="width:100%">
+                <p style="text-align:justify">Declaró, estar conforme con la presente liquidación de beneficios sociales
+                    y no teniendo nada que reclamar posteriormente, firmó al pie del documento en señal de conformidad.
+                </p>
+            </div>
+            <div style="width:100%">
+                <div style="width: 50%;height: 100px;float: right;">
+                    <t t-if="employer_sign">
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <br/>
+                            <span t-if="employer_sign['sign']" t-esc="employer_sign['sign']" class="resize_image"
+                                  t-options="{'widget': 'image'}"/>
+                            <br/>______________________________
+                            <br/>
+                            <span t-esc="employer_sign['name']"/>
+                            <br/>
+                            <span t-esc="employer_sign['job_title']"/>
+                        </div>
+                    </t>
+                    <t t-if="not employer_sign">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <div style="width: 50% !important"/>_____________________________
+                        </div>
+                    </t>
+                </div>
+                <div style="width: 50%;height: 100px;float: left;">
+                    <div style="text-align: center;word-spacing: 1px;">
+                        <t t-if="not employer_sign">
+                            <div style="width: 50% !important;height: 70px!important"/>
+                        </t>
+                        <t t-if="employer_sign">
+                            <div style="width: 50% !important;height: 105px!important"/>
+                        </t>
+                        _____________________________
+                        <br/>
+                        <span t-field="o.employee_id"/>
+                        <br/>
+                        <span>
+                            <span t-field="o.employee_id.type_identification_id"/>:
+                            <span t-field="o.employee_id.identification_id"/>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_payslip_voucher_lbs">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="voucher_lbs.external_layout_payslip_lbs">
+                    <div style="font-size:12px!important; width: 100%;">
+                        <div>
+                            <t t-call="voucher_lbs.body_payslip_lbs"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_voucher_lbs" model="report.paperformat">
+        <field name="name">Voucher LBS Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="action_report_payslip_voucher_lbs"
+            model="hr.payslip"
+            string="Formato LBS"
+            report_type="qweb-pdf"
+            name="voucher_lbs.report_payslip_voucher_lbs"
+            file="voucher_lbs.report_payslip_voucher_lbs"
+            print_report_name="'Payslip - %s' % (object.employee_id.name)"
+    />
+
+    <record id="voucher_lbs.action_report_payslip_voucher_lbs" model="ir.actions.report">
+        <field name="paperformat_id" ref="voucher_lbs.paperformat_voucher_lbs"/>
+    </record>
+
+</odoo>

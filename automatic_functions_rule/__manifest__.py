@@ -1,6 +1,6 @@
 {
     'name': 'Automatic functions rule',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """

@@ -1,0 +1,58 @@
+.payment {
+  height: auto;
+  width: auto;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.payment__logo p {
+  color: #f8f8f8;
+  font-family: 'Baloo Bhaijaan', cursive;
+  font-size: 58px;
+}
+
+.payment__title h2 {
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: #0d3c61;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.payment-form__div {
+  display: flex;
+  flex-direction: row;
+  margin: 4px;
+}
+
+.payment-form__footer {
+  margin-top: 20px ;
+  justify-content: space-between;
+}
+
+@media (max-width: 450px) {
+  .card-wrapper>.jp-card-container {
+    transform: scale(0.745) !important;
+    transform-origin: center !important;
+  }
+}
+
+@media (max-width: 345px) {
+
+  .payment__title h2 {
+    font-size: 18px;
+  }
+
+  .card-wrapper>.jp-card-container {
+    transform: scale(0.705) !important;
+    transform-origin: left center !important;
+  }
+}

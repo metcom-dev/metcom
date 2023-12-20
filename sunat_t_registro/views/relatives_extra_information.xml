@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_relative_extra_information_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.relative.extra_information.view.tree</field>
+        <field name="model">hr.employee.relative</field>
+        <field name="inherit_id" ref="personal_information.hr_employee_relative_view_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='relation_id']" position="after">
+                <field name="first_lastname" />
+                <field name="second_lastname" />
+            </xpath>
+
+            <xpath expr="//field[@name='disability']" position="after">
+                <field name="right_holder"/>
+            </xpath>
+
+            <xpath expr="//field[@name='max_age']" position="after">
+                <field name="identification_id"/>
+                <field name="type_identification_id"/>
+                <field name="document_country_id"/>
+                <field name="high_date" attrs="{'invisible': [('right_holder', '=', False)]}"/>
+                <field name="low_date" attrs="{'invisible': [('right_holder', '=', False)]}"/>
+                <field name="reason_leave" attrs="{'invisible': ['|', ('low_date', '=', False), ('right_holder', '=', False)]}"/>
+                <field name="relation_type"/>
+                <field name="month_pregnant" attrs="{'invisible': ['|', ('relation_type', '!=', '04'), ('right_holder', '=', False)]}"/>
+                <field name="doc_acreditation"/>
+                <field name="n_doc_acred" attrs="{'invisible': [('doc_acreditation', '=', False)]}"/>
+                <field name="address_home_id"/>
+        </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -39,6 +39,7 @@ class WizardReportFinancial(models.TransientModel):
         partner = obj_move_line.partner_id or self.env.company.partner_id
         values = {
             'partner': partner.name,
+            'partner_ple': obj_move_line.partner_id.name if obj_move_line.partner_id.name else 'Falso',
             'move': obj_move_line.move_id.name or '',
             'name': obj_move_line.name or '',
             'ref': obj_move_line.ref or '',
@@ -46,9 +47,14 @@ class WizardReportFinancial(models.TransientModel):
             'account_currency': obj_move_line.account_id.currency_id.name or '',
             'date_maturity': obj_move_line.date_maturity or '',
             'vat': partner.vat or '0',
-            'ple_correlative': obj_move_line.ple_correlative or '',
-            'l10n_latam_identification_type_id': partner.l10n_latam_identification_type_id.l10n_pe_vat_code or '',
+            'vat_ple': obj_move_line.partner_id.vat if obj_move_line.partner_id.vat else '0',
         }
+
+        if hasattr(obj_move_line, 'ple_correlative'):
+            values['ple_correlative'] = obj_move_line.ple_correlative or ''
+        if hasattr(partner, 'l10n_latam_identification_type_id'):
+            values['l10n_latam_identification_type_id'] = partner.l10n_latam_identification_type_id.l10n_pe_vat_code or ''
+
         return values
 
     def generate_data(self):
@@ -62,7 +68,7 @@ class WizardReportFinancial(models.TransientModel):
 
             if not obj_account.reconcile:
 
-                if obj_account.user_type_id.include_initial_balance:
+                if obj_account.include_initial_balance:
 
                     list_move_line = self.env['account.move.line'].search([
                         ('account_id', '=', obj_account.id),

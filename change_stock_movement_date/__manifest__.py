@@ -1,6 +1,6 @@
 {
     'name': 'Change stock movement date',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'live_test_url': 'https://www.ganemo.co',

@@ -1,6 +1,6 @@
 {
     'name': ' account exchange currency',
-    'version': '16.0.0.0.0',
+    'version': '16.0.1.0.0',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': """

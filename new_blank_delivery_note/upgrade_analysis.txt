@@ -1,0 +1,3 @@
+---Models in module 'new_blank_delivery_note'---
+---Fields in module 'new_blank_delivery_note'---
+---XML records in module 'new_blank_delivery_note'---

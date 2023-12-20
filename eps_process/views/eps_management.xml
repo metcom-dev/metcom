@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_eps_management" model="ir.actions.act_window">
+        <field name="name">Gestión EPS</field>
+        <field name="res_model">eps.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_form_eps_management"
+              name="Gestión EPS"
+              parent="eps_process.menu_hr_localization_hr_eps_credit"
+              action="action_eps_management"
+    />
+
+    <record id="eps_management_tree_view" model="ir.ui.view">
+        <field name="name">eps.management.tree.view</field>
+        <field name="model">eps.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="entity"/>
+                <field name="insurance"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="eps_management_form_view" model="ir.ui.view">
+        <field name="name">eps.management.form.view</field>
+        <field name="model">eps.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="GESTIÓN DE LA EPS">
+                        <group>
+                            <field name="star_date"/>
+                            <field name="entity"/>
+                        </group>
+                        <group>
+                            <field name="finish_date"/>
+                            <field name="insurance"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Empleador">
+                            <field name="rate_employer"/>
+                            <field name="amount_employer"/>
+                        </group>
+                        <group string="Trabajador">
+                            <field name="rate_worker"/>
+                            <field name="amount_worker"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Employee_eps" string="Empleados">
+                            <field name="employeer_ids" domain="[('contract_id.state','in',('draft','open'))]" widget="many2many"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_form_eps_process" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.eps_process</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+           <xpath expr="//notebook/page[@name='personal_information']/group" position="inside">
+            <group string="Salud" name="health" groups="hr.group_hr_user">
+                <field name="disability"/>
+                <field name="health_regime_id"/>
+                <field name="exists_eps"/>
+                <field name="management_eps" attrs="{'invisible':[('exists_eps','!=', True)]}"/>
+             </group>
+          </xpath>
+      </field>
+
+    </record>
+
+</odoo>
+
+

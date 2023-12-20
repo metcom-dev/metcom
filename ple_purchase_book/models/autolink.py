@@ -173,7 +173,7 @@ class AccountJournals(models.Model):
                         'l10n_latam_use_documents': 0,
                         'ple_no_include': 0,
                         'ple_journal_correlative': 'M',
-                        'default_account_id': self.env.ref('l10n_pe.chart6419').id,
+                        'default_account_id': self.env.ref('l10n_pe.1_chart6419').id,
                         'refund_sequence': 1,
                         'code': 1662,
             }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="employee_signature_payslip" inherit_id="voucher_payroll.body_voucher_payslip">
+        <xpath expr="//div[@name='employee_sign']" position="replace">
+            <div style="width: 50%;height: 100px;float: left;">
+                <t t-if="o.status == 'signed'">
+                    <t t-if="o.employee_id.employee_signature">                
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <br/>
+                            <span t-esc="o.employee_id.employee_signature" class="resize_image" t-options="{'widget': 'image'}"/>
+                            <br/>______________________________
+                            <br/>
+                            <span>EMPLEADOR</span>
+                        </div>
+                    </t>
+                </t>
+                <t t-else="">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div style="text-align: center;word-spacing: 1px;">
+                        <div style="width: 50% !important;height: 10px!important"/>_____________________________
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

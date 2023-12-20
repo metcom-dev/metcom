@@ -8,7 +8,8 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" position="replace"/>
+                        <field name="contacts_id" options="{'no_create': True}"/>
                         <field name="nro"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
@@ -18,8 +19,7 @@
                     </group>
                     <notebook>
                         <page string="Empleados">
-                            <field name="employees_ids" widget="many2many"
-                                   domain="[('life_insurance_id', '=', False)]"/>
+                            <field name="employees_ids" widget="many2many"/>
                         </page>
                     </notebook>
                 </sheet>

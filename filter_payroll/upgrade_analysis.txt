@@ -1,0 +1,4 @@
+---Models in module 'filter_payroll'---
+---Fields in module 'filter_payroll'---
+---XML records in module 'filter_payroll'---
+[CHANGED]  Inherit ref in "hr_leave_type_form_view_inherit_filter_payroll"

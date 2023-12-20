@@ -1,0 +1,72 @@
+<odoo>
+    <record id="location_restriction_by_user_us_id" model="ir.ui.view">
+        <field name="name">location_restriction_by_user_us_id</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="user_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="location_restriction_by_user_us_02_id" model="ir.ui.view">
+        <field name="name">location_restriction_by_user_us_02_id</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='additional_info']" position="after">
+                <group string="Permisos">
+                    <field name="user_ids_01" widget="many2many_tags"/>
+                    <field name="user_ids_02" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
+        <field name="name">Inventory Overview</field>
+        <field name="res_model">stock.picking.type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="domain">[ '|', ('warehouse_id.user_ids', 'in', uid), ('warehouse_id.user_ids', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation type
+            </p>
+            <p>
+                The operation type system allows you to assign each stock
+                operation a specific type which will alter its views accordingly.
+                On the operation type you could e.g. specify if packing is needed by default,
+                if it should show the customer.
+            </p>
+        </field>
+    </record>
+
+    <record id="stock_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='picking_type_id']" position="before">
+                   <field name="user_logger" invisible='1'/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="stock_vpicktree" model="ir.ui.view">
+        <field name="name">stock.vpicktree.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='picking_type_id']" position="before">
+                   <field name="user_logger" invisible='1'/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

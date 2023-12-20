@@ -98,8 +98,7 @@ class PleInvBal(models.Model):
                 WHERE eeff_ple.eeff_type = '3.1' and 
                 account_move_line.date <= '{date_end}' and ((account_move_line.date >= '{date_start}') OR 
                 "account_move_line"."account_id" in( SELECT "account_account".id FROM "account_account"
-                 WHERE ("account_account"."user_type_id" in (SELECT "account_account_type".id FROM "account_account_type" 
-                 WHERE ("account_account_type"."include_initial_balance" = True)))))
+                 WHERE ("account_account"."include_initial_balance" = True)))
                 and account_move_line.company_id = {company_id} and  ("account_move_line"."account_id" in {accounts})
                 and account_move_line.parent_state = '{state}'
                 GROUP BY
@@ -213,7 +212,7 @@ class PleInvBal(models.Model):
 
         for rec in self:
             report_name = "ple_inv_and_bal_0301.action_print_status_finance"
-            pdf = self.env.ref(report_name, False)._render_qweb_pdf(rec.id)[0]
+            pdf = self.env.ref(report_name)._render_qweb_pdf('ple_inv_and_bal_0301.print_status_finance', self.id)[0]
             rec.pdf_binary = base64.encodebytes(pdf)
             year, month, day = self.date_end.strftime('%Y/%m/%d').split('/')
             rec.pdf_filename = f'Libro_Estado de Situación Financiera_{year}{month}.pdf'

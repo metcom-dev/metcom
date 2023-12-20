@@ -1,0 +1,293 @@
+"id","code","name"
+international_industrial_classification_1000,1110,CULTIVOS DE CEREALES
+international_industrial_classification_1001,1123,CULTIVO DE HORTALIZAS Y LEGUMBRES
+international_industrial_classification_1002,1136,CULTIVO DE FRUTAS
+international_industrial_classification_1003,1211,CRIA DE GANADO
+international_industrial_classification_1004,1224,CRIA DE ANIMALES DOMESTICOS
+international_industrial_classification_1005,1300,EXPLOTACION MIXTA
+international_industrial_classification_1006,1400,"SERVICIOS AGRICOLAS, GANADERAS."
+international_industrial_classification_1007,1501,CAZA ORDINARIA Y SERVICIOS CONEXOS
+international_industrial_classification_1008,2003,SILVICULTURA Y EXT. DE MADERA.
+international_industrial_classification_1009,5002,"PESCA, EXPLOT. CRIADEROS DE PECES."
+international_industrial_classification_1010,10100,EXTRAC. Y AGLOMERAC. CARBON DE PIEDRA.
+international_industrial_classification_1011,10200,EXTRAC. Y AGLOMERAC. LIGNITO.
+international_industrial_classification_1012,10301,EXTRAC. Y AGLOMERAC. DE TURBA.
+international_industrial_classification_1013,11106,EXT. PETROLEO CRUDO Y GAS NATURAL.
+international_industrial_classification_1014,11207,SERV. PETROLEROS Y DE GAS..
+international_industrial_classification_1015,12001,EXT. DE MIN. URANIO Y TORIO
+international_industrial_classification_1016,13109,EXT. DE MIN. DE HIERRO
+international_industrial_classification_1017,13200,EXT. DE MIN. METALIFEROS NO FERROSOS.
+international_industrial_classification_1018,14105,"EXT. DE PIEDRA, ARENA Y ARCILLA."
+international_industrial_classification_1019,14219,EXT. MIN FABRIC. ABONO Y PROD. QUIMIC.
+international_industrial_classification_1020,14221,EXTRACCION DE SAL.
+international_industrial_classification_1021,14290,EXP. OTRAS MINAS Y CANTERAS NIA.
+international_industrial_classification_1022,15114,PRODUC. CARNE Y PROD. CARNICOS.
+international_industrial_classification_1023,15127,ELAB. Y CONS DE PESCADO.
+international_industrial_classification_1024,15130,"ELAB. FRUTAS, LEG. Y HORTALIZAS."
+international_industrial_classification_1025,15142,ELAB. DE ACEITE Y GRASAS.
+international_industrial_classification_1026,15202,ELAB DE PRODUCTOS LACTEOS.
+international_industrial_classification_1027,15316,ELAB. DE PRODUCTOS DE MOLINERIA.
+international_industrial_classification_1028,15329,ELAB DE ALMIDONES Y DERIVADOS.
+international_industrial_classification_1029,15331,ELAB. DE PIENSOS PREPARADOS.
+international_industrial_classification_1030,15417,ELAB. PROD. DE PANADERIA.
+international_industrial_classification_1031,15420,ELAB. DE AZUCAR.
+international_industrial_classification_1032,15432,"ELAB. CACAO, CHOCOLATE Y CONFIT."
+international_industrial_classification_1033,15445,"ELAB. MACARRONES, FIDEOS Y OTROS."
+international_industrial_classification_1034,15499,ELAB DE OTROS PROD. ALIMENTICIOS.
+international_industrial_classification_1035,15518,MEZCLA DE BEBIDAS ALCOHOLICAS.
+international_industrial_classification_1036,15520,ELAB. DE VINOS.
+international_industrial_classification_1037,15533,ELAB. DE BEBIDAS MALTEADAS.
+international_industrial_classification_1038,15546,ELAB. DE BEBIDAS NO ALCOHOLICAS.
+international_industrial_classification_1039,16007,ELAB. DE PRODUCTOS DE TABACO.
+international_industrial_classification_1040,17117,PREP Y TEJ DE FIBRAS TEXTILES.
+international_industrial_classification_1041,17120,ACABADO DE PROD. TEXTILES.
+international_industrial_classification_1042,17218,FAB. ART. CONFECCIONADOS.
+international_industrial_classification_1043,17220,FAB. DE TAPICES Y ALFOMBRAS.
+international_industrial_classification_1044,17233,"FAB. CUERDAS, CORDELES Y REDES."
+international_industrial_classification_1045,17290,FAB. OTROS PROD. TEXTILES NEOP.
+international_industrial_classification_1046,17306,FAB. TEJIDOS Y ART DE PUNTO.
+international_industrial_classification_1047,18100,FAB. DE PRENDAS DE VESTIR.
+international_industrial_classification_1048,18201,FAB. DE ARTICULOS DE PIEL.
+international_industrial_classification_1049,19110,CURTIDO Y ADOBO DE CUEROS.
+international_industrial_classification_1050,19122,FAB. DE MALETAS Y OTROS.
+international_industrial_classification_1051,19208,FAB. DE CALZADO.
+international_industrial_classification_1052,20108,ASERRADO Y ACEPILLADURA MADERA.
+international_industrial_classification_1053,20211,FAB. DE HOJAS DE MADERA.
+international_industrial_classification_1054,20224,FAB. PARTES Y PIEZAS CARPINTERIA.
+international_industrial_classification_1055,20237,FAB. RECIPIENTES DE MADERA.
+international_industrial_classification_1056,20293,FAB. OTROS PRODUCTOS DE MADERA.
+international_industrial_classification_1057,21016,FAB. DE PAPEL Y CARTON.
+international_industrial_classification_1058,21029,FAB. ENVASES DE PAPEL Y CARTON.
+international_industrial_classification_1059,21098,FAB. DE OTROS ARTICULOS.
+international_industrial_classification_1060,22113,"ED. LIBROS, FOLLETOS Y OTROS."
+international_industrial_classification_1061,22126,ED. DE PERIODICOS Y REVISTAS.
+international_industrial_classification_1062,22139,ED. DE MATERIALES GRABADOS.
+international_industrial_classification_1063,22195,OTROS TRABAJOS DE EDICION.
+international_industrial_classification_1064,22214,ACTIVIDADES DE IMPRESION.
+international_industrial_classification_1065,22227,SERVICIOS RDOS CON IMPRESION.
+international_industrial_classification_1066,22302,REPRODUCCION MATERIALES GRAB.
+international_industrial_classification_1067,23107,FAB. PROD. DE HORNOS DE COQUE.
+international_industrial_classification_1068,23208,FAB. PROD. REFINACION DEL PETROLEO.
+international_industrial_classification_1069,23309,ELAB. DE COMBUSTIBLES NUCLEAR.
+international_industrial_classification_1070,24116,FAB. DE SUSTANCIAS QUIMICAS BASICAS.
+international_industrial_classification_1071,24129,FAB. ABONO Y COMP. DE NITROGENO.
+international_industrial_classification_1072,24131,FAB. DE PLASTICOS Y DE CAUCHO.
+international_industrial_classification_1073,24217,FAB. DE PLAGUICIDAS Y OTROS PROD. QUIM.
+international_industrial_classification_1074,24220,FAB. DE PINTURAS Y BARNICES.
+international_industrial_classification_1075,24232,FAB. DE PROD. FARMACEUTICOS.
+international_industrial_classification_1076,24245,FAB. JABONES Y DETERGENTES.
+international_industrial_classification_1077,24299,FAB. DE OTROS PROD. QUIMICOS NEOP.
+international_industrial_classification_1078,24305,FAB. DE FIBRAS SINTETICAS O ARTIFIC.
+international_industrial_classification_1079,25112,FAB. DE CUBIERTOS DE CAUCHO.
+international_industrial_classification_1080,25194,FAB. OTROS PRODUCTOS DE CAUCHO.
+international_industrial_classification_1081,25200,FAB. DE PRODUCTOS DE PLASTICOS.
+international_industrial_classification_1082,26106,FAB. VIDRIO Y PROD. DE VIDRIO
+international_industrial_classification_1083,26916,FAB. PROD. CERAMICA NO REFRACT. N. EST.
+international_industrial_classification_1084,26929,FAB. PROD. CERAMICA REFACTARIA.
+international_industrial_classification_1085,26931,FAB. PROD. CERAMICA NO REFRACT. EST.
+international_industrial_classification_1086,26944,"FAB. DE CEMENTO, CAL Y YESO."
+international_industrial_classification_1087,26957,"FAB. ART. DE HORMIGON, CEMENTO Y YESO."
+international_industrial_classification_1088,26960,"CORTE, TALLADO Y ACABADO DE PIEDRA."
+international_industrial_classification_1089,26998,FAB. OTROS PROD. MIN. NO METALIC. NCP.
+international_industrial_classification_1090,27102,FAB. PRODUCTOS DE HIERRO Y ACERO.
+international_industrial_classification_1091,27203,FAB. PRODUCTOS DE MET. PRECIOSOS.
+international_industrial_classification_1092,27317,FUNDICION DE HIERRO Y DE ACERO.
+international_industrial_classification_1093,27320,FUNDICION DE METALES NO FERROSOS.
+international_industrial_classification_1094,28111,FAB. PROD. METAL. USO ESTRUCTURAL.
+international_industrial_classification_1095,28124,"FAB. TANQUES, DEPOSITOS Y RECIP. METAL."
+international_industrial_classification_1096,28137,FAB. DE GENERADORES DE VAPOR.
+international_industrial_classification_1097,28919,FAB. PROD. MET. ACABADOS O SEMIACABAD.
+international_industrial_classification_1098,28921,OBRAS DE INGENIERIA MECANICA.
+international_industrial_classification_1099,28934,"FAB. ART. CUCHILLERIA, FERRETERIA."
+international_industrial_classification_1100,28990,FAB. OTROS PROD. DE METAL NCP.
+international_industrial_classification_1101,29118,FAB. DE MOTORES Y TURBINAS.
+international_industrial_classification_1102,29120,"FAB. DE BOMBAS, COMPRESORAS, GRIFOS."
+international_industrial_classification_1103,29133,FAB. COJINETES Y ENGRANAJES.
+international_industrial_classification_1104,29146,"FAB. HORNOS, HOGUERAS, QUEMADORES."
+international_industrial_classification_1105,29159,FAB. EQUIP. ELEVACION Y MANIPULACION.
+international_industrial_classification_1106,29190,FAB. OTRO TIPO MAQUINARIA USO GRAL.
+international_industrial_classification_1107,29219,FAB. DE MAQUINARIA AGROPECUARIA.
+international_industrial_classification_1108,29221,FAB. DE MAQUINAS HERRAMIENTA.
+international_industrial_classification_1109,29234,FAB. DE MAQUINARIA METALURGICA.
+international_industrial_classification_1110,29247,FAB. MAQUIN MINERA Y OBRAS DE CONST.
+international_industrial_classification_1111,29250,"FAB. MAQUIN. ELAB. ALIMENTOS, BEBIDAS."
+international_industrial_classification_1112,29262,FAB. MAQUINARIA ELAB. TEXTILES.
+international_industrial_classification_1113,29275,FAB. DE ARMAS Y MUNICIONES.
+international_industrial_classification_1114,29290,FAB. OTRO TIPO MAQUIN. USO ESPECIAL.
+international_industrial_classification_1115,29307,FAB. APARATOS DE USO DOMESTICO NCP.
+international_industrial_classification_1116,30005,FAB. MAQUINARIA DE OFICINA.
+international_industrial_classification_1117,31102,"FAB. MOTORES, GENERADORES ELECTRICOS."
+international_industrial_classification_1118,31203,FAB. DE APARATOS DE DISTRIBUCION.
+international_industrial_classification_1119,31304,FAB. DE HILOS Y CABLES AISLADOS.
+international_industrial_classification_1120,31405,FAB. DE ACUMULADORES Y BATERIAS.
+international_industrial_classification_1121,31506,FAB. DE LAMPARAS ELECTRICAS.
+international_industrial_classification_1122,31900,FAB. OTRO TIPO EQUIPO ELECTRICO NCP.
+international_industrial_classification_1123,32109,FAB. TUBOS Y VALVULAS ELECTRONICOS.
+international_industrial_classification_1124,32200,FAB. TRANSMISORES DE RADIO Y TV.
+international_industrial_classification_1125,32300,FAB. RECEPTORES DE RADIO Y TV.
+international_industrial_classification_1126,33118,FAB. EQUIPO MEDICO Y QUIRURGICO.
+international_industrial_classification_1127,33120,FAB. INSTRUMENTOS DE MEDICION.
+international_industrial_classification_1128,33133,FAB. EQUIPO CONTROL DE PROCESOS IND.
+international_industrial_classification_1129,33206,FAB. INSTRUMENTOS OPTICOS.
+international_industrial_classification_1130,33307,FAB. DE RELOJES.
+international_industrial_classification_1131,34101,FAB. VEHICULOS AUTOMOTORES.
+international_industrial_classification_1132,34202,FAB. CARROCERIAS PARA VEHICULOS.
+international_industrial_classification_1133,34303,"FAB. PARTES, PIEZAS Y ACCESORIOS."
+international_industrial_classification_1134,35110,CONSTRUCCION Y REPARACION DE BUQUES.
+international_industrial_classification_1135,35123,CONSTRUC. Y REPARAC. DE EMBARCACIONES.
+international_industrial_classification_1136,35209,FAB. LOCOMOTORAS Y MATERIAL RODANTE.
+international_industrial_classification_1137,35300,FAB. AERONAVES Y NAVES ESPACIALES.
+international_industrial_classification_1138,35918,FAB. DE MOTOCICLETAS.
+international_industrial_classification_1139,35920,FAB. BICICLETAS Y SILLONES DE RUEDAS.
+international_industrial_classification_1140,35990,FAB. OTROS EQUIPOS DE TRANSPORTE NCP.
+international_industrial_classification_1141,36104,FAB. DE MUEBLES.
+international_industrial_classification_1142,36914,FAB. JOYAS Y ARTICULOS CONEXOS.
+international_industrial_classification_1143,36927,FAB. INSTRUMENTOS MUSICALES.
+international_industrial_classification_1144,36930,FAB. ARTICULOS DEPORTIVOS.
+international_industrial_classification_1145,36942,FAB. DE JUEGOS Y JUGUETES.
+international_industrial_classification_1146,36996,OTRAS INDUSTRIAS MANUFACTURERAS NCP.
+international_industrial_classification_1147,37100,RECICLAMIENTO DESPERDICIOS METALIC.
+international_industrial_classification_1148,37201,RECICLAMIENTO DESPERDICIOS NO METAL.
+international_industrial_classification_1149,40104,GENERACION Y DIST. ENERGIA ELECTRICA.
+international_industrial_classification_1150,40205,"FAB. DE GAS, DISTRIBUCION COMBUSTIBLE."
+international_industrial_classification_1151,40306,SUMINISTRO DE VAPOR Y AGUA CALIENTE.
+international_industrial_classification_1152,41000,"CAPTACION , DEPURACION Y DIST. DE AGUA"
+international_industrial_classification_1153,45106,PREPARACION DEL TERRENO.
+international_industrial_classification_1154,45207,CONSTRUCCION EDIFICIOS COMPLETOS.
+international_industrial_classification_1155,45308,ACONDICIONAMINTO DE EDIFICIOS.
+international_industrial_classification_1156,45409,TERMINACION DE EDIFICIOS.
+international_industrial_classification_1157,45500,ALQUILER DE CONSTRUCCION.
+international_industrial_classification_1158,50102,VENTA DE VEHICULOS AUTOMOTORES.
+international_industrial_classification_1159,50203,MANTENIMIENTO Y REPARAC. VEHICULOS.
+international_industrial_classification_1160,50304,"VENTA PARTES, PIEZAS, ACCESORIOS."
+international_industrial_classification_1161,50405,"VENTA, MANTEN. Y REPARAC. MOTOCICLETAS."
+international_industrial_classification_1162,50506,VENTA AL POR MENOR COMBUSTIBLES.
+international_industrial_classification_1163,51109,VTA. MAY. A CAMBIO DE UNA RETRIBUCION.
+international_industrial_classification_1164,51212,VTA. MAY. DE MATERIAS PRIMAS AGROPEC.
+international_industrial_classification_1165,51225,"VTA. MAY. ALIMENTOS, BEBIDAS Y TABACO."
+international_industrial_classification_1166,51313,VTA. MAY. PRODUCTOS TEXTILES.
+international_industrial_classification_1167,51395,VTA. MAY. OTROS ENSERES DOMESTICOS.
+international_industrial_classification_1168,51414,VTA. AL POR MAYOR DE COMBUSTIBLES.
+international_industrial_classification_1169,51427,VTA. MAY. DE METALES Y MINERALES MET.
+international_industrial_classification_1170,51430,VTA. MAY. MATERIALES DE CONSTRUCCION.
+international_industrial_classification_1171,51496,VTA. MAY. OTROS PRODUCTOS INTERMEDIOS.
+international_industrial_classification_1172,51502,"VTA. MAY. MAQUINARIA, EQUIPO Y MATER."
+international_industrial_classification_1173,51906,VTA. MAY. DE OTROS PRODUCTOS.
+international_industrial_classification_1174,52118,VTA. MIN. EN ALMACENES NO ESPECIALIZ.
+international_industrial_classification_1175,52190,VTA. MIN. OTROS PRODUCTOS EN ALMACEN.
+international_industrial_classification_1176,52206,"VTA. MIN. ALIMENTOS, BEBIDAS, TABACO."
+international_industrial_classification_1177,52310,VTA. MIN. PROD. FARMAC. Y ART. TOCADOR.
+international_industrial_classification_1178,52322,"VTA. MIN. PRODUCTOS TEXTILES, CALZADO."
+international_industrial_classification_1179,52335,VTA. MIN. EQUIPO DE USO DOMESTICO.
+international_industrial_classification_1180,52348,VTA. MIN. ARTICULOS DE FERRETERIA.
+international_industrial_classification_1181,52391,OTROS TIPOS DE VENTA AL POR MENOR.
+international_industrial_classification_1182,52408,VTA. MIN. DE ALMACENES DE ART. USADOS.
+international_industrial_classification_1183,52511,VTA. MIN. DE CASAS DE VENTA POR CORREO.
+international_industrial_classification_1184,52524,VTA. MIN. EN PUESTOS DE VENTA.
+international_industrial_classification_1185,52593,OTROS TIPOS DE VENTA POR MENOR.
+international_industrial_classification_1186,52600,REPARACION DE EFECTOS PERSONALES.
+international_industrial_classification_1187,55104,"HOTELES, CAMPAMENTOS Y OTROS."
+international_industrial_classification_1188,55205,"RESTAURANTES, BARES Y CANTINAS."
+international_industrial_classification_1189,60100,TRANSPORTE POR VIA FERREA.
+international_industrial_classification_1190,60214,OTROS TIPOS TRANSPORTE REG. VIA TER.
+international_industrial_classification_1191,60227,OTROS TIPOS TRANSPORTE NO REG. VIA TER.
+international_industrial_classification_1192,60230,TRANSPORTE DE CARGA POR CARRETERA.
+international_industrial_classification_1193,60302,TRANSPORTE POR TUBERIAS.
+international_industrial_classification_1194,61107,TRANSPORTE MARITIMO Y DE CABOTAJE.
+international_industrial_classification_1195,61208,TRANSPORTE VIAS NAVEGACION INTERIOR.
+international_industrial_classification_1196,62103,TRANSPORTE REGULAR VIA AEREA.
+international_industrial_classification_1197,62204,TRANSPORTE NO REGULAR POR VIA AEREA.
+international_industrial_classification_1198,63011,MANIPULACION DE LA CARGA
+international_industrial_classification_1199,63024,ALMACENAMIENTO Y DEPOSITO
+international_industrial_classification_1200,63037,OTRAS ACTIVIDADES DE TRANSPORTES.
+international_industrial_classification_1201,63040,AGENCIAS DE VIAJES Y GUIAS TURISTIC.
+international_industrial_classification_1202,63093,ORGANIZACION DEL TRANSPORTE
+international_industrial_classification_1203,64119,ACTIVIDADES POSTALES NACIONALES
+international_industrial_classification_1204,64121,ACTIVIDADES DE CORREO DISTINTAS
+international_industrial_classification_1205,64207,TELECOMUNICACIONES
+international_industrial_classification_1206,65115,BANCA CENTRAL
+international_industrial_classification_1207,65197,OTROS TIPOS INTERMEDIACION MONETARIA.
+international_industrial_classification_1208,65912,ARRENDAMIENTO CON OPCION DE COMPRA
+international_industrial_classification_1209,65925,OTROS TIPOS DE CREDITO
+international_industrial_classification_1210,65994,OTROS TIPOS DE INTERMEDIACION FINANC.
+international_industrial_classification_1211,66010,PLANES DE SEGUROS DE VIDA
+international_industrial_classification_1212,66023,PLANES DE PENSIONES
+international_industrial_classification_1213,66036,PLANES DE SEGUROS GENERALES
+international_industrial_classification_1214,67118,ADMINISTRACION MERCADOS FINANCIEROS.
+international_industrial_classification_1215,67120,ACTIVIDADES BURSATILES
+international_industrial_classification_1216,67190,ACTIV. AUXIL ARES DE INTERM. FINANC.
+international_industrial_classification_1217,67206,ACTIV. FINANC. PLANES SEGUROS Y PENS.
+international_industrial_classification_1218,70109,ACTIVIDADES INMOBILIARIAS
+international_industrial_classification_1219,70200,ACTIV. INMOBILIARIAS POR RETRIBUCION.
+international_industrial_classification_1220,71118,ALQUILER EQUIPO TRANSPORTE V. TERRES.
+international_industrial_classification_1221,71120,ALQUILER EQUIPO TRANSPORTE V.ACUAT.
+international_industrial_classification_1222,71133,ALQUILER EQUIPO TRANSPORTE V.AEREA.
+international_industrial_classification_1223,71219,ALQUILER MAQUI. Y EQUIP.AGROPECUARIO.
+international_industrial_classification_1224,71221,ALQUILER MAQUI. Y EQUIP.CONSTRUCCION.
+international_industrial_classification_1225,71234,ALQUILER MAQUI.Y EQUIP.DE OFICINA.
+international_industrial_classification_1226,71290,ALQUILER OTROS TIPOS MAQ.Y EQUI. NCP.
+international_industrial_classification_1227,71307,ALQUILER ENSERES DOMESTICOS NCP.
+international_industrial_classification_1228,72101,CONSULTORES EN EQUIPO INFORMATICA.
+international_industrial_classification_1229,72202,CONSULTORES PROG. Y SUMIN. INFORMATIC.
+international_industrial_classification_1230,72303,PROCESAMIENTO DE DATOS.
+international_industrial_classification_1231,72404,ACTIV.RELACIONADAS.CON BASE DE DATO.
+international_industrial_classification_1232,72505,MANTEN.Y REPAR.MAQUIN. DE OFICINA.
+international_industrial_classification_1233,72909,OTRAS ACTIVIDADES DE INFORMATICA.
+international_industrial_classification_1234,73108,INVESTIGACION DE CIENCIAS NATURALES.
+international_industrial_classification_1235,73209,INVESTIGACION DE CIENCIAS SOCIALES.
+international_industrial_classification_1236,74117,ACTIVIDADES JURIDICAS
+international_industrial_classification_1237,74120,ACTIVIDADES DE CONTABILIDAD
+international_industrial_classification_1238,74132,INVESTIGACION DE MERCADOS
+international_industrial_classification_1239,74145,ACTIV.DE ASESORAMIENTO EMPRESARIAL
+international_industrial_classification_1240,74218,ACTIV.DE ARQUITECTURA E INGENIERIA
+international_industrial_classification_1241,74220,ENSAYOS Y ANALISIS TECNICOS
+international_industrial_classification_1242,74306,PUBLICIDAD
+international_industrial_classification_1243,74914,OBTENCION Y DOTACION PERSONAL
+international_industrial_classification_1244,74927,ACTIV. DE INVESTIGACION Y SEGURIDAD.
+international_industrial_classification_1245,74930,ACTIVIDADES LIMPIEZA DE EDIFICIOS
+international_industrial_classification_1246,74942,ACTIVIDADES DE FOTOGRAFIA
+international_industrial_classification_1247,74955,ACTIVIDADES DE ENVASE Y EMPAQUE
+international_industrial_classification_1248,74996,OTRAS ACTIVIDADES EMPRESARIALES NCP.
+international_industrial_classification_1249,75113,ACTIV. ADMINIST. PUBLICA EN GENERAL
+international_industrial_classification_1250,75126,REGULACION DE ACTIVID.ORGANISMOS
+international_industrial_classification_1251,75139,REGULAC. Y FACILITAC. ACTIV.ECONOMIC.
+international_industrial_classification_1252,75141,SERVIC. AUXIL.PARA ADMINIST.PUBLICA.
+international_industrial_classification_1253,75214,RELACIONES EXTERIORES
+international_industrial_classification_1254,75227,ACTIVIDADES DE DEFENSA
+international_industrial_classification_1255,75230,MANTENIMIENTO DEL ORDEN PUBLICO
+international_industrial_classification_1256,75302,SERVICIOS PUBLICOS SEGURIDAD SOCIAL
+international_industrial_classification_1257,80107,ENSE%ANZA PRIMARIA
+international_industrial_classification_1258,80210,ENSE%ANZA SECUNDARIA FORMACION GRAL.
+international_industrial_classification_1259,80223,ENSE%ANZA SECUNDARIA FORMAC. TECNICA.
+international_industrial_classification_1260,80309,ENSE%ANZA SUPERIOR
+international_industrial_classification_1261,80904,EDUCACION DE ADULTOS Y OTROS
+international_industrial_classification_1262,85111,ACTIVIDADES DE HOSPITALES
+international_industrial_classification_1263,85124,ACTIVIDADES DE MEDICOS Y ODONTOLOGO
+international_industrial_classification_1264,85193,OTRAS ACTIV.RELAC. CON SALUD HUMANA
+international_industrial_classification_1265,85200,ACTIVIDADES VETERINARIAS
+international_industrial_classification_1266,85313,SERVICIOS SOCIALES CON ALOJAMIENTO
+international_industrial_classification_1267,85326,SERVICIOS SOCIALES SIN ALOJAMIENTO
+international_industrial_classification_1268,90004,ELIMINACION DE DESPERDICIOS
+international_industrial_classification_1269,91114,ACTIV.ORGANIZACIONES EMPRESARIALES
+international_industrial_classification_1270,91127,ACTIV.ORGANIZACIONES PROFESIONALES.
+international_industrial_classification_1271,91202,ACTIVIDADES DE SINDICATOS
+international_industrial_classification_1272,91911,ACTIV.ORGANIZACIONES RELIGIOSAS
+international_industrial_classification_1273,91924,ACTIV.ORGANIZACIONES POLITICAS
+international_industrial_classification_1274,91993,ACTIVIDADES OTRAS ASOCIACIONES NCP.
+international_industrial_classification_1275,92110,PRODUCCION Y DIST.FILMES Y VIDEOS
+international_industrial_classification_1276,92123,EXHIBICION FILMES Y VIDEOS
+international_industrial_classification_1277,92136,ACTIVIDADES DE RADIO Y TELEVISION.
+international_industrial_classification_1278,92149,"ACTIV.TEATRALES, MUSICALES Y OTRAS."
+international_industrial_classification_1279,92192,OTRAS ACTIVID.ENTRETENIMIENTO NCP.
+international_industrial_classification_1280,92209,ACTIVIDADES DE AGENCIAS DE NOTICIAS
+international_industrial_classification_1281,92312,ACTIVIDADES BIBLIOTECAS Y ARCHIVOS
+international_industrial_classification_1282,92325,ACTIV.MUSEOS Y LUGARES HISTORICOS.
+international_industrial_classification_1283,92338,ACTIV.JARDINES BOTANICOS Y ZOOLOGIC.
+international_industrial_classification_1284,92413,ACTIVIDADES DEPORTIVAS
+international_industrial_classification_1285,92495,OTRAS ACTIVIDADES DE ESPARCIMIENTO
+international_industrial_classification_1286,93016,"LAVADO, LIMPIEZA Y TE%IDO TELA"
+international_industrial_classification_1287,93029,PELUQUERIA Y OTROS
+international_industrial_classification_1288,93031,POMPAS FUNEBRES Y ACTIVID.CONEXAS
+international_industrial_classification_1289,93098,OTRAS ACTIVID.DE TIPO SERVICIO NCP
+international_industrial_classification_1290,95006,HOGARES PRIVADOS C. SERV.DOMESTICO
+international_industrial_classification_1291,99001,ORGANIZACIONES INTERNACIONALES

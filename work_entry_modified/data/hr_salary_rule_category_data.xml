@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+        <record id="basic_rule.hr_salary_rule_category_ina_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_1</field>
+        </record>
+
+        <record id="basic_rule.hr_salary_rule_category_inn_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_1</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_ing_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_1</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_dat_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_2</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_da_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_2</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_dna_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_2</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_afp_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_1</field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_dae_001" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_3</field>
+        </record>
+        <!-- HASTA AQUI -->
+        <record id="hr_payroll.COMP" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_3</field>
+        </record>
+        <record id="hr_payroll.DED" model="hr.salary.rule.category">
+            <field name="invoice_position">pos_2</field>
+        </record>
+        <record id="hr_payroll.BASIC" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="hr_payroll.ALW" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="hr_payroll.GROSS" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="hr_payroll.NET" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_sp_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bas_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_dto_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bco_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bin_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bpd_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bpb_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_spp_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bsm_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bor_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bed_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bcb_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_pro" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="holiday_rule.hr_salary_rule_category_bcv_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="holiday_rule.hr_salary_rule_category_bhn_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="legal_benefits_rule.hr_salary_rule_category_bhe_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="basic_rule.hr_salary_rule_category_bin_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+        <record id="rules_utilities.hr_salary_rule_utl_001" model="hr.salary.rule.category">
+            <field name="invoice_position"></field>
+        </record>
+    </data>
+</odoo>

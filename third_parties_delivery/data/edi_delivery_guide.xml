@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<odoo>
+
+    <template id="sunat_guiaremision_inherit_third_parties_delivery"  inherit_id="l10n_pe_delivery_note_20.sunat_guiaremision_inherit_delivery_note_20">
+
+        <xpath expr="//*[name()='cac:SellerSupplierParty']" position="replace">
+            <t xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+               xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+                <cac:SellerSupplierParty t-if="record.l10n_pe_edi_reason_for_transfer in ['02','07'] or record.third_parties == '01'">
+                    <cac:Party>
+                        <cac:PartyIdentification>
+                            <cbc:ID t-att-schemeID="record.customer_id.l10n_latam_identification_type_id.l10n_pe_vat_code"
+                                    schemeName="Documento de Identidad"
+                                    schemeAgencyName="PE:SUNAT"
+                                    schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"><t t-esc='record.customer_id.vat'/></cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyLegalEntity>
+                            <cbc:RegistrationName><t t-esc='record.customer_id.name'/></cbc:RegistrationName>
+                        </cac:PartyLegalEntity>
+                    </cac:Party>
+                </cac:SellerSupplierParty>
+            </t>
+        </xpath>
+
+        <xpath expr="//*[name()='cac:BuyerCustomerParty']" position="replace">
+            <t xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+               xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+                <cac:BuyerCustomerParty t-if="record.l10n_pe_edi_reason_for_transfer == '03' or record.third_parties == '02'">
+                    <cac:Party>
+                        <cac:PartyIdentification>
+                            <cbc:ID t-att-schemeID="record.customer_id.l10n_latam_identification_type_id.l10n_pe_vat_code"
+                                schemeName="Documento de Identidad"
+                                schemeAgencyName="PE:SUNAT"
+                                schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"><t t-esc='record.customer_id.vat'/></cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyLegalEntity>
+                            <cbc:RegistrationName><t t-esc='record.customer_id.name'/></cbc:RegistrationName>
+                        </cac:PartyLegalEntity>
+                    </cac:Party>
+                </cac:BuyerCustomerParty>
+            </t>
+        </xpath>
+
+    </template>
+
+</odoo>

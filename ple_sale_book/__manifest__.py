@@ -1,6 +1,6 @@
 {
     'name': ' Electronic Sales Record (PLE)',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'Submit your sales book to SUNAT through PLE.',

@@ -44,8 +44,24 @@ class PleDiary(models.Model):
                 TO_CHAR(account_move_line__move_id.date, 'DD/MM/YYYY') as move_date,
                 validate_string(string_ref(coalesce(coalesce(account_move_line__move_id.ref, account_move_line.name), '')), 200) as reference,
                 string_ref(validate_string(coalesce(account_move_line.name, ''), 200)) as move_line_name,
-                LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 1), '-', '0000'), ''), 4) AS invoice_serie,
-                LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 2), '-', '00000000'), ''), 8) AS invoice_correlative,
+                CASE 
+                  WHEN account_journal.type = 'sale' AND move_type IN ('out_invoice', 'out_refund') THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 1), '-', '0000'), LEFT(COALESCE(replace(split_part(replace(account_move_line.move_name, ' ', ''), '-', 1), '-', '0000'), ''), 4)), 4)
+                  WHEN account_journal.type = 'purchase' AND move_type IN ('in_invoice', 'in_refund') THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 1), '-', '0000'), LEFT(COALESCE(replace(split_part(replace(account_move_line.ref, ' ', ''), '-', 1), '-', '0000'), ''), 4)), 4)
+                  WHEN account_journal.type IN ('cash', 'bank', 'general') AND move_type = 'entry' THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 1), '-', '0000'), ''), 4)
+                  ELSE '0000'
+                END AS invoice_serie,                
+                CASE 
+                  WHEN account_journal.type = 'sale' AND move_type IN ('out_invoice', 'out_refund') THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 2), '-', '00000000'), LEFT(COALESCE(replace(split_part(replace(account_move_line.move_name, ' ', ''), '-', 2), '-', '00000000'), ''), 8) ), 8)
+                  WHEN account_journal.type = 'purchase' AND move_type IN ('in_invoice', 'in_refund') THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 2), '-', '00000000'), LEFT(COALESCE(replace(split_part(replace(account_move_line.ref, ' ', ''), '-', 2), '-', '00000000'), ''), 8) ), 8)
+                  WHEN account_journal.type IN ('cash', 'bank', 'general') AND move_type = 'entry' THEN
+                    LEFT(COALESCE(replace(split_part(replace(account_move_line.serie_correlative, ' ', ''), '-', 2), '-', '00000000'), ''), 8)
+                  ELSE '00000000'
+                END AS invoice_correlative,                             
                 validate_string(COALESCE(split_part(replace(account_move_line__move_id.name, ' ', ''), '-', 1), '0000'),20) AS invoice_serie_oo,
                 coalesce(left(split_part(replace(account_move_line__move_id.name, ' ', ''), '-', 2),20),'') AS invoice_correlative_oo,
                 coalesce(TO_CHAR(account_move_line__move_id.invoice_date_due, 'DD/MM/YYYY'), '') as invoice_date_due,
@@ -164,10 +180,10 @@ class PleDiary(models.Model):
                 values_move.update({'invoice_document_type_code': '00'})
 
             if values_move.get('invoice_serie') == '':
-                values_move.update({'invoice_serie': '0000'})
+                values_move.update({'invoice_serie': '00000000'})
 
             if values_move.get('invoice_correlative') == '':
-                values_move.update({'invoice_correlative': '00000000'})
+                values_move.update({'invoice_correlative': '0000'})
 
             list_data.append(values_move)
 

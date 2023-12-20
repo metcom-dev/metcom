@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_print_stock_picking_blank_delivery" model="report.paperformat">
+        <field name="name">Blank delivery note</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">114</field>
+        <field name="margin_bottom">70</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">115</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="stock_picking_blank_delivery" model="ir.actions.report">
+        <field name="name">Guía de Remisión</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">new_blank_delivery_note.report_blank_delivery_note</field>
+        <field name="report_file">new_blank_delivery_note.report_blank_delivery_note</field>
+        <field name="print_report_name">'Guía de Remisión - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="new_blank_delivery_note.paperformat_print_stock_picking_blank_delivery"/>
+    </record>
+
+</odoo>

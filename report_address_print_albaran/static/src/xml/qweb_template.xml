@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_delivery_document_inherit_new_delivery_address_print_albaran"
+              inherit_id="l10n_pe_delivery_note_20.l10n_pe_edi_guiaremision_report_delivery_document">
+
+        <xpath expr="//div[@name='address_arrival']" position="replace">
+            <strong>Dirección de llegada:</strong>
+            <t t-if="o.customer_id and partner">
+                <span t-esc="o.customer_id.get_structured_address()"/>
+            </t>
+            <t t-elif="partner">
+                <span t-esc="partner.get_structured_address()"/>
+            </t>
+            <t t-elif="o.customer_id">
+                <span t-esc="o.customer_id.get_structured_address()"/>
+            </t>
+            <t t-else="">
+                <span/>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>

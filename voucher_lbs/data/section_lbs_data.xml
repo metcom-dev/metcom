@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--"section.lbs"-->
+        <record id="section_lbs_1" model="section.lbs">
+            <field name="code">1</field>
+            <field name="description">Remuneración</field>
+        </record>
+        <record id="section_lbs_2" model="section.lbs">
+            <field name="code">2</field>
+            <field name="description">Vacaciones</field>
+        </record>
+        <record id="section_lbs_3" model="section.lbs">
+            <field name="code">3</field>
+            <field name="description">Compensación por tiempo de servicios</field>
+        </record>
+        <record id="section_lbs_4" model="section.lbs">
+            <field name="code">4</field>
+            <field name="description">Gratificaciones</field>
+        </record>
+        <record id="section_lbs_5" model="section.lbs">
+            <field name="code">5</field>
+            <field name="description">Otros Ingresos</field>
+        </record>
+        <record id="section_lbs_6" model="section.lbs">
+            <field name="code">6</field>
+            <field name="description">Deducciones</field>
+        </record>
+        <record id="section_lbs_7" model="section.lbs">
+            <field name="code">7</field>
+            <field name="description">Aportaciones</field>
+        </record>
+
+    </data>
+</odoo>

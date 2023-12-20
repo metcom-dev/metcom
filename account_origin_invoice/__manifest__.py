@@ -1,6 +1,6 @@
 {
     'name': 'Origen de Documentos Rectificados',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': '''
