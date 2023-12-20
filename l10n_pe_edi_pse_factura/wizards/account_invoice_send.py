@@ -8,9 +8,18 @@ from odoo import api, models
 
 class AccountInvoiceSend(models.TransientModel):
     _inherit = "account.invoice.send"
+    
+    def _print_document(self):
+        """ to override for each type of models that will use this composer."""        
+        """self.ensure_one()
+        action = self.invoice_ids.action_invoice_print()
+        action.update({'close_on_report_download': True})
+        return action"""
+        return {'type': 'ir.actions.act_window_close'}
 
     @api.onchange("template_id")
     def onchange_template_id(self):
+        conf = self.env['ir.config_parameter']
         res = super(AccountInvoiceSend, self).onchange_template_id()
         for wizard in self:
             Attachment = self.env["ir.attachment"]
@@ -19,7 +28,8 @@ class AccountInvoiceSend(models.TransientModel):
                     wizard.composer_id.res_id
                 )
                 einvoice_attachments = []
-                if invoice_id.l10n_pe_edi_pdf_file:
+                pdf_format_pse = bool(conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,False))
+                if invoice_id.l10n_pe_edi_pdf_file and pdf_format_pse:
                     r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
                     data_content = r.content
                     invoice_id.l10n_pe_edi_pdf_file.write({
@@ -27,6 +37,8 @@ class AccountInvoiceSend(models.TransientModel):
                         "type": "binary",
                     })
                     einvoice_attachments.append(invoice_id.l10n_pe_edi_pdf_file.id)
+                else:
+                    einvoice_attachments = wizard.composer_id.attachment_ids.ids
                 if invoice_id.l10n_pe_edi_cdr_file:
                     r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
                     data_content = r.content
@@ -44,20 +56,6 @@ class AccountInvoiceSend(models.TransientModel):
                     })
                     einvoice_attachments.append(invoice_id.l10n_pe_edi_xml_file.id)
                 if einvoice_attachments:
-                    '''r = requests.get(
-                        invoice_id.l10n_pe_edi_request_id.link_xml, timeout=10
-                    )
-                    data_content = r.content
-                    attachment_ids = []
-                    data_attach = {
-                        "name": invoice_id.name + ".xml",
-                        "datas": base64.encodebytes(data_content),
-                        "res_model": "mail.compose.message",
-                        "res_id": 0,
-                        "type": "binary",
-                        # override default_type from context, possibly meant for another model!
-                    }
-                    attachment_ids.append(Attachment.create(data_attach).id)'''
                     wizard.write(
                         {
                             "attachment_ids": [
