@@ -1,6 +1,6 @@
 {
     'name': 'Formato 3.4 Libro de Inventarios y Balances - Cuentas por Cobrar al Personal: Trab. Soc. Acc. Ger. Direc.',
-    'version': '16.0.0.0.3',
+    'version': '16.0.0.0.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'live_test_url': 'https://www.ganemo.co/demo',

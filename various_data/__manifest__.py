@@ -1,6 +1,6 @@
 {
     'name': 'Various data',
-    'version': '16.0.0.1.4',
+    'version': '16.0.0.2.6',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """

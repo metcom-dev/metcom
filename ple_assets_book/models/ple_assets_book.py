@@ -222,7 +222,7 @@ class PleAssetsBook(models.Model):
 
     def _execute_lines_1(self):
         query_data = self._get_lines_1()
-        list_data = self._calculate_columns_AC_to_AD()
+        list_data = self._calculate_columns_AC_to_AD()        
         lines = []
         var_list = []
         list_parents = list(map(lambda r: r['parent_id'], query_data)) if query_data else []
@@ -696,12 +696,36 @@ class PleAssetsBook(models.Model):
         result_native = self.env.ref('account_asset.assets_report')._get_lines(report_options)
         lista = []
 
-        for i in result_native:
-            id_asset = i['id'].split("|~account.asset~")
+        for dict in result_native:
+            id_asset = dict['id'].split("|~account.asset~")
             if len(id_asset)>1: 
-                lista.append({'id':int(id_asset[1]),
-                              'data':list(map(lambda column: column['no_format'], i['columns']))})
+                lista.append({
+                    'id':int(id_asset[1]),
+                    'data':list(map(lambda column: column['no_format'], dict['columns']))
+                })
+        
+        if len(lista) > 0:
+            for dict in lista:
+                asset_id = self.env['account.asset'].browse(dict['id'])
+                if asset_id and asset_id.currency_id != self.company_id.currency_id:
+                    for position, column in enumerate(dict['data']):
+                        if isinstance(column, (int, float)):
+                            inverse_exchange_rate = self._get_inverse_exchange_rate(
+                                asset_id.currency_id, 
+                                asset_id.acquisition_date or fields.Date.context_today(self)
+                            )
+                            new_value = column / inverse_exchange_rate
+                            new_value_round = self.company_id.currency_id.round(new_value)
+                            dict['data'][position] = new_value_round
         return lista
+
+    def _get_inverse_exchange_rate(self, currency, acquisition_date):
+        return self.env['res.currency']._get_conversion_rate(
+            from_currency=self.company_id.currency_id or self.env.company.currency_id,
+            to_currency=currency,
+            company=self.company_id,
+            date=acquisition_date,
+        )
 
     def action_generate_excel(self):
         asset_data_1 = self._execute_lines_1()

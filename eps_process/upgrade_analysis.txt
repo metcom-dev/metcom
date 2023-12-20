@@ -1,3 +1,6 @@
 ---Models in module 'eps_process'---
 ---Fields in module 'eps_process'---
+eps_management          / eps.management                / employeer_ids (One2many)          : DEL
+eps_management          / eps.management                / employeer_ids (Many2many)         : NEW
+eps_management          / eps.management                / partner_id (Many2one)             : NEW required
 ---XML records in module 'eps_process'---

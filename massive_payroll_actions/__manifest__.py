@@ -1,6 +1,6 @@
 {
     'name': 'Massive payroll actions',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.1.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': """

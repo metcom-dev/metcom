@@ -1,7 +1,7 @@
-from odoo import models, fields
+from odoo import models, fields, _
 from odoo.exceptions import ValidationError
 from odoo.addons.hr_payroll.models.hr_payslip import HrPayslip
-
+from odoo.exceptions import UserError
 
 # The whole base method is being overwritten because sometimes when they extend this function it seems that it will not replace the base but in general.
 # Example:
@@ -51,3 +51,13 @@ class HrPayslipRun(models.Model):
     def action_validate(self):
         self.mapped('slip_ids').filtered(lambda slip: slip.state != 'cancel').with_context(payslip_generate_pdf=True).action_payslip_done()
         self.action_close()
+
+class HrPayslip(models.Model):
+    _inherit = 'hr.payslip'
+
+    def action_payslip_draft(self):
+        for payslip in self:
+            if payslip.move_id:
+                raise UserError(
+                    _("No puede revertir a borrador un payslip que ya tiene asiento contable. Primero debe cancelarlo."))
+        return super().action_payslip_draft()

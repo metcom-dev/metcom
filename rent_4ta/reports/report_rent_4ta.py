@@ -9,7 +9,7 @@ class ReportRent4ta(object):
     def get_content_data_ps4(self):
         raw = ''
         template = '{document_type_code}|{document_number}|{first_name}|{second_name}|' \
-                   '{partner_name}|{is_nodomicilied}|{double_taxation_code}\r\n'
+                   '{partner_name}|{is_nodomicilied}|{double_taxation_code}|\r\n'
         
         for value in self.data_ps4:
             raw += template.format(

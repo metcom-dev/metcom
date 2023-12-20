@@ -1,6 +1,6 @@
 {
     'name': 'Base Spot',
-    'version': '16.0.0.0.0',
+    'version': '16.0.1.0.0',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': """
@@ -8,7 +8,11 @@
         the payment date of the deduction and the payment operation code of the deduction.
     """,
     'depends': ['localization_menu'],
-    'data': ['views/account_move_views.xml'],
+    'data': [
+        'data/account_spot_detraction_data.xml',
+        'views/account_move_views.xml',
+        'views/account_spot_views.xml'
+    ],
     'installable': True,
     'auto_install': False,
     'license': 'Other proprietary',

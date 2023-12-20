@@ -18,7 +18,12 @@
 <div style="margin: 32px 0px 32px 0px; text-align: center;">
     <a t-att-href="object.get_portal_url()"
                         style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-        <t>Revisar, Aceptar y Firmar</t>      
+        <t t-if="object.status == 'to_sign'">
+            Revisar, Aceptar y Firmar
+        </t>
+        <t t-else="">
+            Ver Boleta de Pago
+        </t>   
     </a>
 </div>
         </field>

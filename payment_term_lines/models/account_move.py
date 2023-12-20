@@ -16,6 +16,8 @@ class AccountAccountType(models.Model):
 class AccountPaymentTermLine(models.Model):
     _inherit = "account.payment.term.line"
 
+    l10n_pe_is_detraction_retention = fields.Boolean(string='¿Es un descuento?')
+
     def _get_data_from_line_ids(self, date_ref):
         term_date = self._get_due_date(date_ref)
         tmp_date_maturity = term_date
@@ -25,6 +27,7 @@ class AccountPaymentTermLine(models.Model):
         return {
             'date': term_date,
             'tmp_date_maturity': tmp_date_maturity,
+            'l10n_pe_is_detraction_retention': self.l10n_pe_is_detraction_retention,
             'has_discount': self.discount_percentage,
             'discount_date': None,
             'discount_amount_currency': 0.0,
@@ -150,6 +153,7 @@ class AccountMove(models.Model):
         return {
             'balance': term['company_amount'],
             'amount_currency': term['foreign_amount'],
+            'l10n_pe_is_detraction_retention': term['l10n_pe_is_detraction_retention'],
             'discount_amount_currency': term['discount_amount_currency'] or 0.0,
             'discount_balance': term['discount_balance'] or 0.0,
             'discount_date': term['discount_date'],
@@ -223,6 +227,7 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     tmp_date_maturity = fields.Date(string='Parametro temporal para evitar que agrupe lineas de pagos por fecha')
+    l10n_pe_is_detraction_retention = fields.Boolean(string='¿Es un descuento?')
 
     @api.depends('date_maturity', 'tmp_date_maturity')
     def _compute_term_key(self):
@@ -238,3 +243,4 @@ class AccountMoveLine(models.Model):
                 })
             else:
                 line.term_key = False
+    

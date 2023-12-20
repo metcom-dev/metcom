@@ -8,8 +8,6 @@
             <field name="color">1</field>
             <field name="unpaid">False</field>
             <field name="is_leave">False</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">True</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -21,8 +19,6 @@
             <field name="color">2</field>
             <field name="unpaid">False</field>
             <field name="is_leave">False</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">False</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -34,8 +30,6 @@
             <field name="color">2</field>
             <field name="unpaid">False</field>
             <field name="is_leave">False</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">False</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -47,8 +41,6 @@
             <field name="color">1</field>
             <field name="unpaid">False</field>
             <field name="is_leave">False</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">True</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -60,8 +52,6 @@
             <field name="color">3</field>
             <field name="unpaid">True</field>
             <field name="is_leave">True</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -73,8 +63,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -86,8 +74,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -99,8 +85,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -112,8 +96,6 @@
             <field name="color">4</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -125,8 +107,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">1</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -138,8 +118,6 @@
             <field name="color">5</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -151,8 +129,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -164,8 +140,6 @@
             <field name="color">6</field>
             <field name="unpaid">0</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">True</field>
             <field name="is_calc_own_rule">1</field>
             <field name="is_benefits_license_absence">False</field>
@@ -177,8 +151,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -190,8 +162,6 @@
             <field name="color">2</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">1</field>
@@ -203,8 +173,6 @@
             <field name="color">0</field>
             <field name="unpaid">1</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">0</field>
             <field name="is_benefits_license_absence">1</field>
@@ -216,8 +184,6 @@
             <field name="color">7</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">1</field>
             <field name="is_benefits_license_absence">False</field>
@@ -229,8 +195,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">1</field>
             <field name="is_benefits_license_absence">False</field>
@@ -242,8 +206,6 @@
             <field name="color">6</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">True</field>
             <field name="is_calc_own_rule">1</field>
             <field name="is_benefits_license_absence">False</field>
@@ -255,8 +217,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -268,8 +228,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">True</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -281,8 +239,6 @@
             <field name="color">9</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -294,8 +250,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -307,8 +261,6 @@
             <field name="color">6</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -320,8 +272,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -333,8 +283,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -346,8 +294,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -359,8 +305,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -372,8 +316,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -385,8 +327,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -398,8 +338,6 @@
             <field name="color">0</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">False</field>
             <field name="is_benefits_license_absence">False</field>
@@ -411,8 +349,6 @@
             <field name="color">10</field>
             <field name="unpaid">False</field>
             <field name="is_leave">1</field>
-            <field name="round_days">FULL</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="utilities">0</field>
             <field name="is_calc_own_rule">1</field>
             <field name="is_benefits_license_absence">False</field>
@@ -421,10 +357,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_dias_002" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -433,10 +367,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_mes_001" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -444,10 +376,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_mes_002" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -455,10 +385,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_dias_003" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -466,10 +394,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_mes_003" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_4'),
             ])]"/>
@@ -477,10 +403,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_mes_004" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_4'),
             ])]"/>
@@ -488,10 +412,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_tdm_001" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -499,10 +421,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_tdi_001" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -510,10 +430,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_tdl_001" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_3'),
             ])]"/>
@@ -521,10 +439,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_tdl_002" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_4'),
             ])]"/>
@@ -532,10 +448,8 @@
 
         <record id="legal_benefits_rule.hr_work_entry_type_tdi_002" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_4'),
             ])]"/>
@@ -543,10 +457,8 @@
 
         <record id="rules_utilities.hr_work_entry_type_dias_010" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_5'),
             ])]"/>
@@ -554,10 +466,8 @@
 
         <record id="holiday_process.hr_work_entry_type_vac_lbs" model="hr.work.entry.type">
             <field name="active">1</field>
-            <field name="round_days">FULL</field>
             <field name="sequence">25</field>
             <field name="is_leave">0</field>
-            <field name="round_days_type">HALF-UP</field>
             <field name="section_lbs_ids" eval="[(6,0,[
                 ref('voucher_lbs.section_lbs_2'),
             ])]"/>

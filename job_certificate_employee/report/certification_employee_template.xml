@@ -15,94 +15,57 @@
                     </div>
                     <div>
                         <br/>
-                        <br/>
-                        <br/>
-                        <strong t-field="o.company_id.name"/>
-                        <br/>
-                        <br/>
-                        <strong t-field="o.company_id.vat"/>
-                        <br/>
-                        <div>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </div>
                         <div class="subtitulo" style="text-align:center">
                             <strong>Certificado de trabajo</strong>
                         </div>
                         <br/>
                         <br/>
                         <br/>
-                        <br/>
-                        <div>
-                            <strong>Nombre del trabajador:</strong>
-                            <span t-field="o.name"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>T.Doc:</strong>
-                            <span t-field="o.type_identification_id.name"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>Documento:</strong>
-                            <span t-field="o.identification_id"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>Cargo:</strong>
-                            <span t-field="o.job_id.name"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>Departamento:</strong>
-                            <span t-field="o.department_id.name"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>Salario:</strong>
-                            <span t-field="o.contract_id.wage"/>
-                            <br/>
-                        </div>
-                        <div>
-                            <strong>Rem. variable:</strong>
-                            <span t-field="o.contract_id.variable_payment_id.name"/>
-                            <br/>
+                        <div style="text-align:justify">
+                            Por medio de la presente, yo, <span t-esc="o.search_employee().address_home_id.name"/>,
+                            en calidad de <span t-field="o.parent_id.job_title"/> de la empresa <span t-field="o.company_id.name"/>,
+                            hago constar que <span t-field="o.lastname"/> <span t-field="o.secondname"/> <span t-field="o.firstname"/>,
+                            identificado/a con <span t-field="o.type_identification_id.name"/> <span t-field="o.identification_id"/>,
+                            labora en nuestra organización desde el <span t-field="o.service_start_date"/>
+                            hasta <span t-field="o.service_termination_date"/> en el puesto de <span t-field="o.job_id.name"/>.
                         </div>
                         <br/>
-                        <br/>
-                        <div>
-                            <strong>Fecha inicio:</strong>
-                            <span t-field="o.service_start_date"/>
+                        <div style="text-align:justify">
+                            Durante el tiempo que ha estado en nuestra empresa, ha demostrado ser una persona comprometida,
+                            responsable y proactiva, con un gran interés en aprender y aplicar los conocimientos adquiridos.
                             <br/>
+                            <br/>
+                            Asimismo, ha destacado por su capacidad para trabajar en equipo y su habilidad
+                            para adaptarse a diferentes situaciones y contextos.
+                            <br/>
+                            <br/>
+                            Estamos seguros/as de que ha adquirido valiosas experiencias y habilidades durante su estancia
+                            en nuestra empresa, las cuales serán de gran ayuda para su formación y desarrollo profesional en el futuro.
+                            <br/>
+                            <br/>
+                            Quedamos a su disposición para cualquier consulta o información adicional que requieran.
                         </div>
-                        <div>
-                            <strong>Fecha cese:</strong>
-                            <span t-field="o.service_termination_date"/>
+                        <br/>
+                        <div style="text-align:justify">
+                            Constancia que se expide a petición de la parte interesada el <span t-esc="o.service_duration_days"/> de <span t-esc="o.service_duration_months"/> del <span t-field="o.service_duration_years"/>
                             <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            Atentamente,
                         </div>
                         <br/>
                         <br/>
                         <br/>
-                        <div>
-                            <strong>Tiempo de servicio :</strong>
-                            <span t-field="o.service_duration_years"/>
-                            año(s)
-                            <span t-esc="o.service_duration_months"/>
-                            mes(s)
-                            <span t-esc="o.service_duration_days"/>
-                            dia(s)
-                            <br/>
-                        </div>
-                        <div>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
                         <div style="text-align:center">
                             <img style="width: 165px; height: 60px;" t-attf-src="data:image/*;base64,{{o.search_employee().employer_sign}}"/>
                         </div>
@@ -117,20 +80,8 @@
                         <div style="text-align:center">
                             <strong>Empleador</strong>
                         </div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
                     </div>
                 </div>
-
             </t>
         </t>
 

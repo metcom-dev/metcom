@@ -53,7 +53,7 @@
             </xpath>
             <field name="l10n_latam_document_number" position="replace">
                 <field name="l10n_latam_document_number"
-                       attrs="{'invisible': ['|', '|',('move_type', 'in', ['in_invoice', 'in_refund']), ('l10n_latam_use_documents', '=', False), ('l10n_latam_manual_document_number', '=', False), '|', '|', ('l10n_latam_use_documents', '=', False), ('highest_name', '!=', False), ('state', '!=', 'draft')], 'required': [('move_type', 'not in', ['in_invoice', 'in_refund']), '|', ('l10n_latam_manual_document_number', '=', True), ('highest_name', '=', False)], 'readonly': [('move_type', 'in', ['in_invoice', 'in_refund'] ), ('posted_before', '=', True), ('state', '!=', 'draft')]}"/>
+                       attrs="{'invisible': ['|', '|',('move_type', 'in', ['in_invoice', 'in_refund']), ('l10n_latam_use_documents', '=', False), ('l10n_latam_manual_document_number', '=', False), '|', '|', ('l10n_latam_use_documents', '=', False), ('highest_name', '!=', False), ('state', '!=', 'draft')], 'required': [('move_type', 'not in', ['in_invoice', 'in_refund', 'entry']), '|', ('l10n_latam_manual_document_number', '=', True), ('highest_name', '=', False)], 'readonly': [('move_type', 'in', ['in_invoice', 'in_refund'] ), ('posted_before', '=', True), ('state', '!=', 'draft')]}"/>
             </field>
         </field>
     </record>

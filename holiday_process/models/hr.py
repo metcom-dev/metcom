@@ -95,9 +95,18 @@ class HrLeaveAllocation(models.Model):
     @api.depends('number_of_days_display', 'absence_ids', 'absence_ids.number_of_days_display', 'absence_ids.state')
     def compute_days_holiday(self):
         for rec in self:
-            rec.computed_holiday = rec.number_of_days_display or 0.0
-            rec.used_holiday = sum(
-                line.number_of_days_display for line in rec.absence_ids.filtered(lambda x: x.state == 'validate'))
+            current_computed_holiday = rec.computed_holiday
+            
+            rec.computed_holiday = rec.number_of_days_display 
+            current_used_holiday = sum(
+                line.number_of_days_display for line in rec.absence_ids)
+            
+            rec.used_holiday = current_used_holiday
+              
+            if rec.number_of_days_display == 0.0:  
+                rec.computed_holiday = current_computed_holiday
+                rec.number_of_days = current_computed_holiday
+                
             rec.pending_holiday = rec.computed_holiday - rec.used_holiday
 
     @api.depends('holiday_status_id')

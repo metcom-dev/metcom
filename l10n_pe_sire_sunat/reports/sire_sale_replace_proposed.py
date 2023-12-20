@@ -206,7 +206,7 @@ class SireSaleReplaceProposedTxt:
                 s_tax_other="{0:.2f}".format(dict_result['s_tax_other']),
                 amount_total="{0:.2f}".format(dict_result['amount_total']),
                 currency_name=dict_result['currency_name'],
-                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']),
+                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']) if dict_result['exchange_rate'] else '',
                 origin_invoice_date=dict_result['origin_invoice_date'],
                 origin_document_type_code=dict_result['origin_document_type_code'],
                 origin_number_serie=dict_result['origin_number_serie'],

@@ -1,6 +1,6 @@
 {
     'name': 'Comisiones de AFP',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'Make the monthly search of the different types of percentage of the AFP',

@@ -214,17 +214,17 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='employee_id']" position="after">
                 <span class="o_form_label" style="font-weight: bold">Periodo</span>
-                <span>
-                    <field name="from_date" style="width: 40%;" placeholder="Desde"/>
+                <span style="display: flex;">
+                    <field name="from_date" style="width:52%" placeholder="Desde"/>
                     -
-                    <field name="to_date" style="width: 40%;" placeholder="Hasta"/>
+                    <field name="to_date" style="width:52%; text-align:center;" placeholder="Hasta"/>
                 </span>
                 <field name="deadline"/>
                 <field name="is_holiday" invisible="1"/>
             </xpath>
             <xpath expr="//form/sheet" position="inside">
                 <notebook>
-                    <page name="absences" string="Ausencias"> <!-- attrs="{'invisible': [('is_holiday', '=', False)]}" -->
+                    <page name="absences" string="Ausencias">
                         <group>
                             <field name="computed_holiday"/>
                             <field name="used_holiday"/>

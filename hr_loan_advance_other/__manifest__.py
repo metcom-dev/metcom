@@ -1,6 +1,6 @@
 {
     'name': 'HR - loan advance other',
-    'version': '16.0.0.0.3',
+    'version': '16.0.0.2.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'Gestion de prestamos y adelantos de sueldo a empleados',

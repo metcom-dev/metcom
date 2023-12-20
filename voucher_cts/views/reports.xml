@@ -51,33 +51,33 @@
             <t t-set="line_period" t-value="periods[o.id]"/>
 
             <div style="width:100%">
-                <table class="new_table" style="width:100%;">
-                    <thead>
-                        <tr style="height: 40px !important;"/>
-                        <tr>
-                            <th colspan="3" class="text-center">
+                <table class="new_table" style="width:100%;border-color:white;">
+                    <thead style="border-color:white;">
+                        <tr style="height: 40px !important;border-color:white;"/>
+                        <tr style="border-color:white;">
+                            <th colspan="3" class="text-center" style="border-color:white;">
                                 <strong>LIQUIDACIÓN DE LA COMPENSACIÓN POR TIEMPO DE SERVICIOS</strong>
                             </th>
                         </tr>
-                        <tr>
-                            <th colspan="3" class="text-center">
+                        <tr style="border-color:white;">
+                            <th colspan="3" class="text-center" style="border-color:white;"> 
                                 <strong>DEPÓSITO
                                     <span t-field="o.date_start"/>
                                 </strong>
                             </th>
                         </tr>
-                        <tr style="height: 30px !important;"/>
+                        <tr style="height: 30px !important;border-color:white;"/>
                     </thead>
 
                     <tbody>
-                        <tr>
+                        <tr style="border-color:white;" >
                             <td>
                                 <span>APELLIDOS Y NOMBRES:
                                     <span t-field="o.employee_id"/>
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>TIPO DE DOCUMENTO:
                                     <span t-field="o.employee_id.type_identification_id"/>
@@ -89,7 +89,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>DEPARTAMENTO:
                                     <span t-field="o.employee_id.department_id"/>
@@ -101,7 +101,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>FECHA DE INGRESO:
                                     <span t-field="o.employee_id.service_start_date"/>
@@ -113,7 +113,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr style="height: 10px !important;"/>
+                        <tr style="height: 10px !important;border-color:white;"/>
                         <tr>
                             <td>
                                 <span>NOMBRE DEL BANCO:
@@ -121,20 +121,20 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>NRO. CUENTA:
                                     <span t-esc="bank_data['acc_number']"/>
                                 </span>
                             </td>
                         </tr>
-                        <tr style="height: 10px !important;"/>
-                        <tr>
+                        <tr style="height: 10px !important;border-color:white;"/>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>PERIODO</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>DESDE:
                                     <span t-esc="line_period['date_from']"/>
@@ -144,19 +144,19 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr style="height: 10px !important;"/>
-                        <tr>
+                        <tr style="height: 10px !important;border-color:white;"/>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>REMUNERACIÓN COMPRENDIDA :</span>
                             </td>
                         </tr>
-                        <tr style="height: 10px !important;"/>
+                        <tr style="height: 10px !important;border-color:white;"/>
 
                         <table name="remuneracion" style="width:50%">
                             <t t-set="payslip_lines" t-value="get_lines(o.line_ids)"/>
                             <t t-if="payslip_lines">
                                 <t t-foreach='payslip_lines' t-as='line'>
-                                    <tr style="width:100% !important;">
+                                    <tr style="width:100% !important;border-color:white;">
                                         <td style="width:15% !important;"/>
                                         <td style="width:65% !important;">
                                             <span class="text-uppercase" t-field="line.name"/>
@@ -168,20 +168,20 @@
                                     </tr>
                                 </t>
                             </t>
-                            <tr style="height: 10px !important;"/>
+                            <tr style="height: 10px !important;border-color:white;"/>
                         </table>
 
-                        <tr style="height: 10px !important;"/>
-                        <tr>
+                        <tr style="height: 10px !important;border-color:white;"/>
+                        <tr style="border-color:white;">
                             <td>
                                 <span>CÁLCULO DE CTS :</span>
                             </td>
                         </tr>
-                        <tr style="height: 10px !important;"/>
+                        <tr style="height: 10px !important;border-color:white;"/>
 
-                        <table style="width:50%">
-                            <tr style="height: 10px !important;"/>
-                            <tr style="width:100% !important;">
+                        <table style="width:50%;border-color:white;">
+                            <tr style="height: 10px !important;border-color:white;"/>
+                            <tr style="width:100% !important;border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>INASISTENCIAS:</span>
@@ -190,7 +190,7 @@
                                     <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'TDI_001'))"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>DÍAS DE LICENCIA:</span>
@@ -199,7 +199,7 @@
                                     <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'TDL_001'))"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>DESCANSO MÉDICO:</span>
@@ -209,8 +209,8 @@
                                 </td>
                             </tr>
 
-                            <tr style="height: 10px !important;"/>
-                            <tr>
+                            <tr style="height: 10px !important;border-color:white;"/>
+                            <tr style="border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>MESES:</span>
@@ -219,7 +219,7 @@
                                     <span t-esc="sum(line.number_of_days for line in o.worked_days_line_ids.filtered(lambda x: x.code == 'MES_001')) / 30"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>DÍAS:</span>
@@ -229,8 +229,8 @@
                                 </td>
                             </tr>
 
-                            <tr style="height: 10px !important;"/>
-                            <tr>
+                            <tr style="height: 10px !important;border-color:white;"/>
+                            <tr style="border-color:white;">
                                 <td style="width:15% !important;"/>
                                 <td style="width:65% !important;">
                                     <span>NETO A DEPOSITAR:</span>

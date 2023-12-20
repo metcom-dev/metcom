@@ -53,6 +53,7 @@ class HrOtherDiscounts(models.Model):
         ('waiting_approval_1', 'Submitted'),
         ('waiting_approval_2', 'Waiting Approval'),
         ('approve', 'Approved'),
+        ('paid', 'Paid'),
         ('refuse', 'Refused'),
         ('cancel', 'Canceled'),
     ], string="State", default='draft', copy=False)
@@ -63,6 +64,9 @@ class HrOtherDiscounts(models.Model):
         ('quarterly', 'Quarterly'),
         ('yearly', 'Yearly'),
     ], string="Discount type", default='daily', required=True)
+    amount_paid = fields.Float(string="Amount Paid")
+    amount_owed = fields.Float(string="Amount Owed")
+    
 
     @api.model
     def get_contract(self, employee, date_from, date_to):
@@ -124,40 +128,7 @@ class HrOtherDiscounts(models.Model):
                 raise UserError(
                     'You cannot delete other discount record which is not in draft or cancelled state')
         return super(HrOtherDiscounts, self).unlink()
-
-    def compute_installment(self):
-        for dsc in self:
-            dsc.discount_lines.unlink()
-            date_start = datetime.strptime(str(dsc.payment_date), '%Y-%m-%d')
-
-            contracts = dsc.employee_id._get_contracts(dsc.payment_date, dsc.payment_date)
-            if not contracts or not contracts[0].structure_type_id.default_struct_id:
-                struct_id = False
-            else:
-                struct_id = contracts[0].structure_type_id.default_struct_id.id
-
-            if dsc.discount_type == 'daily':
-                relative_values = relativedelta(days=1)
-            elif dsc.discount_type == 'weekly':
-                relative_values = relativedelta(days=7)
-            elif dsc.discount_type == 'monthly':
-                relative_values = relativedelta(months=1)
-            elif dsc.discount_type == 'quarterly':
-                relative_values = relativedelta(months=3)
-            else:
-                relative_values = relativedelta(years=1)
-            amount = dsc.discount_amount / dsc.installment
-            for i in range(1, dsc.installment + 1):
-                self.env['hr.other.discounts.line'].create({
-                    'date': date_start,
-                    'amount': amount,
-                    'struct_id': struct_id,
-                    'employee_id': dsc.employee_id.id,
-                    'discount_id': dsc.id
-                })
-                date_start = date_start + relative_values
-        return True
-
+    
     def action_payment_anticipated(self):
         for data in self:
             if not data.discount_lines:
@@ -191,6 +162,38 @@ class HrOtherDiscounts(models.Model):
             'target': 'new'
         }
 
+    def compute_installment(self):
+        for dsc in self:
+            dsc.discount_lines.unlink()
+            date_start = datetime.strptime(str(dsc.payment_date), '%Y-%m-%d')
+
+            contracts = dsc.employee_id._get_contracts(dsc.payment_date, dsc.payment_date)
+            if not contracts or not contracts[0].structure_type_id.default_struct_id:
+                struct_id = False
+            else:
+                struct_id = contracts[0].structure_type_id.default_struct_id.id
+
+            if dsc.discount_type == 'daily':
+                relative_values = relativedelta(days=1)
+            elif dsc.discount_type == 'weekly':
+                relative_values = relativedelta(days=7)
+            elif dsc.discount_type == 'monthly':
+                relative_values = relativedelta(months=1)
+            elif dsc.discount_type == 'quarterly':
+                relative_values = relativedelta(months=3)
+            else:
+                relative_values = relativedelta(years=1)
+            amount = dsc.discount_amount / dsc.installment
+            for i in range(1, dsc.installment + 1):
+                self.env['hr.other.discounts.line'].create({
+                    'date': date_start,
+                    'amount': amount,
+                    'struct_id': struct_id,
+                    'employee_id': dsc.employee_id.id,
+                    'discount_id': dsc.id
+                })
+                date_start = date_start + relative_values
+        return True
 
 
 class OtherDiscountsLine(models.Model):

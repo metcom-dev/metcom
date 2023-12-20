@@ -81,8 +81,6 @@ class PleInvBal03(models.Model):
                             'desc_account': k[space_a:],
                             'period': self.date_end.strftime('%Y%m%d') or '',
                             'code_uo': x['move'],
-                            'correlative': x['ple_correlative'],
-                            'doc_type': x['l10n_latam_identification_type_id'],
                             'doc_num': x['vat'],
                             'name_client': x['partner'],
                             'date_ref': x['date'],
@@ -91,7 +89,12 @@ class PleInvBal03(models.Model):
                             'ple_report_inv_val_03_id': self.id,
                             'valor': 1,
                         }
-
+                        if 'ple_correlative' in x.keys():
+                            values['correlative'] = x['ple_correlative']                        
+                        if 'l10n_latam_identification_type_id' in x.keys():
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] == 0:
@@ -104,8 +107,6 @@ class PleInvBal03(models.Model):
                             'desc_account': k[space_a:],
                             'period': self.date_end.strftime('%Y%m%d') or '',
                             'code_uo': x['move'],
-                            'correlative': x['ple_correlative'],
-                            'doc_type': x['l10n_latam_identification_type_id'],
                             'doc_num': x['vat'],
                             'name_client': x['partner'],
                             'date_ref': x['date'],
@@ -114,6 +115,12 @@ class PleInvBal03(models.Model):
                             'ple_report_inv_val_03_id': self.id,
                             'valor': 1,
                         }
+                        if 'ple_correlative' in x.keys():
+                            values['correlative'] = x['ple_correlative']                        
+                        if 'l10n_latam_identification_type_id' in x.keys():
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] != 0:
@@ -130,8 +137,6 @@ class PleInvBal03(models.Model):
                             'desc_account': z[space_a:],
                             'period': self.date_end.strftime('%Y%m%d') or '',
                             'code_uo': x['move'],
-                            'correlative': x['ple_correlative'],
-                            'doc_type': x['l10n_latam_identification_type_id'],
                             'doc_num': x['vat'],
                             'name_client': x['partner'],
                             'date_ref': x['date'],
@@ -140,7 +145,12 @@ class PleInvBal03(models.Model):
                             'ple_report_inv_val_03_id': self.id,
                             'valor': 2,
                         }
-
+                        if 'ple_correlative' in x.keys():
+                            values['correlative'] = x['ple_correlative']                        
+                        if 'l10n_latam_identification_type_id' in x.keys():
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] == 0:
@@ -152,8 +162,6 @@ class PleInvBal03(models.Model):
                             'desc_account': z[space_a:],
                             'period': self.date_end.strftime('%Y%m%d') or '',
                             'code_uo': x['move'],
-                            'correlative': x['ple_correlative'],
-                            'doc_type': x['l10n_latam_identification_type_id'],
                             'doc_num': x['vat'],
                             'name_client': x['partner'],
                             'date_ref': x['date'],
@@ -162,6 +170,12 @@ class PleInvBal03(models.Model):
                             'ple_report_inv_val_03_id': self.id,
                             'valor': 2,
                         }
+                        if 'ple_correlative' in x.keys():
+                            values['correlative'] = x['ple_correlative']                        
+                        if 'l10n_latam_identification_type_id' in x.keys():
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] != 0:

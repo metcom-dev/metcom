@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-
+import base64
 import datetime
 
 import logging
@@ -26,7 +26,7 @@ class ManagementNotifications(models.Model):
         emails_to_notify = [pref.user_id.email for pref in notification_preferences if pref.user_id.email]
         return emails_to_notify
     
-    def send_notifications(self, notification, subject, body_html):
+    def send_notifications(self, notification, subject, body_html, attachment_report_name=False, res=False, model=False):
         emails_to_notify = self.get_mails(notification)
         log.info('emails_to_notify: %s', emails_to_notify)
 
@@ -50,6 +50,21 @@ class ManagementNotifications(models.Model):
         </body>
         """.format(content_body=body_html, year=datetime.datetime.now().year, company_name=self.env.company.name)
 
+        if attachment_report_name:
+            pdf_content, content_type = self.env['ir.actions.report']._render_qweb_pdf(attachment_report_name, res.ids)
+
+            name_pdf = 'Orden de Compra' if model == 'purchase.order' else 'Preorden'
+
+            attachment_data = {
+                'name': f'{name_pdf}_{res.name}.pdf',
+                'type': 'binary',
+                'datas': base64.b64encode(pdf_content),
+                'res_model': model,
+                'res_id': res.id
+            }
+            attachment = self.env['ir.attachment'].create(attachment_data)
+            
+
         if emails_to_notify:
             email_to = ','.join(emails_to_notify)
             log.info('email_to: %s', email_to)
@@ -59,6 +74,7 @@ class ManagementNotifications(models.Model):
                 'email_to': email_to,
                 'auto_delete': True,
                 'message_type': 'email',
+                'attachment_ids': [(6, 0, [attachment.id])] if attachment_report_name else []
             })
             mail_id.send()
     
@@ -108,7 +124,10 @@ class PurchasePreOrder(models.Model):
         self.env['management.notifications'].send_notifications(
             notification='new_requirement', 
             subject='Nuevo requerimiento creado', 
-            body_html='<p>Se ha creado un nuevo requerimiento: {name} </p>'.format(name=res.name) + '<p>Proyecto: {project_id} </p>'.format(project_id=res.project_id.name)
+            body_html='<p>Se ha creado un nuevo requerimiento: {name} </p>'.format(name=res.name) + '<p>Proyecto: {project_id} </p>'.format(project_id=res.project_id.name),
+            attachment_report_name="purchase_preorder.preorder_template",
+            res=res,
+            model='purchase.preorder'
         )
 
         return res
@@ -119,11 +138,13 @@ class PurchaseOrder(models.Model):
     @api.model
     def create(self, vals):
         res = super(PurchaseOrder, self).create(vals)
-
         self.env['management.notifications'].send_notifications(
             notification='purchase_order_created', 
             subject='Nueva Orden de Compra Creada', 
-            body_html='<p>Se ha creado una nueva Orden de Compra: {name} </p>'.format(name=res.name) + '<p>De Preorden: {preorder_id} </p>'.format(preorder_id=res.from_preorders)
+            body_html='<p>Se ha creado una nueva Orden de Compra: {name} </p>'.format(name=res.name) + '<p>De Preorden: {preorder_id} </p>'.format(preorder_id=res.from_preorders),
+            attachment_report_name="purchase.report_purchaseorder",
+            res=res,
+            model='purchase.order'
         )
 
         return res
@@ -171,7 +192,3 @@ class AccountMove(models.Model):
         )
 
         return res
-
-
-
-    

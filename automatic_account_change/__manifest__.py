@@ -1,6 +1,6 @@
 {
     'name': 'Cambiar cuenta corriente facturas',
-    'version': '16.0.0.0.2',
+    'version': '16.0.0.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'The account receivable and payable of the invoices, changes according to the currency and the type of proof of payment.',

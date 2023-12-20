@@ -1,7 +1,7 @@
 ---Models in module 'account.account'---
 version 15.0: model 'account.account.type'
 version 16.0: model 'account.account' (account_type field type selection)
-[DEL] function action_payment_anticipated
+[ADD] function action_payment_anticipated
 ---Fields in module 'hr_localization_menu'---
 ---XML records in module 'hr_localization_menu'---
-[DEL] button name "action_payment_anticipated" 
+[ADD] button name "action_payment_anticipated" 

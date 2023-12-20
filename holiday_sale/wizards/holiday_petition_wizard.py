@@ -139,6 +139,23 @@ class HolidayPetitionWizard(models.TransientModel):
             if 0 > self.hr_leave_id.pending_holiday:
                 raise ValidationError('No se puede usar un registro sin dias pendientes')
 
+        hr_leave_type = self.env['hr.leave.type'].search([('name', '=', 'Vacaciones a Liquidar')])
+        if not hr_leave_type:
+            hr_leave_type = self.env['hr.leave.type'].create({
+                'name': 'Vacaciones a Liquidar',
+            })
+            vac_lbs_code = self.env['hr.work.entry.type'].search([('code', '=', 'VAC_LBS')])
+            hr_leave_type.write({'work_entry_type_id': vac_lbs_code.id})
+
+        for record in self:
+            
+            if record.is_settlement:
+                record.holiday_status_id = hr_leave_type.id
+            else:
+                hr_id_leave_type = self.env['hr.leave.type'].search([('id','=',self.holiday_status_id.id)])
+                hr_id_leave_type.write({"work_entry_type_id":hr_id_leave_type.work_entry_type_id.id})
+                
+                                         
         hr_allocation_ids = self.allocation_ids
         nro = self.nro_holidays
         total_pending_holiday = sum(line.pending_holiday for line in hr_allocation_ids)
@@ -187,7 +204,7 @@ class HolidayPetitionWizard(models.TransientModel):
         return self.action_reopen_wizard(context=context)
 
     def create_holiday_absences(self, from_date, total_days, allocation_id):
-        to_date = from_date + relativedelta(days=total_days) - relativedelta(days=1)
+        to_date = from_date + relativedelta(days=total_days)
         absence_id = self.env['hr.leave'].create({
             'holiday_status_id': self.holiday_status_id.id,
             'employee_id': self.employee_id.id,
@@ -197,12 +214,11 @@ class HolidayPetitionWizard(models.TransientModel):
             # minutes are not zero because when it's the same date compute do not calc one day
             'date_from_wizard': self.date_from,
             'date_to_wizard': self.date_to,
-            'date_from': _convert_date_timezone_to_utc(self.env.user, '{} 08:00:00'.format(from_date)),
-            'date_to': _convert_date_timezone_to_utc(self.env.user, '{} 17:00:00'.format(to_date))
+            'date_from': datetime.combine(from_date, datetime.min.time()),
+            'date_to': datetime.combine(to_date, datetime.min.time())
         })
         if self._context.get('settlement'):
-            absence_id.name = """Esta ausencia no ha sido gozada, sino que se ha creado para dejar constancia 
-            que ya se han pagado por medio de una compra o liquidación."""
+            absence_id.name = """Esta ausencia no ha sido gozada, sino que se ha creado para dejar constancia que ya se han pagado por medio de una compra o liquidación."""
             self.env['hr.leave'].search([('id', '=', absence_id.id)]).write({
                 'number_of_days': total_days
             })

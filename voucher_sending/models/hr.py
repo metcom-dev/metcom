@@ -74,8 +74,7 @@ class HrPayslip(models.Model):
             }
 
     def action_send_mail_employees(self):
-        payslip_ids = self.filtered(lambda x: x.state == 'done')
-
+        payslip_ids = self.filtered(lambda x: x.state == 'done' or x.state == 'paid')
         counter_mail = 1
         data_employee = dict()
 
@@ -119,7 +118,7 @@ class HrPayslip(models.Model):
             report = self.env.ref('hr_payroll.action_report_payslip', False)
         else:
             report = self.struct_id.report_id
-        pdf_content, content_type = report._render_qweb_pdf(self.id)
+        pdf_content, content_type = report._render_qweb_pdf(report.id, self.id)
         if self.struct_id.report_id.print_report_name:
             pdf_name = safe_eval(self.struct_id.report_id.print_report_name, {'object': self})
         else:

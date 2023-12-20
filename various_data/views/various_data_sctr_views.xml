@@ -24,6 +24,7 @@
                     <group>
                         <group>
                             <field name="name_id" required="1"/>
+                            <field name="sctr_name"/>
                             <field name="register_date"/>
                         </group>
                         <group>

@@ -1,6 +1,6 @@
 {
     'name': 'Purchase document type validation',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': "This module allows you to configure the Validation of identification documents parameters.",

@@ -21,6 +21,10 @@ class HrPayslip(models.Model):
             if move.state == 'draft':
                 move.action_post()
 
+    def action_move_id_draft(self):
+        for move in self.move_id:
+            move.button_draft()
+
 
 class AccountJournal(models.Model):
     _inherit = 'account.journal'

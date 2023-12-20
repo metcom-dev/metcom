@@ -1,6 +1,6 @@
 {
     'name': 'Formato 3.5 Libro de Inventarios y Balances - Cuentas por Cobrar Diversas - Terc y Relac.',
-    'version': '16.0.0.0.3',
+    'version': '16.0.0.0.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': 'This module creates the format 3.5 "various accounts receivable" of the electronic inventory and balance book',

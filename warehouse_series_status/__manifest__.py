@@ -1,6 +1,6 @@
 {
     'name': 'Control stock status of serial products',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'live_test_url': 'https://www.ganemo.co/demo',
     'website': 'https://www.ganemo.co',

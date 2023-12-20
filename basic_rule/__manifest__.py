@@ -1,6 +1,6 @@
 {
     'name': 'Basic rules',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': "Este modulo crea una serie de reglas salariales basicas para el calculo de diversos tipos de nómnas.",

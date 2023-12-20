@@ -1,6 +1,6 @@
 {
     'name': 'Sunat T-Registro',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': "This module outputs the files for bulk loading of the t-registro",

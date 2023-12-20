@@ -148,13 +148,19 @@ class DiaryReportTxt(object):
                    '{move_date}|{move_line_name}|{reference}|' \
                    '{debit}|{credit}|{data_structured}|{state}|\r\n'
         for value in self.data:
+            text = value['analytic_distribution'].split()
+            initials=""
+            for word in text:
+                text_clean = ''.join(character for character in word if character.isalpha())        
+                if text_clean:
+                    initials += text_clean[0].upper()
             raw += template.format(
                 period_name=value['period_name'],
                 move_name=value['move_name'],
                 correlative_line=value['correlative_line'],
                 account_code=value['account_code'],
                 unit_code='',
-                cost_center_code= value['analytic_distribution'],
+                cost_center_code= initials,
                 currency_name=value['currency_name'],
 
                 partner_document_type_code=value['partner_document_type_code'],
