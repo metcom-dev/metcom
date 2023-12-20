@@ -4,7 +4,8 @@ import base64
 import requests
 
 from odoo import api, models
-
+import logging
+log = logging.getLogger(__name__)
 
 class AccountInvoiceSend(models.TransientModel):
     _inherit = "account.invoice.send"
@@ -29,6 +30,8 @@ class AccountInvoiceSend(models.TransientModel):
                 )
                 einvoice_attachments = []
                 pdf_format_pse = bool(conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,False))
+                log.info("******************************")
+                log.info(conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,"False"))
                 if invoice_id.l10n_pe_edi_pdf_file and pdf_format_pse:
                     r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
                     data_content = r.content
