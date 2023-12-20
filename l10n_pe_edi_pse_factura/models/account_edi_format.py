@@ -397,11 +397,12 @@ class AccountEdiFormat(models.Model):
             invoice.name.replace(' ', ''),
         )
         latam_invoice_type = self._get_latam_invoice_type(invoice.l10n_latam_document_type_id.code)
+        edi_str = ''
 
         if not latam_invoice_type:
             return {invoice: {'error': _("Missing LATAM document code.")}}
 
-        res = self._l10n_pe_edi_post_invoice_web_service_pse(invoice, edi_filename)
+        res = self._l10n_pe_edi_post_invoice_web_service_pse(invoice, edi_filename, edi_str)
 
         return {invoice: res}
 
