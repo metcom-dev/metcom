@@ -59,6 +59,19 @@ def request_json(token="", method="post", url=None, data_dict=None):
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
+    @api.model
+    def _l10n_pe_edi_pse_create_attachment(self, documents):
+        attachment = self.env['ir.attachment']
+        attachment_ids = []
+        for filename, url in documents:
+            created = attachment.create({
+                "name":filename,
+                "type":'url',
+                "url":url
+            })
+            attachment_ids.append(created.id)
+        return attachment_ids
+
     def _l10n_pe_edi_get_edi_values_conflux(self, invoice):
         base_dte = self._l10n_pe_edi_get_edi_values(invoice)
 
@@ -138,8 +151,6 @@ class AccountEdiFormat(models.Model):
         if base_dte.get('invoice_line_vals_list'):
             for invoice_line in base_dte.get('invoice_line_vals_list', []):
                 line = invoice_line.get('line')
-                if line.is_rounding_line:
-                    continue
                 invoice_line['tax_details'] = base_dte['tax_details']['tax_details_per_record'][line]['tax_details'].values()
                 log.info(invoice_line)
                 if line.price_subtotal<0 and line.l10n_pe_edi_allowance_charge_reason_code in ('02','00'):
@@ -311,9 +322,9 @@ class AccountEdiFormat(models.Model):
             invoice.write(update_invoice)
         return service_iap
     
-    def _l10n_pe_edi_post_invoice_web_service_pse(self, invoice, edi_filename):
+    def _l10n_pe_edi_post_invoice_web_service_pse(self, invoice, edi_filename, edi_str):
         provider = invoice.company_id.l10n_pe_edi_provider
-        res = getattr(self, '_l10n_pe_edi_sign_invoices_%s' % provider)(invoice, edi_filename)
+        res = getattr(self, '_l10n_pe_edi_sign_invoices_%s' % provider)(invoice, edi_filename, edi_str)
 
         if res.get('error'):
             return res
@@ -388,6 +399,45 @@ class AccountEdiFormat(models.Model):
             'pse_status': edi_status,
             'extra_msg': extra_msg
         }
+
+    def _l10n_pe_edi_sign_invoice_pse(self, invoice):
+        edi_filename = '%s-%s-%s' % (
+            invoice.company_id.vat,
+            invoice.l10n_latam_document_type_id.code,
+            invoice.name.replace(' ', ''),
+        )
+        latam_invoice_type = self._get_latam_invoice_type(invoice.l10n_latam_document_type_id.code)
+        edi_str = ''
+
+        if not latam_invoice_type:
+            return {invoice: {'error': _("Missing LATAM document code.")}}
+
+        res = self._l10n_pe_edi_post_invoice_web_service_pse(invoice, edi_filename, edi_str)
+
+        return {invoice: res}
+
+    def _l10n_pe_edi_cancel_invoices_pse(self, invoices):
+        # OVERRIDE
+        if self.code != 'pe_pse':
+            return super()._cancel_invoice_edi(invoices)
+
+        invoice = invoices # Batching is disabled for this EDI.
+        edi_attachments = self.env['ir.attachment']
+        res = {}
+        if not invoice.l10n_pe_edi_cancel_reason:
+            return {invoice: {'error': _("Please put a cancel reason")}}
+
+        edi_attachments |= invoice._get_edi_attachment(self)
+
+        res = {}
+        if invoice.l10n_pe_edi_pse_cancel_uid:
+            # Cancel part 2: Get Cancel Comunication Status.
+            res.update(self._l10n_pe_edi_pse_cancel_invoice_edi_step_2(invoice))
+        else:
+            # Cancel part 1: Send Cancel Communication.
+            res.update(self._l10n_pe_edi_pse_cancel_invoice_edi_step_1(invoice))
+
+        return res
         
 
     def _l10n_pe_edi_sign_service_step_1_conflux(self, company, data_dict, latam_document_type, serie_folio):
