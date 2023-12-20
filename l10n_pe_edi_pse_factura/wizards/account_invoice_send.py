@@ -29,9 +29,11 @@ class AccountInvoiceSend(models.TransientModel):
                     wizard.composer_id.res_id
                 )
                 einvoice_attachments = []
-                pdf_format_pse = bool(conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,False))
-                log.info("******************************")
-                log.info(conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,"False"))
+                pdf_format_pse = conf.sudo().get_param('account.l10n_pe_edi_pdf_use_pse_%s' % invoice_id.company_id.id,"False")
+                if pdf_format_pse.lower() == "true":
+                    pdf_format_pse = True
+                else:
+                    pdf_format_pse = False
                 if invoice_id.l10n_pe_edi_pdf_file and pdf_format_pse:
                     r = requests.get(invoice_id.l10n_pe_edi_pdf_file.url)
                     data_content = r.content
