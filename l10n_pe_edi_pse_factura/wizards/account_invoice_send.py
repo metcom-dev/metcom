@@ -52,14 +52,6 @@ class AccountInvoiceSend(models.TransientModel):
                     attachment_ids.append(Attachment.create(data_attach).id)'''
                     wizard.write(
                         {
-                            '''"attachment_ids": [
-                                (
-                                    6,
-                                    0,
-                                    wizard.composer_id.attachment_ids.ids
-                                    + attachment_ids,
-                                )
-                            ]'''
                             "attachment_ids": [
                                 (
                                     6,
