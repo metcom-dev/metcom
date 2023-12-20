@@ -139,8 +139,6 @@ class AccountEdiFormat(models.Model):
         if base_dte.get('invoice_line_vals_list'):
             for invoice_line in base_dte.get('invoice_line_vals_list', []):
                 line = invoice_line.get('line')
-                if line.is_rounding_line:
-                    continue
                 invoice_line['tax_details'] = base_dte['tax_details']['tax_details_per_record'][line]['tax_details'].values()
                 log.info(invoice_line)
                 if line.price_subtotal<0 and line.l10n_pe_edi_allowance_charge_reason_code in ('02','00'):
