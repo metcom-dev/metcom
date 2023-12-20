@@ -60,6 +60,19 @@ def request_json(token="", method="post", url=None, data_dict=None):
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
+    @api.model
+    def _l10n_pe_edi_pse_create_attachment(self, documents):
+        attachment = self.env['ir.attachment']
+        attachment_ids = []
+        for filename, url in documents:
+            created = attachment.create({
+                "name":filename,
+                "type":'url',
+                "url":url
+            })
+            attachment_ids.append(created.id)
+        return attachment_ids
+
     def _l10n_pe_edi_get_edi_values_conflux(self, invoice):
         base_dte = self._l10n_pe_edi_get_edi_values(invoice)
 
