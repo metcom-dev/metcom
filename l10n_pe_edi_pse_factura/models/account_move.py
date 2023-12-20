@@ -108,6 +108,50 @@ class AccountMove(models.Model):
             self.write({
                 'l10n_pe_edi_payment_fee_ids': invoice_date_due_vals_list
             })
+    
+    def _l10n_pe_edi_get_extra_report_values(self):
+        self.ensure_one()
+        if not self.l10n_pe_edi_pse_uid:
+            res = super()._l10n_pe_edi_get_extra_report_values()
+            return res
+
+        serie_folio = self._l10n_pe_edi_get_serie_folio()
+        qr_code_values = [
+            self.company_id.vat,
+            self.company_id.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,
+            serie_folio['serie'],
+            serie_folio['folio'],
+            str(self.amount_tax),
+            str(self.amount_total),
+            fields.Date.to_string(self.date),
+            self.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,
+            self.commercial_partner_id.vat or '00000000',
+            ''
+        ]
+
+        return {
+            'qr_str': '|'.join(qr_code_values) + '|\r\n',
+            'amount_to_text': self._l10n_pe_edi_amount_to_text(),
+        }
+
+    def button_cancel(self):
+        pe_edi_format = self.env.ref('l10n_pe_edi_pse_factura.edi_pe_pse')
+        if self.is_sale_document() and self.l10n_pe_edi_pse_uid and not self.l10n_pe_edi_pse_cancel_uid:
+            cancel_reason = self.l10n_pe_edi_cancel_reason or 'Anulacion'
+            self.write({'l10n_pe_edi_cancel_reason':cancel_reason})
+            self.edi_document_ids.filtered(lambda doc: doc.state == 'to_send').write({'state': 'sent', 'error': False, 'blocking_level': False})
+        res = super().button_cancel()
+        return res
+
+    def button_cancel_posted_moves(self):
+        # OVERRIDE
+        pe_edi_format = self.env.ref('l10n_pe_edi_pse_factura.edi_pe_pse')
+        pe_invoices = self.filtered(pe_edi_format._get_move_applicability)
+        if pe_invoices:
+            cancel_reason_needed = pe_invoices.filtered(lambda move: not move.l10n_pe_edi_cancel_reason)
+            if cancel_reason_needed:
+                return self.env.ref('l10n_pe_edi.action_l10n_pe_edi_cancel').sudo().read()[0]
+        return super().button_cancel_posted_moves()
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
