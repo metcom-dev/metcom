@@ -335,15 +335,32 @@ class Employee(models.Model):
         groups='hr.group_hr_user'
     )
 
+    code_pas_country_id = fields.Char(
+        string='País emisor',
+        compute='_compute_code_pas_country_id',
+        store=True
+    )
+
+    @api.depends('type_identification_id', 'type_identification_id.country_id')
+    def _compute_code_pas_country_id(self):
+        for record in self:
+            if (
+                record.type_identification_id and
+                record.type_identification_id.country_id and
+                record.type_identification_id.l10n_pe_vat_code == '7'
+            ):
+                record.code_pas_country_id = record.type_identification_id.country_id.cod_pas_only
+            else:
+                record.code_pas_country_id = "No se encontro el codigo de pais"
+    
     @api.depends('address_id')
     def _compute_filter_other_annexed(self):
-        annexes = []
-        if self.address_id.other_annexed_estab:
-            for record in self.address_id.other_annexed_estab:
-                annexes.append(record.id)
-            self.other_annexed_filter = annexes
-        else:
-            self.other_annexed_filter = False
+        for record in self:
+            annexes = []
+            if record.address_id and record.address_id.other_annexed_estab:
+                for annex_record in record.address_id.other_annexed_estab:
+                    annexes.append(annex_record.id)
+            record.other_annexed_filter = annexes if annexes else False
 
 
 class EduNameObject(models.Model):

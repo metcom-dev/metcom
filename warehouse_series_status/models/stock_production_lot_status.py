@@ -3,7 +3,7 @@ from odoo.osv import expression
 
 
 class ProductionLotStatus(models.Model):
-    _name = 'stock.lot.status'
+    _name = 'stock.production.lot.status'
     _description = 'Status Stock Production Lot'
 
     code = fields.Char(string='Code')

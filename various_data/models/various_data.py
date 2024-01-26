@@ -33,6 +33,7 @@ class VariousDataSCTR(models.Model):
         inverse_name='sctr_id',
         string='Empleados'
     )
+    sctr_name = fields.Char(string='Nombre de la póliza')
 
     @api.constrains('register_date', 'due_date')
     def _check_employee_overlap(self):
@@ -85,4 +86,9 @@ class HrEmployee(models.Model):
         comodel_name='various.data.sctr',
         string='Poliza SCTR',
         groups="hr.group_hr_user"
+    )
+    sctr_name = fields.Char(
+        string='Nombre de la Póliza',
+        related='sctr_id.sctr_name',
+        readonly=True
     )

@@ -33,7 +33,8 @@
                     <group string="GESTIÓN DE LA EPS">
                         <group>
                             <field name="star_date"/>
-                            <field name="entity"/>
+                            <field name="entity" invisible="1"/>
+                            <field name="partner_id"/>
                         </group>
                         <group>
                             <field name="finish_date"/>

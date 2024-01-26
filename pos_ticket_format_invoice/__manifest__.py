@@ -1,6 +1,6 @@
 {
     "name": "Use POS ticket format to print invoices",
-    "version": "16.0.0.6.2",
+    "version": "16.0.0.6.3",
     "author": "Ganemo",
     "website": "https://www.ganemo.co/",
     "summary": "Add an additional format to invoices, POS ticket type, which allows the use of thermal printers.",

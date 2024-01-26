@@ -888,11 +888,17 @@ if not flag:
     if inputs.dict.get('SHE_001') and inputs.dict.get('SHE_001').amount > 0:
         result = inputs.SHE_001.amount
     else:
-        payslip_id = payslip.env['hr.payslip'].browse(slip_id)
-        if payslip_id.employee_id.children > 0:
-            rmv_id = payslip.env['various.data.rmv'].search([('is_active', '=', True)], limit=1)
-            if rmv_id:
-                result = rmv_id.af_amount / 30
+        if any(employee.relative_ids):
+            flag2=False
+            for member in employee.relative_ids:
+                if member.name == 'Hijo(a)' and max_age>= member.age:
+                    flag2=True
+            if flag2:
+                rmv_id = payslip.env['various.data.rmv'].search([('is_active', '=', True)], limit=1)
+                if rmv_id:
+                    result = rmv_id.af_amount / 30
+            else:
+                result = 0
         global_data = globals()
         sd_001 = global_data['SD_001'] if 'SD_001' in global_data and global_data['SD_001'] > 0 else 0
         result += sd_001

@@ -93,7 +93,9 @@ class PleInvBal105(models.Model):
                         if 'ple_correlative' in x.keys():
                             values['correlative'] = x['ple_correlative']                        
                         if 'l10n_latam_identification_type_id' in x.keys():
-                            values['doc_type'] = x['l10n_latam_identification_type_id']
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat_ple'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] == 0:
@@ -117,7 +119,9 @@ class PleInvBal105(models.Model):
                         if 'ple_correlative' in x.keys():
                             values['correlative'] = x['ple_correlative']                        
                         if 'l10n_latam_identification_type_id' in x.keys():
-                            values['doc_type'] = x['l10n_latam_identification_type_id']
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat_ple'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] != 0:
@@ -144,7 +148,9 @@ class PleInvBal105(models.Model):
                         if 'ple_correlative' in x.keys():
                             values['correlative'] = x['ple_correlative']                        
                         if 'l10n_latam_identification_type_id' in x.keys():
-                            values['doc_type'] = x['l10n_latam_identification_type_id']
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat_ple'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] == 0:
@@ -167,7 +173,9 @@ class PleInvBal105(models.Model):
                         if 'ple_correlative' in x.keys():
                             values['correlative'] = x['ple_correlative']                        
                         if 'l10n_latam_identification_type_id' in x.keys():
-                            values['doc_type'] = x['l10n_latam_identification_type_id']
+                            doc_type = x['l10n_latam_identification_type_id']
+                            doc_type = doc_type.l10n_pe_vat_code if doc_type else ''
+                            values['doc_type'] = doc_type
                         if x['vat_ple'] == '0':
                             values['doc_type'] = 0
                         if values['mont'] != 0:

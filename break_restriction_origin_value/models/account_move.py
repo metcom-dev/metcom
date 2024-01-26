@@ -1,5 +1,6 @@
-from odoo import models, _
+from odoo import models, api, fields, _
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class AccountMove(models.Model):
@@ -95,3 +96,68 @@ class AccountMove(models.Model):
         if self.currency_id == asset.currency_id and self.currency_id.name == 'USD' and asset.currency_id != self.company_currency_id:
             asset_depreciation = round(asset_depreciation / self.exchange_rate, 2)
         return asset_depreciation
+
+    @api.model
+    def _prepare_move_for_asset_depreciation(self, vals):
+        missing_fields = set(['asset_id', 'amount', 'depreciation_beginning_date', 'date', 'asset_number_days']) - set(vals)
+        if missing_fields:
+            raise UserError(_('Some fields are missing {}').format(', '.join(missing_fields)))
+        asset = vals['asset_id']
+        analytic_distribution = asset.analytic_distribution
+        depreciation_date = vals.get('date', fields.Date.context_today(self))
+        company_currency = asset.company_id.currency_id
+        current_currency = asset.currency_id
+        prec = company_currency.decimal_places
+        amount_currency = vals['amount']
+        # amount = current_currency._convert(amount_currency, company_currency, asset.company_id, depreciation_date)
+        amount = amount_currency
+        # Keep the partner on the original invoice if there is only one
+        partner = asset.original_move_line_ids.mapped('partner_id')
+        partner = partner[:1] if len(partner) <= 1 else self.env['res.partner']
+        move_line_1 = {
+            'name': asset.name,
+            'partner_id': partner.id,
+            'account_id': asset.account_depreciation_id.id,
+            'debit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
+            'credit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
+            'analytic_distribution': analytic_distribution,
+            'currency_id': current_currency.id,
+            'amount_currency': -amount_currency,
+        }
+        move_line_2 = {
+            'name': asset.name,
+            'partner_id': partner.id,
+            'account_id': asset.account_depreciation_expense_id.id,
+            'credit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
+            'debit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
+            'analytic_distribution': analytic_distribution,
+            'currency_id': current_currency.id,
+            'amount_currency': amount_currency,
+        }
+        move_vals = {
+            'partner_id': partner.id,
+            'date': depreciation_date,
+            'journal_id': asset.journal_id.id,
+            'line_ids': [(0, 0, move_line_1), (0, 0, move_line_2)],
+            'asset_id': asset.id,
+            'ref': _("%s: Depreciation", asset.name),
+            'asset_depreciation_beginning_date': vals['depreciation_beginning_date'],
+            'asset_number_days': vals['asset_number_days'],
+            'name': '/',
+            'asset_value_change': vals.get('asset_value_change', False),
+            'move_type': 'entry',
+            'currency_id': current_currency.id,
+        }
+        return move_vals
+
+    @api.depends('line_ids.balance')
+    def _compute_depreciation_value(self):
+        super()._compute_depreciation_value()
+        for move in self:
+            asset = move.asset_id or move.reversed_entry_id.asset_id  # reversed moves are created before being assigned to the asset
+            if asset and asset.currency_id != asset.company_id.currency_id:
+                account_internal_group = 'income' if asset.asset_type == 'sale' else 'expense'
+                asset_depreciation = sum(
+                    move.line_ids.filtered(lambda l: l.account_id.internal_group == account_internal_group or l.account_id == asset.account_depreciation_expense_id).mapped('amount_currency')
+                ) * (-1 if asset.asset_type == 'sale' else 1)
+                move.depreciation_value = asset_depreciation

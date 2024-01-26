@@ -175,7 +175,7 @@ class SirePurchaseReplaceProposedTxt:
         return '{company_vat}|{company_name}|' \
             '{period}||{invoice_date}|' \
             '{invoice_date_due}|{document_type_code}|{ref_serie}|' \
-            '{year_aduana}||{ref_correlative}||' \
+            '{year_aduana}|{ref_correlative}||' \
             '{partner_identification_code}|{partner_vat}|{partner_name}|' \
             '{p_base_gdg}|{p_tax_gdg}|{p_base_gdm}|' \
             '{p_tax_gdm}|{p_base_gdng}|{p_tax_gdng}|{p_base_ng}|' \
@@ -214,7 +214,7 @@ class SirePurchaseReplaceProposedTxt:
                 p_tax_other="{0:.2f}".format(dict_result['p_tax_other']),
                 amount_total="{0:.2f}".format(dict_result['amount_total']),
                 currency_name=dict_result['currency_name'],
-                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']),
+                exchange_rate="{0:.3f}".format(dict_result['exchange_rate']) if dict_result['exchange_rate'] else '',
                 origin_invoice_date=dict_result['origin_invoice_date'],
                 origin_document_type_code=dict_result['origin_document_type_code'],
                 origin_number_serie=dict_result['origin_number_serie'],

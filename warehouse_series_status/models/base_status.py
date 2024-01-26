@@ -5,7 +5,7 @@ class ProductionLot(models.Model):
     _inherit = 'stock.lot'
 
     status = fields.Many2one(
-        'stock.lot.status',
+        'stock.production.lot.status',
         string='Status',
         help='Este campo se aprovecha mejor, cuando se trata de productos que utilizan el método de seguimiento de serie, porque nos ayuda a identificar el '
              'estatus del producto relacionado a la serie. Cuando se establece un status en una transferencia o ajuste de inventario, se almacena el valor en este campo.'
@@ -18,16 +18,18 @@ class MoveLine(models.Model):
     status = fields.Many2one(
         'stock.production.lot.status',
         string='Status',
-        readonly=False
+        readonly=True,
+        compute='set_status',
+        store=True
     )
 
-    @api.onchange('lot_id')
+    @api.depends('lot_id')
     def set_status(self):
         for record in self:
-            if record.lot_id.status:
+            if record.lot_id and record.lot_id.status:
                 record.status = record.lot_id.status
             else:
-                record.status
+                record.status = False
 
 
 class InventoryLine(models.Model):

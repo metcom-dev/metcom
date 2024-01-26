@@ -25,9 +25,10 @@ class PensionSystem(models.Model):
             _logger.warning('Error: {}'.format(exception_error))
 
     def button_afp_method(self):
+        
         url = 'https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/paginas/comision_prima.aspx'
         afp_data = []
-
+        percentage = 100
         open_html = urllib.request.urlopen(url)
         html = BeautifulSoup(open_html, "lxml")
         tr_array = html.findAll("tr", {"class": "JER_filaContenido"})
@@ -37,7 +38,7 @@ class PensionSystem(models.Model):
                 str_temp = str(row.text.strip())
                 str_temp = str_temp.replace('%', '').replace(',', '')
                 afp_data.append(str_temp)
-                
+        
         habitat = self.env.ref('types_system_pension.pension_system_25')
         integra = self.env.ref('types_system_pension.pension_system_21')
         profuturo = self.env.ref('types_system_pension.pension_system_23')
@@ -49,45 +50,49 @@ class PensionSystem(models.Model):
         pension_line_habitat = {
             'date_from': init_date,
             'date_to': last_day,
-            'fund': float(afp_data[4]),  # fondo
-            'bonus': float(afp_data[3]),  # prima
-            'mixed_flow': 0.0,  # flujo/mixta
-            'flow': float(afp_data[1]),  # flujo
-            'balance': float(afp_data[2]),  # saldo
+            'fund': float(afp_data[4]) / percentage,  
+            'bonus': float(afp_data[3]) / percentage,  
+            'mixed_flow': 0.0, 
+            'flow': float(afp_data[1]) / percentage, 
+            'balance': float(afp_data[2]) / percentage,  
         }
+
         pension_line_integra = {
             'date_from': init_date,
             'date_to': last_day,
-            'fund': float(afp_data[10]),  # fondo
-            'bonus': float(afp_data[9]),  # prima
-            'mixed_flow': 0.0,  # flujo/mixta
-            'flow': float(afp_data[7]),  # flujo
-            'balance': float(afp_data[8]),  # saldo
+            'fund': float(afp_data[10]) / percentage,  
+            'bonus': float(afp_data[9]) / percentage, 
+            'mixed_flow': 0.0, 
+            'flow': float(afp_data[7]) / percentage, 
+            'balance': float(afp_data[8]) / percentage, 
         }
+
         pension_line_prima = {
             'date_from': init_date,
             'date_to': last_day,
-            'fund': float(afp_data[16]),  # fondo
-            'bonus': float(afp_data[15]),  # prima
-            'mixed_flow': 0.0,  # flujo/mixta
-            'flow': float(afp_data[13]),  # flujo
-            'balance': float(afp_data[14]),  # saldo
+            'fund': float(afp_data[16]) / percentage,  
+            'bonus': float(afp_data[15]) / percentage,  
+            'mixed_flow': 0.0, 
+            'flow': float(afp_data[13]) / percentage, 
+            'balance': float(afp_data[14]) / percentage,  
         }
+
         pension_line_profuturo = {
             'date_from': init_date,
             'date_to': last_day,
-            'fund': float(afp_data[22]),  # fondo
-            'bonus': float(afp_data[21]),  # prima
-            'mixed_flow': 0.0,  # flujo/mixta
-            'flow': float(afp_data[19]),  # flujo
-            'balance': float(afp_data[20]),  # saldo
+            'fund': float(afp_data[22]) / percentage,  
+            'bonus': float(afp_data[21]) / percentage,  
+            'mixed_flow': 0.0,  
+            'flow': float(afp_data[19]) / percentage,  
+            'balance': float(afp_data[20]) / percentage,  
         }
+
 
         if not self.env['tope.afp'].search([("date_from", "=", init_date)]):
             self.env['tope.afp'].create({
                 'date_from': init_date,
                 'date_to': last_day,
-                'top': float(afp_data[5]),
+                'top': float(afp_data[5].replace(' ', '')),
             })
 
         flag = False

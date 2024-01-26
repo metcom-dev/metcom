@@ -1,6 +1,6 @@
 {
     'name': 'Libro kardex en unidades físicas PLE - SUNAT (Perú)',
-    'version': '16.0.0.1.4',
+    'version': '16.0.0.1.6',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Permanent inventory book in physical units (kardex)',

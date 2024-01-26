@@ -1,6 +1,6 @@
 {
     'name': 'Automatic leave type',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.0.1',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': 'Este módulo importa los tipos de ausencias que existen en la Planilla Electronica del Perú.',

@@ -1,6 +1,6 @@
 {
     'name': 'Pagos masivos de detracciones',
-    'version': '16.0.0.1.5',
+    'version': '16.0.0.1.6',
     'author': 'Ganemo, Unoobi',
     'website': 'https://www.ganemo.co',
     'live_test_url': 'https://www.ganemo.co/demo',

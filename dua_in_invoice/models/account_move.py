@@ -21,6 +21,7 @@ class AccountMove(models.Model):
 
     @api.onchange('l10n_latam_document_type_id')
     def _onchange_l10n_latam_document_type_id(self):
+        super(AccountMove, self)._onchange_l10n_latam_document_type_id()
         if self.move_type not in ['out_invoice', 'out_refund'] and self.l10n_latam_document_type_id.code not in ['50', '52']:
             self.code_aduana = False
             self.year_aduana = ''

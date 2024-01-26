@@ -6,11 +6,11 @@ class AccountMove(models.Model):
 
     to_force_exchange_rate = fields.Float(
         string='Forzar T.C.',
-        digits=(12, 12),
-        help='This labels is used for force exchange rate.'
+        digits=0,
+        help='Este campo se utiliza para forzar el tipo de cambio.'
     )
 
-    @api.depends('currency_id', 'invoice_date', 'date', 'to_force_exchange_rate')
+    @api.depends('currency_id', 'company_id', 'date', 'invoice_date', 'to_force_exchange_rate')
     def _compute_currency_rate(self):
         super()._compute_currency_rate()
 
@@ -29,3 +29,8 @@ class AccountMove(models.Model):
     def _onchange_to_force_exchange_rate(self):
         if self.currency_id == self.company_currency_id:
             self.to_force_exchange_rate = 0.0
+
+    @api.onchange('currency_id', 'to_force_exchange_rate')
+    def _onchange_currency_move_type_entry(self):
+        if self.currency_id and self.move_type == 'entry':
+            self.line_ids._inverse_amount_currency()

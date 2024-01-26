@@ -7,7 +7,7 @@
         <record id="hr_leave_type_01" model="hr.leave.type">
             <field name="name">S.P. Sanción Disciplinaria</field>
             <field name="code">01</field>
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -22,7 +22,7 @@
             <field name="name">S.P. Ejercicio Derecho Huelga</field>
             <field name="code">02</field>
             <field name="leave_validation_type" eval="False"/>
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -38,7 +38,7 @@
             <field name="code">03</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -54,7 +54,7 @@
             <field name="code">04</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -70,7 +70,7 @@
             <field name="code">05</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -86,7 +86,7 @@
             <field name="code">06</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -102,7 +102,7 @@
             <field name="code">07</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -118,7 +118,7 @@
             <field name="code">08</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -134,7 +134,7 @@
             <field name="code">09</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -150,7 +150,7 @@
             <field name="code">10</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -166,7 +166,7 @@
             <field name="code">11</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -182,7 +182,7 @@
             <field name="code">12</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">1</field>
@@ -198,7 +198,7 @@
             <field name="code">20</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -214,7 +214,7 @@
             <field name="code">21</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -230,7 +230,7 @@
             <field name="code">22</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -246,7 +246,7 @@
             <field name="code">24</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -262,7 +262,7 @@
             <field name="code">25</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -278,7 +278,7 @@
             <field name="code">26</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -294,7 +294,7 @@
             <field name="code">27</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -307,7 +307,7 @@
             <field name="code">28</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -323,7 +323,7 @@
             <field name="code">29</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -339,7 +339,7 @@
             <field name="code">30</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -355,7 +355,7 @@
             <field name="code">31</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -371,7 +371,7 @@
             <field name="code">32</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -387,7 +387,7 @@
             <field name="code">33</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -403,7 +403,7 @@
             <field name="code">34</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>
@@ -419,7 +419,7 @@
             <field name="code">35</field>
             
             
-            <field name="requires_allocation">yes</field>
+            <field name="requires_allocation">no</field>
             <field name="leave_validation_type">manager</field>
             <field name="request_unit">day</field>
             <field name="unpaid">0</field>

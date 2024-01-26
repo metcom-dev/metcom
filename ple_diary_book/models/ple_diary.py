@@ -75,11 +75,39 @@ class PleDiary(models.Model):
                 account_move_line__move_id.payment_reference as payment_reference,
                 account_move_line.debit as debit,
                 account_move_line.credit as credit,
-                (SELECT get_data_structured_diary(account_journal.type, account_journal.ple_no_include, account_move.is_nodomicilied, account_move.name, account_move.date) 
-                    FROM account_move
-                    LEFT JOIN account_journal ON account_move.journal_id = account_journal.id
-                    WHERE account_move.id = account_move_line__move_id.id
-                )as data_structured
+                CASE 
+                    WHEN 
+                        NOT EXISTS (SELECT 1 FROM ir_module_module WHERE name = 'l10n_pe_sire_sunat' AND state = 'installed')
+                    THEN 
+                        (
+                            SELECT get_data_structured_diary(
+                                account_journal.type, 
+                                account_journal.ple_no_include, 
+                                account_move.is_nodomicilied, 
+                                account_move.name, 
+                                account_move.date
+                            ) 
+                            FROM account_move
+                            LEFT JOIN account_journal ON account_move.journal_id = account_journal.id
+                            WHERE account_move.id = account_move_line__move_id.id
+                        )
+                    ELSE
+                        (
+                            SELECT get_data_structured_sire(
+                                account_journal.type, 
+                                account_journal.ple_no_include, 
+                                account_move.is_nodomicilied, 
+                                account_move.name, 
+                                account_move.ref,
+                                '{company_vat}', 
+                                res_partner.vat,
+                                coalesce(l10n_latam_document_type.code, '00')
+                            ) 
+                            FROM account_move
+                            LEFT JOIN account_journal ON account_move.journal_id = account_journal.id
+                            WHERE account_move.id = account_move_line__move_id.id
+                        )                
+                END AS data_structured
                 -- QUERIES TO MATCH MULTI TABLES
                 FROM "account_move" as "account_move_line__move_id","account_move_line"
                 --  TYPE JOIN   |  TABLE                        | MATCH
@@ -103,6 +131,7 @@ class PleDiary(models.Model):
                 ORDER BY "account_move_line"."date" DESC,"account_move_line"."move_name" DESC,"account_move_line"."id"
         """.format(
             company_id=self.company_id.id,
+            company_vat=self.company_id.vat,
             date_start=self.date_start,
             date_end=self.date_end,
             state='posted',

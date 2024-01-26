@@ -1,6 +1,6 @@
 {
     'name': 'Voucher sending',
-    'version': '16.0.2.4.2',
+    'version': '16.0.2.4.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'category': 'Payroll',

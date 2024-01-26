@@ -10,7 +10,8 @@ class HrEmployee(models.Model):
     service_hire_date = fields.Date(
         string='Hire Date',
         groups='hr.group_hr_user',
-        compute='_compute_service_hire_date',  
+        compute='_compute_service_hire_date', 
+        inverse='_inverse_service_hire_date',
         help=(
             'Hire date is normally the date an employee completes new hire'
             ' paperwork'
@@ -86,9 +87,30 @@ class HrEmployee(models.Model):
         if not self.service_start_date:
             self.service_start_date = self.service_hire_date
 
-    @api.depends('service_start_date')
+    @staticmethod
+    def _find_service_hire_date(contracts):
+        service_hire_date = False
+        for contract in range(len(contracts) - 1):
+            current_contract = contracts[contract]
+            next_contract = contracts[contract + 1]
+            if current_contract.date_end and next_contract.date_start:
+                if (next_contract.date_start - current_contract.date_end).days == 1:
+                    service_hire_date = current_contract.date_start
+                else:
+                    service_hire_date = next_contract.date_start
+        if not service_hire_date and contracts:
+            service_hire_date = contracts[-1].date_start
+        return service_hire_date
+
+    @api.depends('contract_ids')
     def _compute_service_hire_date(self):
-        self.service_hire_date = self.service_start_date
-        
+        for record in self:
+            valid_contracts = record.contract_ids.filtered(lambda contract: contract.state in ['open', 'pending', 'close'])
+            contract_ids = valid_contracts.sorted(key=lambda contract: contract.date_start)
+            record.service_hire_date = self._find_service_hire_date(contract_ids)
+    
+    def _inverse_service_hire_date(self):
+        pass
+    
     def _get_date_start_work(self):
         return self.service_start_date or super()._get_date_start_work()

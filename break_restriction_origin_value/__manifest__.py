@@ -1,6 +1,6 @@
 {
     'name': 'To break restriction exchange rates on the same day',
-    'version': '16.0.0.0.1',
+    'version': '16.0.0.1.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'summary': '''
@@ -14,7 +14,10 @@
         field when an asset is registered from suppliers.
     ''',
     'category': 'Accounting',
-    'depends': ['account', 'account_asset'],
+    'depends': ['account', 'account_asset', 'account_field_to_force_exchange_rate'],
+    'data': [
+        'views/account_asset_views.xml',    
+    ],
     'installable': True,
     'auto_install': False,
     'license': 'Other proprietary',

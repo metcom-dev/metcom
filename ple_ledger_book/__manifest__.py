@@ -1,6 +1,6 @@
 {
     'name': 'Accounting ledger PLE - SUNAT (Perú)',
-    'version': '16.0.0.1.0',
+    'version': '16.0.0.3.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Accounting ledger PLE - SUNAT (Perú)',
@@ -20,7 +20,8 @@
         'sql/get_data_structured_ledger.sql',
         'sql/string_ref.sql',
         'sql/UDF_numeric_char_ledger.sql',
-        'sql/get_journal_correlative.sql'
+        'sql/get_journal_correlative.sql',
+        'sql/get_data_structured_sire.sql'
     ],
     'installable': True,
     'auto_install': False,

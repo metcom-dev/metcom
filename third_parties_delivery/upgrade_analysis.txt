@@ -1,4 +1,3 @@
-update price 0.00 -> 10.00
 ---Models in module 'third_parties_delivery'---
 ---Fields in module 'third_parties_delivery'---
 ---XML records in module 'third_parties_delivery'---

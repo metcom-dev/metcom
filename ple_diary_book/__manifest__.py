@@ -1,6 +1,6 @@
 {
     'name': 'Electronic Journal Perú',
-    'version': '16.0.0.1.1',
+    'version': '16.0.0.3.4',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co/ple',
     'summary': 'Generate Electronic Journal for PLE SUNAT',
@@ -21,7 +21,8 @@
         'sql/get_data_structured_diary.sql',
         'sql/get_journal_correlative.sql',
         'sql/string_ref.sql',
-        'sql/UDF_numeric_char_diary.sql'
+        'sql/UDF_numeric_char_diary.sql',
+        'sql/get_data_structured_sire.sql'
     ],
     'installable': True,
     'auto_install': False,

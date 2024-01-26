@@ -48,7 +48,7 @@
             <t t-set="period_id" t-value="periods[o.id]"/>
 
             <div style="width:100%">
-                <table class="new_table" style="width:100%;">
+                <table class="new_table" style="width:100%; border-color:white;">
                     <thead>
                         <tr style="height: 80px !important;"/>
                         <tr>
@@ -101,7 +101,7 @@
                             </td>
                         </tr>
 
-                        <table style="width:100%" name="lines_data">
+                        <table style="width:100%; border-color:white;" name="lines_data">
                             <tr style="height: 10px !important;"/>
                             <tr style="height: 10px !important;"/>
 

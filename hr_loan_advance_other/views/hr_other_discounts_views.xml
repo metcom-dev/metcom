@@ -8,6 +8,8 @@
             <tree>
                 <field name="name"/>
                 <field name="employee_id"/>
+                <field name="amount_paid"/>
+                <field name="amount_owed"/>
                 <field name="discount_amount"/>
                 <field name="date"/>
                 <field name="state"/>
@@ -31,7 +33,7 @@
                             groups="hr.group_hr_manager,hr.group_hr_user"/>
                     <button name="action_payment_anticipated" type="object" string="Pago anticipado" states="approve" class="oe_highlight"
                             groups="hr.group_hr_manager,hr.group_hr_user"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,approve"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,approve,paid"/>
                 </header>
 
                 <sheet>

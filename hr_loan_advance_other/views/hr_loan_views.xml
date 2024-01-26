@@ -31,6 +31,8 @@
                     <button name="action_cancel" type="object" string="Cancel" states="approve,draft,waiting_approval_1"/>
                     <button name="action_refuse" type="object" string="Refuse" states="approve,waiting_approval_1,waiting_approval_2,cancel"
                             groups="hr.group_hr_manager,hr.group_hr_user"/>
+                    <button name="action_payment_anticipated" type="object" string="Pago anticipado" states="approve" class="oe_highlight"
+                            groups="hr.group_hr_manager,hr.group_hr_user"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,approve,paid"/>
                 </header>
 

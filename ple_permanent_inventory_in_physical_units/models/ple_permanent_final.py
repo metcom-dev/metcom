@@ -227,6 +227,8 @@ class PlePermanentFinal(models.Model):
             WHERE ("stock_valuation_layer"."accounting_date" >= '{start_date}') AND 
                 ("stock_valuation_layer"."accounting_date"<='{end_date}') AND ("product_template"."type" = 'product')
                 AND (stock_valuation_layer.company_id = '{company_id}')
+                AND NOT (stock_location.usage = 'internal' AND stock_location.storehouse_id IS NULL)
+                AND NOT (stock_location_dest.usage = 'internal' AND stock_location_dest.storehouse_id IS NULL)
     
                 ORDER BY product_id DESC,"stock_valuation_layer"."create_date" ASC ,stock_valuation DESC;
             """.format(
@@ -305,16 +307,14 @@ class PlePermanentFinal(models.Model):
                 ids = obj_move_line.get('product_id')
 
                 if ids in opening_balances:
-                    datos = self.opening_balances(ids, quantity_hand.get(
-                        ids), year, month, day, correct_name=display_name)
+                    datos = self.opening_balances(ids, quantity_hand.get(ids), year, month, day, correct_name=display_name)
                     hand_accumulated = datos['quantity_hand_accumulated']
                     total_accumulated = datos['cost_total_accumulated']
                     opening_balances.remove(ids)
 
-            total_hand = obj_move_line.get('quantity_product_hand', '') + obj_move_line.get('quantity',
-                                                                                            '0') + hand_accumulated
-            total_total = obj_move_line.get('total_value', '') + obj_move_line.get('value_cost',
-                                                                                   '0') + total_accumulated
+            total_hand = obj_move_line.get('quantity_product_hand', '') + obj_move_line.get('quantity', '0') + hand_accumulated
+            total_total = obj_move_line.get('total_value', '') + obj_move_line.get('value_cost', '0') + total_accumulated
+            
             if round(total_hand, 2) == 0:
                 divisor = 1
             else:
@@ -331,12 +331,12 @@ class PlePermanentFinal(models.Model):
 
             product_valuation_final = display_name
             udm_product_final = obj_move_line.get('uom', '')
-            standar_price_final = round((total_total / divisor), 2)
+            standar_price_final = total_total / divisor
             code_final = code
 
             product_id = obj_move_line.get('product_id')
-            hand_accumulated = round(total_hand, 2)
-            total_accumulated = round(total_total, 2)
+            hand_accumulated = total_hand
+            total_accumulated = total_total
 
         if data_aml:
             if product_id in open_balance:

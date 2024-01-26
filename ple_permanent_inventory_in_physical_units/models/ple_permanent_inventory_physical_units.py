@@ -231,9 +231,10 @@ class PlePermanentInventoryPhysicalUnits(models.Model):
                 --LEFT JOIN purchase_order_line  pol      ON      pol.id = sm.purchase_line_id
 
                 WHERE 
-                (svl.accounting_date BETWEEN '{date_start}' and '{date_end}')   and
+                (svl.accounting_date BETWEEN '{date_start}' and '{date_end}') and
                 (pt.type = 'product') and (svl.quantity !=0) and (svl.company_id='{company}')
-
+                and not (sl.usage = 'internal' and sl.storehouse_id IS NULL)
+                and not (sld.usage = 'internal' and sld.storehouse_id IS NULL)
                 ORDER BY
                 product_id DESC,
                 svl.create_date ASC, 

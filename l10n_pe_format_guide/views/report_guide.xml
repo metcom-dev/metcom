@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_blank_report_guide">
+        <div t-attf-class="article o_report_layout_standard " t-att-data-oe-model="o and o._name"
+            t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+
+    <template id="report_guide">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="l10n_pe_format_guide.external_layout_blank_report_guide">
+                    <div class="page" style="">
+                        <link href="/l10n_pe_format_guide/static/src/css/main.css" rel="stylesheet"/>
+                        <div style="width:100%">
+                            <div class="row_dates ttrans">
+                                <!-- Fecha de Emision -->
+                                <div class="date_donee">
+                                    FECHA DE EMISIÓN
+                                    <span t-if="doc.mod_date_done()" t-esc="doc.mod_date_done()"/>
+                                </div>
+                                <!-- Fecha de Inicio de Traslado -->
+                                <div class="date_start">
+                                    FECHA INICIO DE TRASLADO
+                                    <span t-if="doc.l10n_pe_edi_departure_start_date" t-field="doc.l10n_pe_edi_departure_start_date"/>
+                                </div>
+                                <!-- Orden de Compra Cliente -->
+                                <div class="customer_order">
+                                    ORDEN DE COMPRA CLIENTE
+                                    <span t-if="doc.sale_id.client_order_ref" t-field="doc.sale_id.client_order_ref"/>
+                                </div>
+                            </div>
+                            <div class="row_points">
+                                <!-- Domicilio de partida -->
+                                <div class="start_point">
+                                    <p class="text-center ttrans">DOMICILIO DE PARTIDA</p>
+                                    <p class="ttrans p_inline"><span t-if="doc.company_id.partner_id.street" t-field="doc.company_id.partner_id.street"/></p>
+                                    <p class="ttrans">DIST / PROV / DPTO:<span class="pl-1" t-if="doc.concatenated_fields_starting_point()" t-esc="doc.concatenated_fields_starting_point()"></span></p>
+                                    <p class="ttrans">CÓDIGO POSTAL:<span class="pl-1" t-if="doc.company_id.partner_id.zip" t-field="doc.company_id.partner_id.zip"></span></p>
+                                    <p class="ttrans">PAÍS:<span class="pl-1" t-if="doc.company_id.partner_id.country_id.name" t-field="doc.company_id.partner_id.country_id.name"></span></p>
+                                </div>
+                                <!-- Domicilio de llegada -->
+                                <div class="end_point">
+                                    <p class="text-center ttrans">DOMICILIO DE LLEGADA</p>
+                                    <p class="ttrans p_inline"><span t-if="doc.partner_id.street" t-field="doc.partner_id.street"/></p>
+                                    <p class="ttrans">DIST / PROV / DPTO:<span class="pl-1" t-if="doc.concatenated_fields_arrival()" t-esc="doc.concatenated_fields_arrival()"></span></p>
+                                    <p class="ttrans">CÓDIGO POSTAL:<span class="pl-1" t-if="doc.partner_id.zip" t-field="doc.partner_id.zip"></span></p>
+                                    <p class="ttrans" style="display:inline;">PAÍS:<span class="pl-1" t-if="doc.partner_id.country_id.name" t-field="doc.partner_id.country_id.name"></span></p>
+                                    <p class="ttrans">COD. SUC:<span class="pl-1" t-if="doc.cod_client_sucur" t-field="doc.cod_client_sucur"></span></p>
+                                </div>
+                            </div>
+
+                            <div class="row_person">
+                                <div class="customer">
+                                    <!-- <h3>DESTINATARIO</h3> -->
+                                    <p class="text-center ttrans">DESTINATARIO</p>
+                                    <p class="ttrans">R. SOCIAL/NOMBRE:<span class="pl-2" t-if="doc.partner_id.name" t-field="doc.partner_id.name"/></p>
+                                    <p class="ttrans">RUC/DNI/CE:<span class="pl-3" t-if="doc.partner_id.vat" t-field="doc.partner_id.vat"></span></p>
+                                    <p class="ttrans">ATENCIÓN:<span class="pl-2" t-if="doc.l10n_pe_edi_observation" t-field="doc.l10n_pe_edi_observation"></span></p>
+                                </div>
+                                <div class="driver">
+                                    <!-- <h3>UNIDAD DE TRANSPORTE / CONDUCTOR</h3> -->
+                                    <p class="text-center ttrans">UNIDAD DE TRANSPORTE / CONDUCTOR</p>
+                                    <p class="ttrans">VEHÍCULO/MARCA:<span class="pl-3" t-if="doc.l10n_pe_edi_vehicle_id.name" t-field="doc.l10n_pe_edi_vehicle_id.name"></span></p>
+                                    <p class="ttrans">PLACA:<span class="pl-2" t-if="doc.l10n_pe_edi_vehicle_id.license_plate" t-field="doc.l10n_pe_edi_vehicle_id.license_plate"></span></p>
+                                    <p class="ttrans">CERT. DE INSP. MTC:<span class="pl-2" t-if="doc.l10n_pe_edi_operator_id.l10n_pe_edi_mtc_number" t-field="doc.l10n_pe_edi_operator_id.l10n_pe_edi_mtc_number"></span></p>
+                                    <p class="ttrans">LICENCIA DE CONDUCIR:<span class="pl-2" t-if="doc.l10n_pe_edi_vehicle_id.operator_id.l10n_pe_edi_operator_license" t-field="doc.l10n_pe_edi_vehicle_id.operator_id.l10n_pe_edi_operator_license"></span></p>
+                                </div>
+                            </div>
+
+                            <div class="row_mot_ord">
+                                <div class="child ttrans">MOTIVO DE TRASLADO<span t-if="doc.l10n_pe_edi_reason_for_transfer" t-field="doc.l10n_pe_edi_reason_for_transfer"></span></div>
+
+                                <div class="child ttrans">COTIZACIÓN/ORDEN/REFERENCIA<span t-if="doc.origin" t-field="doc.origin"></span></div>
+                                    <!-- <span t-field="doc.origin"></span> -->
+                            </div>
+                            <div class="row_moa">
+                                <p class="ttrans">MOTIVO DE TRASLADO MOA<span t-if="doc.select_options" t-field="doc.select_options"></span></p>
+                            </div>
+
+                            <table class="main_table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="item-td ttrans">ITEM</th>
+                                        <th class="cot-td ttrans">CODIGO</th>
+                                        <th class="desc-td ttrans">DESCRIPCION</th>
+                                        <th class="lot-td ttrans">LOTE</th>
+                                        <th class="umed-td ttrans">U.MED.</th>
+                                        <th class="cant-td ttrans">CANT.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total" t-value="0.0"/>
+                                    <tr t-foreach="doc.move_line_ids_without_package" t-as="line">
+                                        <td class="item-td"><span t-esc="line_index + 1"/></td>
+                                        <td class="cod-td"><span t-field="line.product_id.default_code"/></td>
+                                        <td class="desc-td"><span t-field="line.product_id.name"/></td>
+                                        <td class="lot-td"><span t-field="line.lot_id.name"/></td>
+                                        <td class="umed-td"><span t-field="line.product_uom_id.name"/></td>
+                                        <td class="cant-td">
+                                            <span t-field="line.qty_done"/>
+                                            <t t-set="total" t-value="total+line.qty_done"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:100% !important;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="total-td"><span t-esc="'%.4f'%(total)"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row_trans_comp_agen">
+                                <div class="trans">
+                                    <p class="text-center ttrans">TRANSPORTISTA</p>
+                                    <p class="ttrans">R.SOCIAL / NOMBRE:<span t-if="doc.l10n_pe_edi_operator_id.name" t-field="doc.l10n_pe_edi_operator_id.name"/></p>
+                                    <p class="ttrans p_inline_trans"><span t-if="doc.l10n_pe_edi_operator_id.street" t-field="doc.l10n_pe_edi_operator_id.street"/></p>
+                                    <p class="ttrans">RUC:<span t-if="doc.l10n_pe_edi_operator_id.vat" t-field="doc.l10n_pe_edi_operator_id.vat"/></p>
+                                </div>
+                                <div class="comp">
+                                    <p class="text-center ttrans">COMPROBANTE DE PAGO</p>
+                                    <p class="ttrans">TIPO:<span t-if="doc.transfer_document_type_id.name" t-field="doc.transfer_document_type_id.name"/></p>
+                                    <p class="ttrans p_inline_doc"><span t-if="doc.get_payment_proof_doc_num()" t-esc="doc.get_payment_proof_doc_num()"/></p>
+                                </div>
+                                <div class="agen">
+                                    <p class="text-center ttrans">AGENCIA TRANSPORTE</p>
+                                    <p class="ttrans">R. SOCIAL:<span t-if="doc.transport_agency.name" t-field="doc.transport_agency.name"/></p>
+                                    <p class="ttrans">RUC:<span t-if="doc.transport_agency.vat" t-field="doc.transport_agency.vat"/> <span t-if="doc.transport_agency.parent_id.name" t-field="doc.transport_agency.parent_id.name"/></p>
+                                    <p class="ttrans">DIREC:<span t-if="doc.transport_agency.street" t-field="doc.transport_agency.street"/></p>
+                                </div>
+                            </div>
+
+                            <div class="row_last">
+                                <div class="measures">
+                                    <p class="text-center ttrans">CONSOLIDADO DE MEDIDAS DE PEDIDO</p>
+                                    <p class="ttrans">PESO NETO:<span t-if="doc.weight" t-field="doc.weight"/></p>
+                                    <p class="ttrans">PESO BRUTO:<span t-if="doc.gross_weight" t-field="doc.gross_weight"/></p>
+                                    <p class="ttrans">VOLUMEN m3:<span t-if="doc.volume" t-field="doc.volume"/></p>
+                                </div>
+                                <div class="incoterm">
+                                    <p class="text-center ttrans">INCOTERM</p>
+                                    <span t-if="doc.sale_id.incoterm" t-field="doc.sale_id.incoterm"/>
+                                </div>
+                                <div class="seller">
+                                    <p class="text-center ttrans">VENDEDOR</p>
+                                    <span t-if="doc.sale_id.user_id.name" t-field="doc.sale_id.user_id.name"/>
+                                </div>
+                                <div class="notes">
+                                    <p class="ttrans">NOTAS:<span class="pl-2" t-if="doc.note" t-field="doc.note"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

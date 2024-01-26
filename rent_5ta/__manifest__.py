@@ -1,7 +1,7 @@
 {
     'name': 'Renta de quinta',
     'summary': 'It is in charge of creating a complete model for the calculation of fifth rent, considering all the parameters established by SUNAT',
-    'version': '16.0.0.2.0',
+    'version': '16.0.0.2.2',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'description': 'It is in charge of creating a complete model for the calculation of fifth rent, considering all the parameters established by SUNAT',

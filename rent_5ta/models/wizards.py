@@ -115,13 +115,13 @@ class PayrollProjectionWizard(models.TransientModel):
 
             self.get_calc_lines_rates_r2(projection_id, periods)
             self.get_amount_rem_ordinarias(projection_id, periods)
-            self.get_amount_retencion_total(projection_id, periods)
             self.get_amount_retenciones_meses_ant(projection_id, periods, employee)
             self.get_amount_tot_renta_anual_proyectado(projection_id, periods)
 
             self.get_amount_retencion_afectada_extraordinarias(projection_id, periods)
 
             self.get_amount_retencion_1(projection_id, periods)
+            self.get_amount_retencion_total(projection_id, periods)
             self.get_amount_devolucion_impuesto_retenido(projection_id, periods)
 
         tree_view = self.env.ref('rent_5ta.payroll_projection_tree_view').id

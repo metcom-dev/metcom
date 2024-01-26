@@ -99,10 +99,10 @@ class SunatTRegistro(models.Model):
     def _get_data_esp(self):
         data_esp = []
         code_file = self.env['ir.config_parameter'].sudo().get_param('hr_contract.risk_activities_sctr')
-
+        
         for emp in self.employees_lines_ids_t:
             data_esp.append({
-                'annexed_establishment': emp.address_home_id.annexed_establishment,
+                'annexed_establishment': emp.contract_id.other_annexed.code,
                 'parameter': 1 if code_file else 0,
             })
         return data_esp
