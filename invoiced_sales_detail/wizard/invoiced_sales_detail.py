@@ -67,6 +67,7 @@ class InvoicedSalesDetail(models.TransientModel):
 class InvoicedSalesDetailReportXlsx(models.AbstractModel):
     _name = 'report.invoiced_sales_detail.invoiced_sales_detail_xls.xlsx'
     _inherit = 'report.report_xlsx.abstract'
+    _description = 'invoiced sales detail report xlsx'
 
     def generate_xlsx_report(self, workbook, data, lines):
         wizard = lines[0]
