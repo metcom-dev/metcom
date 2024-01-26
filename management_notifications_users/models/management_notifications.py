@@ -19,6 +19,11 @@ class ManagementNotifications(models.Model):
     contact_created = fields.Boolean(string='Contacto Creado')
     invoice_income = fields.Boolean(string='Factura de Ingreso')
 
+    @api.model
+    def create(self, vals):
+        res = super(ManagementNotifications, self).create(vals)
+        return res
+
     def get_mails(self, notification):
         notification_preferences = self.search([
             (notification, '=', True),

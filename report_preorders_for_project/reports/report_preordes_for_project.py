@@ -12,7 +12,8 @@ class ReportPreorderProject(models.AbstractModel):
         sheet = workbook.add_worksheet('Reporte de pre-ordenes por proyecto')
         from_date = data['from_date']
         to_date = data['to_date']
-        data = self.get_data(from_date + " 00:00:00", to_date + " 23:59:59")
+        project_id = data['project_id']
+        data = self.get_data(from_date + " 00:00:00", to_date + " 23:59:59", project_id)
         user_lang = self.env.user.lang
 
         formats = {
@@ -29,6 +30,7 @@ class ReportPreorderProject(models.AbstractModel):
         sheet.write(1, 2, from_date, formats['date_format'])
         sheet.write(2, 1, 'Hasta:', formats['bold_right'])
         sheet.write(2, 2, to_date, formats['date_format'])
+
 
         sheet.set_column('A:A', 5)
         sheet.set_column('B:B', 15)
@@ -48,6 +50,7 @@ class ReportPreorderProject(models.AbstractModel):
         sheet.set_column('P:P', 15)
         sheet.set_column('Q:Q', 20)
         sheet.set_column('R:R', 15)
+        sheet.set_column('S:S', 15)
 
         
         row_header= 4
@@ -68,25 +71,26 @@ class ReportPreorderProject(models.AbstractModel):
         sheet.write(row_header, 14, 'Monto sin IGV', formats['bold_center'])
         sheet.write(row_header, 15, 'Moneda', formats['bold_center'])
         sheet.write(row_header, 16, 'Fecha de Compra', formats['bold_center'])
-        sheet.write(row_header, 17, 'Usuario Emisor', formats['bold_center'])
+        sheet.write(row_header, 17, 'Categoria', formats['bold_center'])
+        sheet.write(row_header, 18, 'Usuario Emisor', formats['bold_center'])
 
         row = 5
         if len(data) > 0:
             for item in data:
                 sheet.write(row, 1, item['name'], formats['normal_center'])
                 sheet.write(row, 2, item['date_order'], formats['date_format'])
-                sheet.write(row, 3, item.get('name_project').get(user_lang, '') if item.get('name_project') else '', formats['normal_left'])
+                sheet.write(row, 3, item.get('name_project').get(user_lang, ''), formats['normal_left'])
                 sheet.write(row, 4, item['codigo_material'], formats['normal_center'])
 
                 nombre_material = item.get('nombre_material')
                 unidadmedida = item.get('unidadmedida')
                 if nombre_material:
-                    sheet.write(row, 5, nombre_material.get(user_lang, '') if item.get('name_project') else '', formats['normal_left'])
+                    sheet.write(row, 5, nombre_material.get(user_lang, ''), formats['normal_left'])
                 else:
                     sheet.write(row, 5, '', formats['normal_left'])
 
                 if unidadmedida:
-                    sheet.write(row, 6, unidadmedida.get(user_lang, '') if item.get('name_project') else '', formats['normal_center'])
+                    sheet.write(row, 6, unidadmedida.get(user_lang, ''), formats['normal_center'])
                 else:
                     sheet.write(row, 6, '', formats['normal_center'])
 
@@ -107,7 +111,8 @@ class ReportPreorderProject(models.AbstractModel):
                 sheet.write(row, 14, item['monto_sin_igv'], formats['normal_center'])
                 sheet.write(row, 15, item['tipo_moneda'], formats['normal_center'])
                 sheet.write(row, 16, item['fecha_compra'], formats['date_format'])
-                sheet.write(row, 17, item['usuario_emisor'], formats['normal_center'])
+                sheet.write(row, 17, item['name_category'], formats['normal_center'])
+                sheet.write(row, 18, item['usuario_emisor'], formats['normal_center'])
                 row += 1
         else:
             sheet.write(row, 0, 'NO HAY DATOS / REPORTE EN CONSTRUCCION', )
@@ -117,7 +122,7 @@ class ReportPreorderProject(models.AbstractModel):
         standard_price = product.standard_price
         return standard_price if standard_price else 0
 
-    def get_data(self, from_date, to_date):
+    def get_data(self, from_date, to_date, project_id):
         query = """
             (SELECT
                 pp.name,
@@ -137,7 +142,8 @@ class ReportPreorderProject(models.AbstractModel):
                 pt."name" as nombre_material,
                 pt.default_code as codigo_material,
                 uu.name as unidadmedida,
-                pt.id as id_product
+                pt.id as id_product,
+                pc.name as name_category
             FROM
                 purchase_preorder pp
                 LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
@@ -151,9 +157,11 @@ class ReportPreorderProject(models.AbstractModel):
                 INNER JOIN product_product pp3 ON ppl.product_id = pp3.id
                 LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
                 LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
+                LEFT JOIN product_category pc ON pt.categ_id = pc.id
             WHERE
                 pp.date_order >= '%s'
-                AND pp.date_order <= '%s')
+                AND pp.date_order <= '%s'
+                AND pp.project_id = %s)
 
             UNION ALL
 
@@ -175,7 +183,8 @@ class ReportPreorderProject(models.AbstractModel):
                 pt."name" as nombre_material,
                 pt.default_code as codigo_material,
                 uu.name as unidadmedida,
-                pt.id as id_product
+                pt.id as id_product,
+                pc.name as name_category
             FROM
                 purchase_preorder pp
                 LEFT JOIN project_project pp2 ON pp2.id = pp.project_id
@@ -183,9 +192,11 @@ class ReportPreorderProject(models.AbstractModel):
                 LEFT JOIN product_product pp3 ON ppl.product_id = pp3.id
                 LEFT JOIN product_template pt ON pt.id = pp3.product_tmpl_id
                 LEFT JOIN uom_uom uu ON pt.uom_id = uu.id
+                LEFT JOIN product_category pc ON pt.categ_id = pc.id
             WHERE
                 pp.date_order >= '%s'
                 AND pp.date_order <= '%s'
+                AND pp.project_id = %s
                 AND NOT EXISTS (
                     SELECT 1
                     FROM purchase_order po
@@ -193,7 +204,7 @@ class ReportPreorderProject(models.AbstractModel):
                     WHERE po.from_preorders = pp.name AND pol.product_id = ppl.product_id))
 
             ORDER BY date_order ASC, name_project ASC;
-        """ % (from_date, to_date, from_date, to_date)
+        """ % (from_date, to_date, project_id, from_date, to_date, project_id)
 
         log.info(query)
 

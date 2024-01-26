@@ -24,3 +24,4 @@ class ResPartner(models.Model):
             return res
         else:
             raise UserError(_('No tiene permisos necesarios para crear un cliente'))
+        return super(ResPartner, self).create(vals)
